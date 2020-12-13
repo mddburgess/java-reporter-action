@@ -1,0 +1,29 @@
+{
+  "name": "java-reporter-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mddburgess/java-reporter-action.git"
+  },
+  "author": "mddburgess",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mddburgess/java-reporter-action/issues"
+  },
+  "homepage": "https://github.com/mddburgess/java-reporter-action#readme",
+  "keywords": [],
+  "devDependencies": {
+    "@types/jest": "^26.0.19",
+    "@types/node": "^14.14.13",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
