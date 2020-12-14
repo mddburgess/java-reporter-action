@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Surefire parser can parse a simple Surefire report 1`] = `
+Object {
+  "errors": 2,
+  "failures": 2,
+  "skipped": 2,
+  "testCases": Array [
+    Object {
+      "className": "com.example.demo.SimpleTest",
+      "message": "void com.example.demo.SimpleTest.disabledTest() is @Disabled",
+      "result": "skipped",
+      "testName": "disabledTest",
+    },
+    Object {
+      "className": "com.example.demo.SimpleTest",
+      "message": "error message",
+      "result": "error",
+      "stackTrace": "java.lang.RuntimeException: error message
+	at com.example.demo.SimpleTest.errorTestWithMessage(SimpleTest.java:35)
+",
+      "testName": "errorTestWithMessage",
+    },
+    Object {
+      "className": "com.example.demo.SimpleTest",
+      "message": undefined,
+      "result": "failure",
+      "stackTrace": "org.opentest4j.AssertionFailedError: 
+	at com.example.demo.SimpleTest.failingTestWithoutMessage(SimpleTest.java:29)
+",
+      "testName": "failingTestWithoutMessage",
+    },
+    Object {
+      "className": "com.example.demo.SimpleTest",
+      "message": "assumption was not met due to: &#10;Expecting:&#10; &lt;1&gt;&#10;to be equal to:&#10; &lt;null&gt;&#10;but was not.",
+      "result": "skipped",
+      "stackTrace": "org.opentest4j.TestAbortedException: 
+assumption was not met due to: 
+Expecting:
+ <1>
+to be equal to:
+ <null>
+but was not.
+	at com.example.demo.SimpleTest.skippedTest(SimpleTest.java:51)
+Caused by: org.opentest4j.AssertionFailedError: 
+
+Expecting:
+ <1>
+to be equal to:
+ <null>
+but was not.
+	at com.example.demo.SimpleTest.skippedTest(SimpleTest.java:51)
+",
+      "testName": "skippedTest",
+    },
+    Object {
+      "className": "com.example.demo.SimpleTest",
+      "message": undefined,
+      "result": "error",
+      "stackTrace": "java.lang.RuntimeException
+	at com.example.demo.SimpleTest.errorTestWithoutMessage(SimpleTest.java:40)
+",
+      "testName": "errorTestWithoutMessage",
+    },
+    Object {
+      "className": "com.example.demo.SimpleTest",
+      "message": "&#10;Expecting:&#10; &lt;4&gt;&#10;to be equal to:&#10; &lt;5&gt;&#10;but was not.",
+      "result": "failure",
+      "stackTrace": "org.opentest4j.AssertionFailedError: 
+
+Expecting:
+ <4>
+to be equal to:
+ <5>
+but was not.
+	at com.example.demo.SimpleTest.failingTestWithMessage(SimpleTest.java:24)
+",
+      "testName": "failingTestWithMessage",
+    },
+  ],
+  "tests": 7,
+}
+`;
