@@ -21,6 +21,7 @@
   "keywords": [],
   "dependencies": {
     "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
     "@actions/glob": "^0.1.1",
     "saxophone-ts": "^0.6.4"
   },
