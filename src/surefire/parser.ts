@@ -1,5 +1,4 @@
 import {parseAttrs, Saxophone} from 'saxophone-ts';
-import {Logger} from 'tslog';
 import {CDATANode, TagCloseNode, TagOpenNode, TextNode} from 'saxophone-ts/dist/types/src/static/nodes';
 import {SurefireReport, SurefireTestCase} from './report';
 
@@ -9,14 +8,7 @@ export class SurefireParser {
         .on('tagOpen', (tag) => this.onTagOpen(tag))
         .on('tagClose', (tag) => this.onTagClose(tag))
         .on('text', (tag) => this.onText(tag))
-        .on('cdata', (tag) => this.onText(tag))
-        .on('finish', () => this.onFinish());
-
-    private log = new Logger({
-        name: 'SurefireParser',
-        displayFilePath: 'hidden',
-        displayFunctionName: false
-    });
+        .on('cdata', (tag) => this.onText(tag));
 
     private report?: SurefireReport;
     private testCase?: SurefireTestCase;
@@ -104,10 +96,6 @@ export class SurefireParser {
 
     private onText(tag: TextNode | CDATANode) {
         this.textHandler && this.textHandler(tag.contents);
-    }
-
-    private onFinish() {
-        this.log.debug(`Parsed Surefire report`, this.report);
     }
 }
 

@@ -5,7 +5,8 @@
   "main": "build/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest --coverage",
+    "all": "npm run build && npm test"
   },
   "repository": {
     "type": "git",
@@ -21,8 +22,7 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/glob": "^0.1.1",
-    "saxophone-ts": "^0.6.4",
-    "tslog": "^3.0.1"
+    "saxophone-ts": "^0.6.4"
   },
   "devDependencies": {
     "@types/jest": "^26.0.19",

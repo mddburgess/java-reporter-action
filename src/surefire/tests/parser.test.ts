@@ -5,7 +5,7 @@ import {findFile} from '../../common/files';
 describe('Surefire parser', () => {
 
     it('can parse a simple Surefire report', async () => {
-        const path = await findFile('**/TEST-com.example.demo.SimpleTest.xml');
+        const path = await findFile('**/TEST-org.example.SimpleTest.xml');
         const xml = await fs.promises.readFile(path);
 
         const surefireReport = new SurefireParser().parse(xml);
