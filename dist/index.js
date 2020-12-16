@@ -93,6 +93,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const surefire_1 = __webpack_require__(2647);
 surefire_1.checkSurefire()
+    .catch(error => core.setFailed(error))
     .finally(() => core.info('Surefire check finished.'));
 
 
