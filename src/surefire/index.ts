@@ -14,7 +14,7 @@ export async function checkSurefire() {
     const token = core.getInput('github-token', {required: true});
     const octokit = github.getOctokit(token);
 
-    const githubResponse = octokit.checks.create({
+    const githubResponse = await octokit.checks.create({
         ...github.context.repo,
         name: 'surefire',
         head_sha: github.context.sha,
