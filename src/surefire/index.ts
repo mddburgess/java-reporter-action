@@ -1,10 +1,12 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
+import {Context} from '@actions/github/lib/context';
 import * as fs from 'fs';
 import {findFiles} from '../common/files';
 import {SurefireParser} from './parser';
 import {SurefireReport} from './report';
 import {toAnnotation} from './annotator';
+
 
 export async function checkSurefire() {
     const reportPaths = await findSurefireReports(['**/surefire-reports/TEST-*.xml']);
@@ -17,7 +19,7 @@ export async function checkSurefire() {
     const githubResponse = await octokit.checks.create({
         ...github.context.repo,
         name: 'surefire',
-        head_sha: github.context.sha,
+        head_sha: resolveHeadSha(github.context),
         status: 'completed',
         conclusion: resolveConclusion(surefireReport),
         output: {
@@ -67,6 +69,12 @@ async function parseSurefireReports(reportPaths: string[]) {
         }
     }
     return reports;
+}
+
+function resolveHeadSha(context: Context): string {
+    return context.payload.pull_request
+        ? context.payload.pull_request.head.sha
+        : context.sha;
 }
 
 function resolveConclusion(report: SurefireReport) {

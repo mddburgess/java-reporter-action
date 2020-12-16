@@ -229,7 +229,7 @@ function checkSurefire() {
         core.info(JSON.stringify(surefireReport, undefined, 2));
         const token = core.getInput('github-token', { required: true });
         const octokit = github.getOctokit(token);
-        const githubResponse = yield octokit.checks.create(Object.assign(Object.assign({}, github.context.repo), { name: 'surefire', head_sha: github.context.sha, status: 'completed', conclusion: resolveConclusion(surefireReport), output: {
+        const githubResponse = yield octokit.checks.create(Object.assign(Object.assign({}, github.context.repo), { name: 'surefire', head_sha: resolveHeadSha(github.context), status: 'completed', conclusion: resolveConclusion(surefireReport), output: {
                 title: resolveTitle(surefireReport),
                 summary: resolveSummary(surefireReport),
                 annotations: yield resolveAnnotations(surefireReport)
@@ -277,6 +277,11 @@ function parseSurefireReports(reportPaths) {
         }
         return reports;
     });
+}
+function resolveHeadSha(context) {
+    return context.payload.pull_request
+        ? context.payload.pull_request.head.sha
+        : context.sha;
 }
 function resolveConclusion(report) {
     if (report.failures + report.errors > 0) {
