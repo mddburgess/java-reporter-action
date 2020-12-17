@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="6.29.0" timestamp="2020-12-16T19:19:11.996">
+<file name="/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/BestPractices.java">
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="20" rule="UnusedImports" ruleset="Best Practices" package="org.example.pmd" class="BestPractices" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedimports" priority="4">
+Avoid unused imports such as 'java.io.File'
+</violation>
+<violation beginline="11" endline="11" begincolumn="31" endcolumn="41" rule="AvoidUsingHardCodedIP" ruleset="Best Practices" package="org.example.pmd" class="BestPractices" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#avoidusinghardcodedip" priority="3">
+Do not hard code the IP address 
+</violation>
+<violation beginline="12" endline="12" begincolumn="20" endcolumn="37" rule="UnusedPrivateField" ruleset="Best Practices" package="org.example.pmd" class="BestPractices" variable="unusedPrivateField" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedprivatefield" priority="3">
+Avoid unused private fields such as 'unusedPrivateField'.
+</violation>
+<violation beginline="17" endline="17" begincolumn="9" endcolumn="66" rule="CheckResultSet" ruleset="Best Practices" package="org.example.pmd" class="BestPractices" method="checkResultSet" variable="VariableDeclaratorId" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#checkresultset" priority="3">
+Always check the return of one of the navigation method (next,previous,first,last) of a ResultSet.
+</violation>
+<violation beginline="21" endline="21" begincolumn="45" endcolumn="65" rule="UnusedFormalParameter" ruleset="Best Practices" package="org.example.pmd" class="BestPractices" method="unusedPrivateMethod" variable="unusedFormalParameter" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'unusedFormalParameter'.
+</violation>
+<violation beginline="21" endline="21" begincolumn="18" endcolumn="66" rule="UnusedPrivateMethod" ruleset="Best Practices" package="org.example.pmd" class="BestPractices" method="unusedPrivateMethod" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedprivatemethod" priority="3">
+Avoid unused private methods such as 'unusedPrivateMethod(String)'.
+</violation>
+<violation beginline="22" endline="22" begincolumn="13" endcolumn="31" rule="UnusedLocalVariable" ruleset="Best Practices" package="org.example.pmd" class="BestPractices" method="unusedPrivateMethod" variable="unusedLocalVariable" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'unusedLocalVariable'.
+</violation>
+</file>
+<file name="/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java">
+<violation beginline="1" endline="59" begincolumn="1" endcolumn="2" rule="TooManyStaticImports" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#toomanystaticimports" priority="3">
+Too many static imports may lead to messy code
+</violation>
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="24" rule="DontImportJavaLang" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#dontimportjavalang" priority="4">
+Avoid importing anything from the package java.lang
+</violation>
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="24" rule="UnusedImports" ruleset="Best Practices" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedimports" priority="4">
+Avoid unused imports such as 'java.lang.String'
+</violation>
+<violation beginline="4" endline="4" begincolumn="1" endcolumn="24" rule="DuplicateImports" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#duplicateimports" priority="4">
+Avoid duplicate imports such as 'java.lang.String'
+</violation>
+<violation beginline="4" endline="4" begincolumn="1" endcolumn="24" rule="DontImportJavaLang" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#dontimportjavalang" priority="4">
+Avoid importing anything from the package java.lang
+</violation>
+<violation beginline="6" endline="6" begincolumn="1" endcolumn="64" rule="UnusedImports" ruleset="Best Practices" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedimports" priority="4">
+Avoid unused imports such as 'java.time.format.DateTimeFormatter.BASIC_ISO_DATE'
+</violation>
+<violation beginline="7" endline="7" begincolumn="1" endcolumn="58" rule="UnusedImports" ruleset="Best Practices" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedimports" priority="4">
+Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_DATE'
+</violation>
+<violation beginline="8" endline="8" begincolumn="1" endcolumn="63" rule="UnusedImports" ruleset="Best Practices" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedimports" priority="4">
+Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_DATE_TIME'
+</violation>
+<violation beginline="9" endline="9" begincolumn="1" endcolumn="64" rule="UnusedImports" ruleset="Best Practices" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedimports" priority="4">
+Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_LOCAL_TIME'
+</violation>
+<violation beginline="10" endline="10" begincolumn="1" endcolumn="61" rule="UnusedImports" ruleset="Best Practices" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedimports" priority="4">
+Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_INSTANT'
+</violation>
+<violation beginline="12" endline="12" begincolumn="32" endcolumn="37" rule="ExtendsObject" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#extendsobject" priority="4">
+No need to explicitly extend Object.
+</violation>
+<violation beginline="15" endline="17" begincolumn="9" endcolumn="9" rule="ForLoopShouldBeWhileLoop" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" method="forLoopShouldBeWhileLoop" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#forloopshouldbewhileloop" priority="3">
+This for loop could be simplified to a while loop
+</violation>
+<violation beginline="21" endline="21" begincolumn="26" endcolumn="30" rule="UnusedLocalVariable" ruleset="Best Practices" package="org.example.pmd" class="CodeStyle" method="unnecessaryFullyQualifiedName" variable="value" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'value'.
+</violation>
+<violation beginline="21" endline="21" begincolumn="9" endcolumn="24" rule="UnnecessaryFullyQualifiedName" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" method="unnecessaryFullyQualifiedName" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessaryfullyqualifiedname" priority="4">
+Unnecessary use of fully qualified name 'java.lang.String' due to existing import 'java.lang.String'
+</violation>
+<violation beginline="24" endline="26" begincolumn="19" endcolumn="5" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="CodeStyle$UnnecessaryModifier" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'static' on interface 'UnnecessaryModifier': member interfaces are implicitly static
+</violation>
+<violation beginline="28" endline="30" begincolumn="19" endcolumn="5" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="CodeStyle$UnnecessaryModifierEnum" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'static' on enum 'UnnecessaryModifierEnum': nested enums are implicitly static
+</violation>
+<violation beginline="33" endline="33" begincolumn="9" endcolumn="15" rule="UnnecessaryReturn" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" method="unnecessaryReturn" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessaryreturn" priority="3">
+Avoid unnecessary return statements
+</violation>
+<violation beginline="37" endline="37" begincolumn="17" endcolumn="17" rule="UselessParentheses" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" method="uselessParentheses" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="41" endline="41" begincolumn="19" endcolumn="26" rule="UnusedLocalVariable" ruleset="Best Practices" package="org.example.pmd" class="CodeStyle" method="uselessQualifiedThis" variable="instance" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'instance'.
+</violation>
+<violation beginline="41" endline="41" begincolumn="30" endcolumn="38" rule="UselessQualifiedThis" ruleset="Code Style" package="org.example.pmd" class="CodeStyle" method="uselessQualifiedThis" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#uselessqualifiedthis" priority="3">
+Useless qualified this usage in the same class.
+</violation>
+<violation beginline="47" endline="47" begincolumn="21" endcolumn="42" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifier" method="publicAbstract" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifiers 'public abstract' on method 'publicAbstract': the method is declared in an interface type
+</violation>
+<violation beginline="48" endline="48" begincolumn="25" endcolumn="50" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifier" variable="VariableDeclaratorId" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifiers 'public static final' on field 'publicStaticFinal': the field is declared in an interface type
+</violation>
+<violation beginline="49" endline="49" begincolumn="19" endcolumn="44" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifier$PublicStaticClass" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'public' on class 'PublicStaticClass': members of interface types are implicitly public
+</violation>
+<violation beginline="49" endline="49" begincolumn="19" endcolumn="44" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifier$PublicStaticClass" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'static' on class 'PublicStaticClass': types nested within an interface type are implicitly static
+</violation>
+<violation beginline="50" endline="50" begincolumn="19" endcolumn="52" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifier$PublicStaticInterface" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'public' on interface 'PublicStaticInterface': members of interface types are implicitly public
+</violation>
+<violation beginline="50" endline="50" begincolumn="19" endcolumn="52" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifier$PublicStaticInterface" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'static' on interface 'PublicStaticInterface': member interfaces are implicitly static
+</violation>
+<violation beginline="55" endline="55" begincolumn="21" endcolumn="41" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifierAnnotation" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifiers 'public abstract' on method 'publicAbstract': the method is declared in an annotation type
+</violation>
+<violation beginline="56" endline="56" begincolumn="25" endcolumn="50" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifierAnnotation" variable="VariableDeclaratorId" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifiers 'public static final' on field 'publicStaticFinal': the field is declared in an annotation type
+</violation>
+<violation beginline="57" endline="57" begincolumn="19" endcolumn="44" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifierAnnotation$PublicStaticClass" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'public' on class 'PublicStaticClass': members of annotation types are implicitly public
+</violation>
+<violation beginline="57" endline="57" begincolumn="19" endcolumn="44" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifierAnnotation$PublicStaticClass" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'static' on class 'PublicStaticClass': types nested within an interface type are implicitly static
+</violation>
+<violation beginline="58" endline="58" begincolumn="19" endcolumn="52" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifierAnnotation$PublicStaticInterface" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'public' on interface 'PublicStaticInterface': members of annotation types are implicitly public
+</violation>
+<violation beginline="58" endline="58" begincolumn="19" endcolumn="52" rule="UnnecessaryModifier" ruleset="Code Style" package="org.example.pmd" class="UnnecessaryModifierAnnotation$PublicStaticInterface" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#unnecessarymodifier" priority="3">
+Unnecessary modifier 'static' on interface 'PublicStaticInterface': member interfaces are implicitly static
+</violation>
+</file>
+<file name="/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Design.java">
+<violation beginline="7" endline="9" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Design" package="org.example.pmd" class="Design" method="collapsibleIfStatements" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_design.html#collapsibleifstatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="14" endline="14" begincolumn="16" endcolumn="43" rule="SimplifiedTernary" ruleset="Design" package="org.example.pmd" class="Design" method="simplifiedTernary" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_design.html#simplifiedternary" priority="3">
+Ternary operators that can be simplified with || or &amp;&amp;
+</violation>
+<violation beginline="17" endline="19" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Design" package="org.example.pmd" class="Design" method="toString" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_design.html#uselessoverridingmethod" priority="3">
+Overriding method merely calls super
+</violation>
+</file>
+<file name="/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java">
+<violation beginline="9" endline="9" begincolumn="1" endcolumn="37" rule="UnusedImports" ruleset="Best Practices" package="org.example.pmd" class="ErrorProne" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedimports" priority="4">
+Avoid unused imports such as 'org.example.pmd.BestPractices'
+</violation>
+<violation beginline="9" endline="9" begincolumn="1" endcolumn="37" rule="ImportFromSamePackage" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#importfromsamepackage" priority="3">
+No need to import a type that lives in the same package
+</violation>
+<violation beginline="13" endline="13" begincolumn="12" endcolumn="13" rule="EmptyInitializer" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptyinitializer" priority="3">
+Empty initializer was found
+</violation>
+<violation beginline="20" endline="20" begincolumn="13" endcolumn="18" rule="AvoidBranchingStatementAsLastInLoop" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="avoidBranchingStatementAsLastInLoop" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#avoidbranchingstatementaslastinloop" priority="2">
+Avoid using a branching statement as the last in a loop.
+</violation>
+<violation beginline="25" endline="25" begincolumn="16" endcolumn="36" rule="AvoidDecimalLiteralsInBigDecimalConstructor" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="avoidDecimalLiteralsInBigDecimalConstructor" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#avoiddecimalliteralsinbigdecimalconstructor" priority="3">
+Avoid creating BigDecimal with a decimal (float/double) literal. Use a String literal
+</violation>
+<violation beginline="29" endline="29" begincolumn="16" endcolumn="21" rule="AvoidMultipleUnaryOperators" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="avoidMultipleUnaryOperators" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#avoidmultipleunaryoperators" priority="2">
+Using multiple unary operators may be a bug, and/or is confusing.
+</violation>
+<violation beginline="33" endline="33" begincolumn="16" endcolumn="18" rule="AvoidUsingOctalValues" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="avoidUsingOctalValues" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#avoidusingoctalvalues" priority="3">
+Do not start a literal by 0 unless its an octal value
+</violation>
+<violation beginline="37" endline="39" begincolumn="9" endcolumn="9" rule="BrokenNullCheck" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="brokenNullCheck" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#brokennullcheck" priority="2">
+Method call on object which may be null
+</violation>
+<violation beginline="45" endline="45" begincolumn="9" endcolumn="16" rule="CheckSkipResult" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="checkSkipResult" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#checkskipresult" priority="3">
+Check the value returned by the skip() method of an InputStream to see if the requested number of bytes has been skipped.
+</violation>
+<violation beginline="51" endline="51" begincolumn="39" endcolumn="58" rule="ClassCastExceptionWithToArray" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="classCastExceptionWithToArray" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#classcastexceptionwithtoarray" priority="3">
+This usage of the Collection.toArray() method will throw a ClassCastException.
+</violation>
+<violation beginline="55" endline="55" begincolumn="14" endcolumn="18" rule="DontUseFloatTypeForLoopIndices" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="dontUseFloatTypeForLoopIndices" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#dontusefloattypeforloopindices" priority="3">
+Dont use floating point for loop indices. If you must use floating point, use double.
+</violation>
+<violation beginline="61" endline="63" begincolumn="13" endcolumn="9" rule="EmptyTryBlock" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="emptyTryCatchFinallyBlocks" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptytryblock" priority="3">
+Avoid empty try blocks
+</violation>
+<violation beginline="63" endline="65" begincolumn="11" endcolumn="9" rule="EmptyCatchBlock" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="emptyTryCatchFinallyBlocks" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptycatchblock" priority="3">
+Avoid empty catch blocks
+</violation>
+<violation beginline="65" endline="67" begincolumn="11" endcolumn="9" rule="EmptyFinallyBlock" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="emptyTryCatchFinallyBlocks" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptyfinallyblock" priority="3">
+Avoid empty finally blocks
+</violation>
+<violation beginline="71" endline="73" begincolumn="24" endcolumn="9" rule="EmptyIfStmt" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="emptyIfBlock" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptyifstmt" priority="3">
+Avoid empty if statements
+</violation>
+<violation beginline="77" endline="77" begincolumn="9" endcolumn="10" rule="EmptyStatementBlock" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="emptyStatementBlock" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptystatementblock" priority="3">
+Avoid empty block statements.
+</violation>
+<violation beginline="81" endline="81" begincolumn="9" endcolumn="9" rule="EmptyStatementNotInLoop" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="emptyStatementNotInLoop" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptystatementnotinloop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+<violation beginline="86" endline="88" begincolumn="9" endcolumn="9" rule="EmptySwitchStatements" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="emptySwitchStatements" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptyswitchstatements" priority="3">
+Avoid empty switch statements
+</violation>
+<violation beginline="92" endline="94" begincolumn="29" endcolumn="9" rule="EmptySynchronizedBlock" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="emptySynchronizedBlock" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptysynchronizedblock" priority="3">
+Avoid empty synchronized blocks
+</violation>
+<violation beginline="98" endline="100" begincolumn="22" endcolumn="9" rule="EmptyWhileStmt" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="emptyWhileStmt" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#emptywhilestmt" priority="3">
+Avoid empty while statements
+</violation>
+<violation beginline="105" endline="107" begincolumn="13" endcolumn="13" rule="JumbledIncrementer" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="jumbledIncrementer" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#jumbledincrementer" priority="3">
+Avoid modifying an outer loop incrementer in an inner loop for update expression
+</violation>
+<violation beginline="112" endline="112" begincolumn="43" endcolumn="48" rule="MisplacedNullCheck" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="misplacedNullCheck" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#misplacednullcheck" priority="3">
+The null check here is misplaced; if the variable 'string' is null there will be a NullPointerException
+</violation>
+<violation beginline="115" endline="115" begincolumn="20" endcolumn="39" rule="OverrideBothEqualsAndHashcode" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="equals" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#overridebothequalsandhashcode" priority="3">
+Ensure you override both equals() and hashCode()
+</violation>
+<violation beginline="123" endline="123" begincolumn="13" endcolumn="25" rule="ReturnFromFinallyBlock" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="returnFromFinallyBlock" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#returnfromfinallyblock" priority="3">
+Avoid returning from a finally block
+</violation>
+<violation beginline="128" endline="128" begincolumn="13" endcolumn="16" rule="UnconditionalIfStatement" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="unconditionalIfStatement" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#unconditionalifstatement" priority="3">
+Do not use if statements that are always true or always false
+</violation>
+<violation beginline="135" endline="135" begincolumn="30" endcolumn="38" rule="UnnecessaryConversionTemporary" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="unnecessaryConversionTemporary" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#unnecessaryconversiontemporary" priority="3">
+Avoid unnecessary temporaries when converting primitives to Strings
+</violation>
+<violation beginline="139" endline="139" begincolumn="38" endcolumn="38" rule="UnusedNullCheckInEquals" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="unusedNullCheckInEquals" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#unusednullcheckinequals" priority="3">
+Invoke equals() on the object you've already ensured is not null
+</violation>
+<violation beginline="144" endline="144" begincolumn="9" endcolumn="14" rule="UselessOperationOnImmutable" ruleset="Error Prone" package="org.example.pmd" class="ErrorProne" method="uselessOperationOnImmutable" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_errorprone.html#uselessoperationonimmutable" priority="3">
+An operation on an Immutable object (String, BigDecimal or BigInteger) wont change the object itself
+</violation>
+</file>
+<file name="/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Multithreading.java">
+<violation beginline="8" endline="8" begincolumn="21" endcolumn="22" rule="UnusedLocalVariable" ruleset="Best Practices" package="org.example.pmd" class="Multithreading" method="avoidThreadGroup" variable="tg" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'tg'.
+</violation>
+<violation beginline="8" endline="8" begincolumn="30" endcolumn="40" rule="AvoidThreadGroup" ruleset="Multithreading" package="org.example.pmd" class="Multithreading" method="avoidThreadGroup" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_multithreading.html#avoidthreadgroup" priority="3">
+Avoid using java.lang.ThreadGroup; it is not thread safe
+</violation>
+<violation beginline="12" endline="12" begincolumn="9" endcolumn="26" rule="DontCallThreadRun" ruleset="Multithreading" package="org.example.pmd" class="Multithreading" method="dontCallThreadRun" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_multithreading.html#dontcallthreadrun" priority="4">
+Dont call Thread.run() explicitly, use Thread.start()
+</violation>
+<violation beginline="15" endline="24" begincolumn="12" endcolumn="5" rule="DoubleCheckedLocking" ruleset="Multithreading" package="org.example.pmd" class="Multithreading" method="doubleCheckedLocking" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_multithreading.html#doublecheckedlocking" priority="1">
+Double checked locking is not thread safe in Java.
+</violation>
+</file>
+<file name="/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Performance.java">
+<violation beginline="8" endline="8" begincolumn="16" endcolumn="34" rule="BigIntegerInstantiation" ruleset="Performance" package="org.example.pmd" class="Performance" method="bigIntegerInstantiation" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_performance.html#bigintegerinstantiation" priority="3">
+Dont create instances of already existing BigInteger and BigDecimal (ZERO, ONE, TEN)
+</violation>
+<violation beginline="12" endline="12" begincolumn="16" endcolumn="34" rule="BooleanInstantiation" ruleset="Performance" package="org.example.pmd" class="Performance" method="booleanInstantiation" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_performance.html#booleaninstantiation" priority="2">
+Avoid instantiating Boolean objects; reference Boolean.TRUE or Boolean.FALSE or call Boolean.valueOf() instead.
+</violation>
+</file>
+</pmd>
