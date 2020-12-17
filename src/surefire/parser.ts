@@ -1,25 +1,14 @@
-import {parseAttrs, Saxophone} from 'saxophone-ts';
+import {parseAttrs} from 'saxophone-ts';
 import {CDATANode, TagCloseNode, TagOpenNode, TextNode} from 'saxophone-ts/dist/types/src/static/nodes';
 import {SurefireReport, SurefireTestCase} from './report';
+import {XmlParser} from '../common/xml-parser';
 
-export class SurefireParser {
+export class SurefireParser extends XmlParser<SurefireReport> {
 
-    private parser = new Saxophone()
-        .on('tagOpen', (tag) => this.onTagOpen(tag))
-        .on('tagClose', (tag) => this.onTagClose(tag))
-        .on('text', (tag) => this.onText(tag))
-        .on('cdata', (tag) => this.onText(tag));
-
-    private report?: SurefireReport;
     private testCase?: SurefireTestCase;
     private textHandler?: (text: string) => void;
 
-    parse(xml: Buffer | string) {
-        this.parser.parse(xml);
-        return this.report;
-    }
-
-    private onTagOpen(tag: TagOpenNode) {
+    protected onTagOpen(tag: TagOpenNode) {
         switch (tag.name) {
             case 'testsuite':
                 this.onTestSuiteOpen(parseAttrs(tag.attrs) as TestSuiteAttrs);
@@ -70,7 +59,7 @@ export class SurefireParser {
         }
     }
 
-    private onTagClose(tag: TagCloseNode) {
+    protected onTagClose(tag: TagCloseNode) {
         switch (tag.name) {
             case 'testcase':
                 this.onTestCaseClose();
@@ -94,7 +83,7 @@ export class SurefireParser {
         this.textHandler = undefined;
     }
 
-    private onText(tag: TextNode | CDATANode) {
+    protected onText(tag: TextNode | CDATANode) {
         this.textHandler && this.textHandler(tag.contents);
     }
 }

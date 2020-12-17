@@ -65,6 +65,32 @@ exports.findRelativePath = findRelativePath;
 
 /***/ }),
 
+/***/ 5100:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.XmlParser = void 0;
+const saxophone_ts_1 = __webpack_require__(3902);
+class XmlParser {
+    constructor() {
+        this.parser = new saxophone_ts_1.Saxophone()
+            .on('tagOpen', (tag) => this.onTagOpen(tag))
+            .on('tagClose', (tag) => this.onTagClose(tag))
+            .on('text', (tag) => this.onText(tag))
+            .on('cdata', (tag) => this.onText(tag));
+    }
+    parse(xml) {
+        this.parser.parse(xml);
+        return this.report;
+    }
+}
+exports.XmlParser = XmlParser;
+
+
+/***/ }),
+
 /***/ 1667:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -92,9 +118,236 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const surefire_1 = __webpack_require__(2647);
+const main_1 = __webpack_require__(1664);
 surefire_1.checkSurefire()
     .catch(error => core.setFailed(error))
     .finally(() => core.info('Surefire check finished.'));
+main_1.checkPmd()
+    .catch(error => core.setFailed(error))
+    .finally(() => core.info('PMD check finished.'));
+
+
+/***/ }),
+
+/***/ 1857:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.toAnnotation = void 0;
+const path_1 = __importDefault(__webpack_require__(5622));
+function toAnnotation(violation) {
+    return {
+        path: resolvePath(violation.filePath),
+        start_line: violation.startLine,
+        end_line: violation.endLine,
+        start_column: violation.startLine === violation.endLine ? violation.startColumn : undefined,
+        end_column: violation.startLine === violation.endLine ? violation.endColumn : undefined,
+        annotation_level: 'failure',
+        title: resolveTitle(violation),
+        message: violation.message
+    };
+}
+exports.toAnnotation = toAnnotation;
+function resolvePath(filePath) {
+    return process.env.GITHUB_WORKSPACE
+        ? path_1.default.relative(process.env.GITHUB_WORKSPACE, filePath)
+        : filePath;
+}
+function resolveTitle(violation) {
+    return `${violation.ruleset}: ${violation.rule}`;
+}
+
+
+/***/ }),
+
+/***/ 1664:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.findPmdReports = exports.checkPmd = void 0;
+const core = __importStar(__webpack_require__(2186));
+const files_1 = __webpack_require__(9337);
+const fs_1 = __importDefault(__webpack_require__(5747));
+const parser_1 = __webpack_require__(3198);
+const github = __importStar(__webpack_require__(5438));
+const annotator_1 = __webpack_require__(1857);
+function checkPmd() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const reportPaths = yield findPmdReports(['**/pmd.xml']);
+        const surefireReport = yield parsePmdReports(reportPaths);
+        core.info(JSON.stringify(surefireReport, undefined, 2));
+        const token = core.getInput('github-token', { required: true });
+        const octokit = github.getOctokit(token);
+        const githubResponse = yield octokit.checks.create(Object.assign(Object.assign({}, github.context.repo), { name: 'pmd', head_sha: resolveHeadSha(github.context), status: 'completed', conclusion: resolveConclusion(surefireReport), output: {
+                title: resolveTitle(surefireReport),
+                summary: resolveSummary(surefireReport),
+                annotations: resolveAnnotations(surefireReport)
+            } }));
+        core.debug(JSON.stringify(githubResponse, undefined, 2));
+    });
+}
+exports.checkPmd = checkPmd;
+function findPmdReports(searchPaths) {
+    return __awaiter(this, void 0, void 0, function* () {
+        core.startGroup('Searching for PMD reports');
+        core.info('search-paths:');
+        searchPaths.forEach(searchPath => core.info(`  ${searchPath}`));
+        core.endGroup();
+        const reportPaths = yield files_1.findFiles(searchPaths);
+        core.startGroup(`Found ${reportPaths.length} PMD reports`);
+        reportPaths.forEach(reportPath => core.info(reportPath));
+        core.endGroup();
+        return reportPaths;
+    });
+}
+exports.findPmdReports = findPmdReports;
+function parsePmdReports(reportPaths) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const reports = {
+            violations: []
+        };
+        for (const reportPath of reportPaths) {
+            const xml = yield fs_1.default.promises.readFile(reportPath, { encoding: 'utf-8' });
+            const report = new parser_1.PmdParser().parse(xml);
+            if (report) {
+                reports.violations.push(...report.violations);
+            }
+            else {
+                core.warning(`Cannot read PMD report: ${reportPath}`);
+            }
+        }
+        return reports;
+    });
+}
+function resolveHeadSha(context) {
+    return context.payload.pull_request
+        ? context.payload.pull_request.head.sha
+        : context.sha;
+}
+function resolveConclusion(report) {
+    if (report.violations.length > 0) {
+        return 'failure';
+    }
+    return 'success';
+}
+function resolveTitle(report) {
+    return report.violations.length
+        ? `${report.violations.length} violations`
+        : 'No violations';
+}
+function resolveSummary(report) {
+    return resolveTitle(report);
+}
+function resolveAnnotations(report) {
+    return report.violations.map(violation => annotator_1.toAnnotation(violation));
+}
+
+
+/***/ }),
+
+/***/ 3198:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PmdParser = void 0;
+const xml_parser_1 = __webpack_require__(5100);
+const saxophone_ts_1 = __webpack_require__(3902);
+class PmdParser extends xml_parser_1.XmlParser {
+    constructor() {
+        super(...arguments);
+        this.filePath = '';
+    }
+    onTagOpen(tag) {
+        switch (tag.name) {
+            case 'pmd':
+                this.onPmdOpen();
+                break;
+            case 'file':
+                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case 'violation':
+                this.onViolationOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+        }
+    }
+    onPmdOpen() {
+        this.report = {
+            violations: []
+        };
+    }
+    onFileOpen(attrs) {
+        this.filePath = attrs.name;
+    }
+    onViolationOpen(attrs) {
+        this.violation = {
+            filePath: this.filePath,
+            startLine: attrs.beginline,
+            endLine: attrs.endline,
+            startColumn: attrs.begincolumn,
+            endColumn: attrs.endcolumn,
+            ruleset: attrs.ruleset,
+            rule: attrs.rule,
+            message: ''
+        };
+    }
+    onTagClose(tag) {
+        tag.name === 'violation' && this.onViolationClose();
+    }
+    onViolationClose() {
+        if (this.report && this.violation) {
+            this.violation.message = this.violation.message.trim();
+            if (!this.violation.message.endsWith('.')) {
+                this.violation.message = `${this.violation.message}.`;
+            }
+            this.report.violations.push(this.violation);
+            this.violation = undefined;
+        }
+    }
+    onText(tag) {
+        this.violation && (this.violation.message = this.violation.message.concat(tag.contents));
+    }
+}
+exports.PmdParser = PmdParser;
 
 
 /***/ }),
@@ -329,18 +582,8 @@ function resolveAnnotations(report) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.SurefireParser = void 0;
 const saxophone_ts_1 = __webpack_require__(3902);
-class SurefireParser {
-    constructor() {
-        this.parser = new saxophone_ts_1.Saxophone()
-            .on('tagOpen', (tag) => this.onTagOpen(tag))
-            .on('tagClose', (tag) => this.onTagClose(tag))
-            .on('text', (tag) => this.onText(tag))
-            .on('cdata', (tag) => this.onText(tag));
-    }
-    parse(xml) {
-        this.parser.parse(xml);
-        return this.report;
-    }
+const xml_parser_1 = __webpack_require__(5100);
+class SurefireParser extends xml_parser_1.XmlParser {
     onTagOpen(tag) {
         switch (tag.name) {
             case 'testsuite':
