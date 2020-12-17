@@ -35,10 +35,10 @@ export class PmdParser extends XmlParser<PmdReport> {
     private onViolationOpen(attrs: ViolationAttrs) {
         this.violation = {
             filePath: this.filePath,
-            startLine: attrs.beginline,
-            endLine: attrs.endline,
-            startColumn: attrs.begincolumn,
-            endColumn: attrs.endcolumn,
+            startLine: Number(attrs.beginline),
+            endLine: Number(attrs.endline),
+            startColumn: Number(attrs.begincolumn),
+            endColumn: Number(attrs.endcolumn),
             ruleset: attrs.ruleset,
             rule: attrs.rule,
             message: ''

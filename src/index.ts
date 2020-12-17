@@ -2,10 +2,11 @@ import * as core from '@actions/core';
 import {checkSurefire} from './surefire';
 import {checkPmd} from './pmd/main';
 
-checkSurefire()
-    .catch(error => core.setFailed(error))
-    .finally(() => core.info('Surefire check finished.'));
+const main = async () => {
+    await checkSurefire();
+    await checkPmd();
+}
 
-checkPmd()
+main()
     .catch(error => core.setFailed(error))
-    .finally(() => core.info('PMD check finished.'));
+    .finally(() => core.info('Java Reporter finished.'));

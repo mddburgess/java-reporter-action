@@ -115,16 +115,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const surefire_1 = __webpack_require__(2647);
 const main_1 = __webpack_require__(1664);
-surefire_1.checkSurefire()
+const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield surefire_1.checkSurefire();
+    yield main_1.checkPmd();
+});
+main()
     .catch(error => core.setFailed(error))
-    .finally(() => core.info('Surefire check finished.'));
-main_1.checkPmd()
-    .catch(error => core.setFailed(error))
-    .finally(() => core.info('PMD check finished.'));
+    .finally(() => core.info('Java Reporter finished.'));
 
 
 /***/ }),
@@ -321,10 +331,10 @@ class PmdParser extends xml_parser_1.XmlParser {
     onViolationOpen(attrs) {
         this.violation = {
             filePath: this.filePath,
-            startLine: attrs.beginline,
-            endLine: attrs.endline,
-            startColumn: attrs.begincolumn,
-            endColumn: attrs.endcolumn,
+            startLine: Number(attrs.beginline),
+            endLine: Number(attrs.endline),
+            startColumn: Number(attrs.begincolumn),
+            endColumn: Number(attrs.endcolumn),
             ruleset: attrs.ruleset,
             rule: attrs.rule,
             message: ''
