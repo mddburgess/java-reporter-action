@@ -3,7 +3,7 @@ import Check from '../common/check';
 class SpotbugsCheck extends Check {
 
     constructor() {
-        super('SpotBugs');
+        super('spotbugs');
     }
 
     protected reportSearchPaths(): string[] {

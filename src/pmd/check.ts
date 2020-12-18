@@ -2,8 +2,8 @@ import Check from '../common/check';
 
 class PmdCheck extends Check {
 
-    public constructor() {
-        super('PMD');
+    constructor() {
+        super('pmd');
     }
 
     protected reportSearchPaths(): string[] {

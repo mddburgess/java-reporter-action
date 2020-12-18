@@ -3,7 +3,7 @@ import Check from '../common/check';
 class CpdCheck extends Check {
 
     constructor() {
-        super('CPD');
+        super('cpd');
     }
 
     protected reportSearchPaths(): string[] {

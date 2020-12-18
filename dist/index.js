@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
 class CheckstyleCheck extends check_1.default {
     constructor() {
-        super('Checkstyle');
+        super('checkstyle');
     }
     reportSearchPaths() {
         return ['**/checkstyle-result.xml'];
@@ -66,19 +66,38 @@ const core = __importStar(__webpack_require__(2186));
 const github = __importStar(__webpack_require__(5438));
 const glob = __importStar(__webpack_require__(8090));
 const path_1 = __importDefault(__webpack_require__(5622));
+const core_1 = __webpack_require__(2186);
 class Check {
     constructor(reportType) {
         this.reportType = reportType;
+        this.checkCondition = this.resolveCheckCondition();
+    }
+    resolveCheckCondition() {
+        const condition = core_1.getInput(this.reportType);
+        switch (condition) {
+            case 'required':
+            case 'expected':
+            case 'disabled':
+                return CheckCondition[condition];
+            case undefined:
+                return CheckCondition.autodetect;
+            default:
+                core.warning(`Input '${this.reportType}' is invalid - must be one of ['required','expected','disabled']. Defaulting to 'expected'.`);
+                return CheckCondition.expected;
+        }
     }
     run() {
         return __awaiter(this, void 0, void 0, function* () {
             const reportPaths = yield this.findReports();
             const token = core.getInput('github-token', { required: true });
             const octokit = github.getOctokit(token);
-            const response = yield octokit.checks.create(Object.assign(Object.assign({}, github.context.repo), { name: this.reportType, head_sha: github.context.payload.pull_request
-                    ? github.context.payload.pull_request.head.sha
-                    : github.context.sha, status: 'completed', conclusion: reportPaths.length ? 'success' : 'skipped' }));
-            this.checkRunId = response.data.id;
+            if (reportPaths.length > 0 || this.checkCondition >= CheckCondition.expected) {
+                const response = yield octokit.checks.create(Object.assign(Object.assign({}, github.context.repo), { name: this.reportType, head_sha: github.context.payload.pull_request
+                        ? github.context.payload.pull_request.head.sha
+                        : github.context.sha, status: 'completed', conclusion: reportPaths.length ? 'success' :
+                        this.checkCondition === CheckCondition.required ? 'failure' : 'skipped' }));
+                this.checkRunId = response.data.id;
+            }
             core.info(`${this.reportType} check finished.`);
         });
     }
@@ -98,6 +117,13 @@ class Check {
     }
 }
 Check.workspacePath = process.env.GITHUB_WORKSPACE || '';
+var CheckCondition;
+(function (CheckCondition) {
+    CheckCondition[CheckCondition["disabled"] = 0] = "disabled";
+    CheckCondition[CheckCondition["autodetect"] = 1] = "autodetect";
+    CheckCondition[CheckCondition["expected"] = 2] = "expected";
+    CheckCondition[CheckCondition["required"] = 3] = "required";
+})(CheckCondition || (CheckCondition = {}));
 exports.default = Check;
 
 
@@ -115,7 +141,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
 class CpdCheck extends check_1.default {
     constructor() {
-        super('CPD');
+        super('cpd');
     }
     reportSearchPaths() {
         return ['**/target/cpd.xml'];
@@ -202,7 +228,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
 class PmdCheck extends check_1.default {
     constructor() {
-        super('PMD');
+        super('pmd');
     }
     reportSearchPaths() {
         return ['**/target/pmd.xml'];
@@ -225,7 +251,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
 class SpotbugsCheck extends check_1.default {
     constructor() {
-        super('SpotBugs');
+        super('spotbugs');
     }
     reportSearchPaths() {
         return ['**/target/spotbugsXml.xml'];
@@ -248,7 +274,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
 class SurefireCheck extends check_1.default {
     constructor() {
-        super('Surefire');
+        super('surefire');
     }
     reportSearchPaths() {
         return ['**/target/surefire-reports/TEST-*.xml'];

@@ -5,6 +5,21 @@ inputs:
     description: 'GitHub token'
     required: true
     default: ${{ github.token }}
+  surefire:
+    description: 'Surefire'
+    required: false
+  pmd:
+    description: 'PMD'
+    required: false
+  cpd:
+    description: 'CPD'
+    required: false
+  spotbugs:
+    description: 'SpotBugs'
+    required: false
+  checkstyle:
+    description: 'Checkstyle'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'

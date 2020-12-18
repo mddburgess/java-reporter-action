@@ -3,7 +3,7 @@ import Check from '../common/check';
 class SurefireCheck extends Check {
 
     constructor() {
-        super('Surefire');
+        super('surefire');
     }
 
     protected reportSearchPaths(): string[] {
