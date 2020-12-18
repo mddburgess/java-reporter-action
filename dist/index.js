@@ -66,20 +66,19 @@ const core = __importStar(__webpack_require__(2186));
 const github = __importStar(__webpack_require__(5438));
 const glob = __importStar(__webpack_require__(8090));
 const path_1 = __importDefault(__webpack_require__(5622));
-const core_1 = __webpack_require__(2186);
 class Check {
     constructor(reportType) {
         this.reportType = reportType;
         this.checkCondition = this.resolveCheckCondition();
     }
     resolveCheckCondition() {
-        const condition = core_1.getInput(this.reportType);
+        const condition = core.getInput(this.reportType);
         switch (condition) {
             case 'required':
             case 'expected':
             case 'disabled':
                 return CheckCondition[condition];
-            case undefined:
+            case '':
                 return CheckCondition.autodetect;
             default:
                 core.warning(`Input '${this.reportType}' has invalid value: must be one of ['required','expected','disabled']. Defaulting to 'expected'.`);

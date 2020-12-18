@@ -2,7 +2,6 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 import * as glob from '@actions/glob';
 import path from 'path';
-import {getInput} from '@actions/core';
 
 abstract class Check {
 
@@ -18,13 +17,13 @@ abstract class Check {
     }
 
     private resolveCheckCondition() {
-        const condition = getInput(this.reportType);
+        const condition = core.getInput(this.reportType);
         switch (condition) {
             case 'required':
             case 'expected':
             case 'disabled':
                 return CheckCondition[condition];
-            case undefined:
+            case '':
                 return CheckCondition.autodetect;
             default:
                 core.warning(`Input '${this.reportType}' has invalid value: must be one of ['required','expected','disabled']. Defaulting to 'expected'.`);
