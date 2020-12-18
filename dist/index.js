@@ -287,7 +287,7 @@ function resolveSummary(report) {
     return resolveTitle(report);
 }
 function resolveAnnotations(report) {
-    return report.violations.map(violation => annotator_1.toAnnotation(violation));
+    return report.violations.slice(0, 50).map(violation => annotator_1.toAnnotation(violation));
 }
 
 

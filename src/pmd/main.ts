@@ -86,5 +86,5 @@ function resolveSummary(report: PmdReport) {
 }
 
 function resolveAnnotations(report: PmdReport) {
-    return report.violations.map(violation => toAnnotation(violation));
+    return report.violations.slice(0, 50).map(violation => toAnnotation(violation));
 }
