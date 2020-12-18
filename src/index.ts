@@ -1,10 +1,24 @@
 import * as core from '@actions/core';
-import {checkSurefire} from './surefire';
-import {checkPmd} from './pmd/main';
+import CheckstyleCheck from './checkstyle/check';
+import Check from './common/check';
+import CpdCheck from './cpd/check';
+import PmdCheck from './pmd/check';
+import SpotbugsCheck from './spotbugs/check';
+import SurefireCheck from './surefire/check';
 
-const main = async () => {
-    await checkSurefire();
-    await checkPmd();
+async function main() {
+
+    const checks: Check[] = [
+        new SurefireCheck(),
+        new PmdCheck(),
+        new CpdCheck(),
+        new SpotbugsCheck(),
+        new CheckstyleCheck()
+    ];
+
+    for (const check of checks) {
+        await check.run();
+    }
 }
 
 main()
