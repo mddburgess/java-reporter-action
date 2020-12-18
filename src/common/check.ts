@@ -27,30 +27,37 @@ abstract class Check {
             case undefined:
                 return CheckCondition.autodetect;
             default:
-                core.warning(`Input '${this.reportType}' is invalid - must be one of ['required','expected','disabled']. Defaulting to 'expected'.`);
+                core.warning(`Input '${this.reportType}' has invalid value: must be one of ['required','expected','disabled']. Defaulting to 'expected'.`);
                 return CheckCondition.expected;
         }
     }
 
     public async run() {
+        if (this.checkCondition === CheckCondition.disabled) {
+            core.warning(`${this.reportType} check is disabled.`);
+            return;
+        }
+
         const reportPaths = await this.findReports();
+
+        if (this.checkCondition === CheckCondition.autodetect && reportPaths.length === 0) {
+            core.info(`No ${this.reportType} reports found. Skipping check.`);
+            return;
+        }
 
         const token = core.getInput('github-token', {required: true});
         const octokit = github.getOctokit(token);
-
-        if (reportPaths.length > 0 || this.checkCondition >= CheckCondition.expected) {
-            const response = await octokit.checks.create({
-                ...github.context.repo,
-                name: this.reportType,
-                head_sha: github.context.payload.pull_request
-                    ? github.context.payload.pull_request.head.sha
-                    : github.context.sha,
-                status: 'completed',
-                conclusion: reportPaths.length ? 'success' :
-                    this.checkCondition === CheckCondition.required ? 'failure' : 'skipped'
-            });
-            this.checkRunId = response.data.id;
-        }
+        const response = await octokit.checks.create({
+            ...github.context.repo,
+            name: this.reportType,
+            head_sha: github.context.payload.pull_request
+                ? github.context.payload.pull_request.head.sha
+                : github.context.sha,
+            status: 'completed',
+            conclusion: reportPaths.length ? 'success' :
+                this.checkCondition === CheckCondition.required ? 'failure' : 'skipped'
+        });
+        this.checkRunId = response.data.id;
 
         core.info(`${this.reportType} check finished.`);
     }
