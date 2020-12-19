@@ -79,7 +79,7 @@ abstract class Check<T> {
             output: {
                 title: this.resolveTitle(aggregateReport),
                 summary: this.resolveSummary(aggregateReport),
-                annotations
+                annotations: annotations.slice(0, 50)
             }
         });
         this.checkRunId = response.data.id;

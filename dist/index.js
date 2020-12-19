@@ -131,7 +131,7 @@ class Check {
                     : github.context.sha, status: 'completed', conclusion: this.resolveConclusion(annotations), output: {
                     title: this.resolveTitle(aggregateReport),
                     summary: this.resolveSummary(aggregateReport),
-                    annotations
+                    annotations: annotations.slice(0, 50)
                 } }));
             this.checkRunId = response.data.id;
             core.info(`${this.reportType} check finished.`);
@@ -424,6 +424,49 @@ main()
 
 /***/ }),
 
+/***/ 1857:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const path_1 = __importDefault(__webpack_require__(5622));
+class PmdAnnotator {
+    annotate(report) {
+        return report.violations.map(violation => this.annotateViolation(violation));
+    }
+    annotateViolation(violation) {
+        return {
+            path: this.resolvePath(violation.filePath),
+            start_line: violation.startLine,
+            end_line: violation.endLine,
+            start_column: violation.startLine === violation.endLine ? violation.startColumn : undefined,
+            end_column: violation.startLine === violation.endLine ? violation.endColumn : undefined,
+            annotation_level: this.resolveAnnotationLevel(violation),
+            title: this.resolveTitle(violation),
+            message: violation.message
+        };
+    }
+    resolvePath(filePath) {
+        return process.env.GITHUB_WORKSPACE
+            ? path_1.default.relative(process.env.GITHUB_WORKSPACE, filePath)
+            : filePath;
+    }
+    resolveAnnotationLevel(violation) {
+        return Number(violation.priority) <= 2 ? 'failure' : 'warning';
+    }
+    resolveTitle(violation) {
+        return `${violation.ruleset}: ${violation.rule}`;
+    }
+}
+exports.default = PmdAnnotator;
+
+
+/***/ }),
+
 /***/ 7309:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -434,6 +477,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
+const reader_1 = __importDefault(__webpack_require__(9844));
+const annotator_1 = __importDefault(__webpack_require__(1857));
 class PmdCheck extends check_1.default {
     constructor() {
         super('pmd');
@@ -442,21 +487,95 @@ class PmdCheck extends check_1.default {
         return ['**/target/pmd.xml'];
     }
     readReport(reportPath) {
-        return undefined;
+        return new reader_1.default().readReport(reportPath);
     }
     aggregateReport(aggregate, report) {
+        aggregate.violations.push(...report.violations);
     }
     createAnnotations(aggregate) {
-        return Promise.reject();
+        const annotations = new annotator_1.default().annotate(aggregate);
+        return Promise.resolve(annotations);
     }
     resolveTitle(aggregate) {
-        return '';
+        return aggregate.violations.length
+            ? `${aggregate.violations.length} violations`
+            : `No violations`;
     }
     resolveSummary(aggregate) {
-        return '';
+        return this.resolveTitle(aggregate);
     }
 }
 exports.default = PmdCheck;
+
+
+/***/ }),
+
+/***/ 9844:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const reader_1 = __importDefault(__webpack_require__(3900));
+const saxophone_ts_1 = __webpack_require__(3902);
+class PmdReportReader extends reader_1.default {
+    constructor() {
+        super(...arguments);
+        this.filePath = '';
+    }
+    onTagOpen(tag) {
+        switch (tag.name) {
+            case 'pmd':
+                this.onPmdOpen();
+                break;
+            case 'file':
+                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case 'violation':
+                this.onViolationOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+        }
+    }
+    onPmdOpen() {
+        this.report = {
+            violations: []
+        };
+    }
+    onFileOpen(attrs) {
+        this.filePath = attrs.name;
+    }
+    onViolationOpen(attrs) {
+        this.violation = {
+            filePath: this.filePath,
+            startLine: Number(attrs.beginline),
+            endLine: Number(attrs.endline),
+            startColumn: Number(attrs.begincolumn),
+            endColumn: Number(attrs.endcolumn),
+            ruleset: attrs.ruleset,
+            rule: attrs.rule,
+            priority: attrs.priority,
+            message: '',
+        };
+    }
+    onTagClose(tag) {
+        if (tag.name !== 'violation' || !this.report || !this.violation) {
+            return;
+        }
+        this.violation.message = this.violation.message.trim();
+        if (!this.violation.message.endsWith('.')) {
+            this.violation.message += '.';
+        }
+        this.report.violations.push(this.violation);
+        this.violation = undefined;
+    }
+    onText(tag) {
+        this.violation && (this.violation.message += tag.contents);
+    }
+}
+exports.default = PmdReportReader;
 
 
 /***/ }),

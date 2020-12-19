@@ -1,6 +1,8 @@
 import Check from '../common/check';
-import {PmdReport} from './report';
+import PmdReport from './report';
 import {Annotation} from '../common/github';
+import PmdReportReader from './reader';
+import PmdAnnotator from './annotator';
 
 class PmdCheck extends Check<PmdReport> {
 
@@ -13,23 +15,26 @@ class PmdCheck extends Check<PmdReport> {
     }
 
     protected readReport(reportPath: string): PmdReport | undefined {
-        return undefined;
+        return new PmdReportReader().readReport(reportPath);
     }
 
     protected aggregateReport(aggregate: PmdReport, report: PmdReport): void {
-
+        aggregate.violations.push(...report.violations);
     }
 
     protected createAnnotations(aggregate: PmdReport): Promise<Annotation[]> {
-        return Promise.reject();
+        const annotations = new PmdAnnotator().annotate(aggregate);
+        return Promise.resolve(annotations);
     }
 
     protected resolveTitle(aggregate: PmdReport): string {
-        return '';
+        return aggregate.violations.length
+            ? `${aggregate.violations.length} violations`
+            : `No violations`;
     }
 
     protected resolveSummary(aggregate: PmdReport): string {
-        return '';
+        return this.resolveTitle(aggregate);
     }
 }
 

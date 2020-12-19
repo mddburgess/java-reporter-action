@@ -1,14 +1,14 @@
+import ReportReader from '../common/reader';
+import PmdReport, {PmdViolation} from './report';
 import {CDATANode, TagCloseNode, TagOpenNode, TextNode} from 'saxophone-ts/dist/types/src/static/nodes';
-import {XmlParser} from '../common/xml-parser';
-import {PmdReport, PmdViolation} from './report';
 import {parseAttrs} from 'saxophone-ts';
 
-export class PmdParser extends XmlParser<PmdReport> {
+class PmdReportReader extends ReportReader<PmdReport> {
 
-    private filePath: string = '';
+    private filePath = '';
     private violation?: PmdViolation;
 
-    protected onTagOpen(tag: TagOpenNode) {
+    protected onTagOpen(tag: TagOpenNode): void {
         switch (tag.name) {
             case 'pmd':
                 this.onPmdOpen();
@@ -41,28 +41,26 @@ export class PmdParser extends XmlParser<PmdReport> {
             endColumn: Number(attrs.endcolumn),
             ruleset: attrs.ruleset,
             rule: attrs.rule,
-            message: ''
+            priority: attrs.priority,
+            message: '',
         }
     }
 
-    protected onTagClose(tag: TagCloseNode) {
-        tag.name === 'violation' && this.onViolationClose();
-    }
-
-    private onViolationClose() {
-        if (this.report && this.violation) {
-            this.violation.message = this.violation.message.trim();
-            if (!this.violation.message.endsWith('.')) {
-                this.violation.message = `${this.violation.message}.`;
-            }
-
-            this.report.violations.push(this.violation);
-            this.violation = undefined;
+    protected onTagClose(tag: TagCloseNode): void {
+        if (tag.name !== 'violation' || !this.report || !this.violation) {
+            return;
         }
+
+        this.violation.message = this.violation.message.trim();
+        if (!this.violation.message.endsWith('.')) {
+            this.violation.message += '.';
+        }
+        this.report.violations.push(this.violation);
+        this.violation = undefined;
     }
 
-    protected onText(tag: TextNode | CDATANode) {
-        this.violation && (this.violation.message = this.violation.message.concat(tag.contents));
+    protected onText(tag: TextNode | CDATANode): void {
+        this.violation && (this.violation.message += tag.contents);
     }
 }
 
@@ -71,11 +69,13 @@ interface FileAttrs {
 }
 
 interface ViolationAttrs {
-    beginline: number;
-    endline: number;
-    begincolumn: number;
-    endcolumn: number;
+    beginline: string;
+    endline: string;
+    begincolumn: string;
+    endcolumn: string;
     rule: string;
     ruleset: string;
     priority: string;
 }
+
+export default PmdReportReader;

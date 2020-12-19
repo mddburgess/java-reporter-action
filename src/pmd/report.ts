@@ -1,9 +1,9 @@
-export interface PmdReport {
+interface PmdReport {
 
     violations: PmdViolation[];
 }
 
-export interface PmdViolation {
+interface PmdViolation {
 
     filePath: string;
     startLine: number;
@@ -12,5 +12,11 @@ export interface PmdViolation {
     endColumn: number;
     ruleset: string;
     rule: string;
+    priority: string;
     message: string;
 }
+
+export {
+    PmdViolation
+};
+export default PmdReport;
