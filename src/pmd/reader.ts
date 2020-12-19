@@ -31,12 +31,12 @@ class PmdReportReader extends ReportReader<PmdReport> {
     }
 
     private onFileOpen(attrs: FileAttrs) {
-        this.filePath = attrs.name;
+        this.filePath = XmlEntities.decode(attrs.name);
     }
 
     private onViolationOpen(attrs: ViolationAttrs) {
         this.violation = {
-            filePath: XmlEntities.decode(this.filePath),
+            filePath: this.filePath,
             startLine: Number(attrs.beginline),
             endLine: Number(attrs.endline),
             startColumn: Number(attrs.begincolumn),

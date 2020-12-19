@@ -1,7 +1,10 @@
 import Check from '../common/check';
 import {Annotation} from '../common/github';
+import CheckstyleReportReader from './reader';
+import CheckstyleReport from './report';
+import CheckstyleAnnotator from './annotator';
 
-class CheckstyleCheck extends Check<string> {
+class CheckstyleCheck extends Check<CheckstyleReport> {
 
     constructor() {
         super('checkstyle');
@@ -12,24 +15,27 @@ class CheckstyleCheck extends Check<string> {
     }
 
 
-    protected readReport(reportPath: string): string | undefined {
-        return undefined;
+    protected readReport(reportPath: string): CheckstyleReport | undefined {
+        return new CheckstyleReportReader().readReport(reportPath);
     }
 
-    protected aggregateReport(aggregate: string, report: string): void {
-
+    protected aggregateReport(aggregate: CheckstyleReport, report: CheckstyleReport): void {
+        aggregate.violations.push(...report.violations);
     }
 
-    protected createAnnotations(aggregate: string): Promise<Annotation[]> {
-        return Promise.reject();
+    protected createAnnotations(aggregate: CheckstyleReport): Promise<Annotation[]> {
+        const annotations = new CheckstyleAnnotator().annotate(aggregate);
+        return Promise.resolve(annotations);
     }
 
-    protected resolveTitle(aggregate: string): string {
-        return '';
+    protected resolveTitle(aggregate: CheckstyleReport): string {
+        return aggregate.violations.length
+            ? `${aggregate.violations.length} violations`
+            : `No violations`;
     }
 
-    protected resolveSummary(aggregate: string): string {
-        return '';
+    protected resolveSummary(aggregate: CheckstyleReport): string {
+        return this.resolveTitle(aggregate);
     }
 }
 

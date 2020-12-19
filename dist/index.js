@@ -2,6 +2,56 @@ require('./sourcemap-register.js');module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 6037:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const path_1 = __importDefault(__webpack_require__(5622));
+class CheckstyleAnnotator {
+    annotate(report) {
+        return report.violations.map(violation => this.annotateViolation(violation));
+    }
+    annotateViolation(violation) {
+        return {
+            path: this.resolvePath(violation.filePath),
+            start_line: violation.line,
+            end_line: violation.line,
+            start_column: violation.column,
+            end_column: violation.column,
+            annotation_level: this.resolveAnnotationLevel(violation),
+            title: this.resolveTitle(violation),
+            message: violation.message
+        };
+    }
+    resolvePath(filePath) {
+        return process.env.GITHUB_WORKSPACE
+            ? path_1.default.relative(process.env.GITHUB_WORKSPACE, filePath)
+            : filePath;
+    }
+    resolveAnnotationLevel(violation) {
+        switch (violation.severity) {
+            case 'error':
+                return 'failure';
+            case 'warning':
+                return 'warning';
+            case 'info':
+                return 'notice';
+        }
+    }
+    resolveTitle(violation) {
+        return violation.rule.split('.').slice(-1)[0];
+    }
+}
+exports.default = CheckstyleAnnotator;
+
+
+/***/ }),
+
 /***/ 1594:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -12,6 +62,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
+const reader_1 = __importDefault(__webpack_require__(8609));
+const annotator_1 = __importDefault(__webpack_require__(6037));
 class CheckstyleCheck extends check_1.default {
     constructor() {
         super('checkstyle');
@@ -20,21 +72,85 @@ class CheckstyleCheck extends check_1.default {
         return ['**/checkstyle-result.xml'];
     }
     readReport(reportPath) {
-        return undefined;
+        return new reader_1.default().readReport(reportPath);
     }
     aggregateReport(aggregate, report) {
+        aggregate.violations.push(...report.violations);
     }
     createAnnotations(aggregate) {
-        return Promise.reject();
+        const annotations = new annotator_1.default().annotate(aggregate);
+        return Promise.resolve(annotations);
     }
     resolveTitle(aggregate) {
-        return '';
+        return aggregate.violations.length
+            ? `${aggregate.violations.length} violations`
+            : `No violations`;
     }
     resolveSummary(aggregate) {
-        return '';
+        return this.resolveTitle(aggregate);
     }
 }
 exports.default = CheckstyleCheck;
+
+
+/***/ }),
+
+/***/ 8609:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const reader_1 = __importDefault(__webpack_require__(3900));
+const saxophone_ts_1 = __webpack_require__(3902);
+const html_entities_1 = __webpack_require__(2589);
+class CheckstyleReportReader extends reader_1.default {
+    constructor() {
+        super(...arguments);
+        this.filePath = '';
+    }
+    onTagOpen(tag) {
+        switch (tag.name) {
+            case 'checkstyle':
+                this.onCheckstyleOpen();
+                break;
+            case 'file':
+                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case 'error':
+                this.onErrorOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+        }
+    }
+    onCheckstyleOpen() {
+        this.report = {
+            violations: []
+        };
+    }
+    onFileOpen(attrs) {
+        this.filePath = html_entities_1.XmlEntities.decode(attrs.name);
+    }
+    onErrorOpen(attrs) {
+        this.report && this.report.violations.push({
+            filePath: this.filePath,
+            line: Number(attrs.line),
+            column: Number(attrs.column) || 0,
+            rule: html_entities_1.XmlEntities.decode(attrs.source),
+            severity: attrs.severity,
+            message: html_entities_1.XmlEntities.decode(attrs.message)
+        });
+    }
+    onTagClose(tag) {
+        // do nothing
+    }
+    onText(tag) {
+        // do nothing
+    }
+}
+exports.default = CheckstyleReportReader;
 
 
 /***/ }),
@@ -672,11 +788,11 @@ class PmdReportReader extends reader_1.default {
         };
     }
     onFileOpen(attrs) {
-        this.filePath = attrs.name;
+        this.filePath = html_entities_1.XmlEntities.decode(attrs.name);
     }
     onViolationOpen(attrs) {
         this.violation = {
-            filePath: html_entities_1.XmlEntities.decode(this.filePath),
+            filePath: this.filePath,
             startLine: Number(attrs.beginline),
             endLine: Number(attrs.endline),
             startColumn: Number(attrs.begincolumn),
