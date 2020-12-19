@@ -1,5 +1,6 @@
 import Check from '../common/check';
 import {PmdReport} from './report';
+import {Annotation} from '../common/github';
 
 class PmdCheck extends Check<PmdReport> {
 
@@ -11,11 +12,24 @@ class PmdCheck extends Check<PmdReport> {
         return ['**/target/pmd.xml'];
     }
 
-    protected aggregateReport(aggregate: PmdReport, report: PmdReport): void {
-    }
-
     protected readReport(reportPath: string): PmdReport | undefined {
         return undefined;
+    }
+
+    protected aggregateReport(aggregate: PmdReport, report: PmdReport): void {
+
+    }
+
+    protected createAnnotations(aggregate: PmdReport): Promise<Annotation[]> {
+        return Promise.reject();
+    }
+
+    protected resolveTitle(aggregate: PmdReport): string {
+        return '';
+    }
+
+    protected resolveSummary(aggregate: PmdReport): string {
+        return '';
     }
 }
 

@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import * as github from '@actions/github';
 import * as glob from '@actions/glob';
 import path from 'path';
+import {Annotation} from './github';
 
 abstract class Check<T> {
 
@@ -53,6 +54,16 @@ abstract class Check<T> {
         core.info(JSON.stringify(aggregateReport, undefined, 2));
         core.endGroup();
 
+        if (aggregateReport === undefined) {
+            core.warning(`Failed to read ${this.reportType} reports. Skipping check.`);
+            return;
+        }
+
+        const annotations = await this.createAnnotations(aggregateReport);
+        core.startGroup(`Annotations:`);
+        core.info(JSON.stringify(annotations, undefined, 2));
+        core.endGroup();
+
         const token = core.getInput('github-token', {required: true});
         const octokit = github.getOctokit(token);
         const response = await octokit.checks.create({
@@ -62,8 +73,12 @@ abstract class Check<T> {
                 ? github.context.payload.pull_request.head.sha
                 : github.context.sha,
             status: 'completed',
-            conclusion: reportPaths.length ? 'success' :
-                this.checkCondition === CheckCondition.required ? 'failure' : 'skipped'
+            conclusion: this.resolveConclusion(annotations),
+            output: {
+                title: this.resolveTitle(aggregateReport),
+                summary: this.resolveSummary(aggregateReport),
+                annotations
+            }
         });
         this.checkRunId = response.data.id;
 
@@ -101,6 +116,20 @@ abstract class Check<T> {
 
     protected abstract readReport(reportPath: string): T | undefined;
     protected abstract aggregateReport(aggregate: T, report: T): void;
+    protected abstract createAnnotations(aggregate: T): Promise<Annotation[]>;
+
+    private resolveConclusion(annotations: Annotation[]) {
+        if (annotations.filter(a => a.annotation_level === 'failure').length > 0) {
+            return 'failure';
+        }
+        if (annotations.filter(a => a.annotation_level === 'warning').length > 0) {
+            return 'neutral';
+        }
+        return 'success';
+    }
+
+    protected abstract resolveTitle(aggregate: T): string;
+    protected abstract resolveSummary(aggregate: T): string;
 }
 
 enum CheckCondition {

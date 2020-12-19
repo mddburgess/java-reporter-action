@@ -19,10 +19,19 @@ class CheckstyleCheck extends check_1.default {
     resolveSearchPaths() {
         return ['**/checkstyle-result.xml'];
     }
-    aggregateReport(aggregate, report) {
-    }
     readReport(reportPath) {
         return undefined;
+    }
+    aggregateReport(aggregate, report) {
+    }
+    createAnnotations(aggregate) {
+        return Promise.reject();
+    }
+    resolveTitle(aggregate) {
+        return '';
+    }
+    resolveSummary(aggregate) {
+        return '';
     }
 }
 exports.default = CheckstyleCheck;
@@ -106,12 +115,23 @@ class Check {
             core.startGroup(`Aggregate ${this.reportType} report:`);
             core.info(JSON.stringify(aggregateReport, undefined, 2));
             core.endGroup();
+            if (aggregateReport === undefined) {
+                core.warning(`Failed to read ${this.reportType} reports. Skipping check.`);
+                return;
+            }
+            const annotations = yield this.createAnnotations(aggregateReport);
+            core.startGroup(`Annotations:`);
+            core.info(JSON.stringify(annotations, undefined, 2));
+            core.endGroup();
             const token = core.getInput('github-token', { required: true });
             const octokit = github.getOctokit(token);
             const response = yield octokit.checks.create(Object.assign(Object.assign({}, github.context.repo), { name: this.reportType, head_sha: github.context.payload.pull_request
                     ? github.context.payload.pull_request.head.sha
-                    : github.context.sha, status: 'completed', conclusion: reportPaths.length ? 'success' :
-                    this.checkCondition === CheckCondition.required ? 'failure' : 'skipped' }));
+                    : github.context.sha, status: 'completed', conclusion: this.resolveConclusion(annotations), output: {
+                    title: this.resolveTitle(aggregateReport),
+                    summary: this.resolveSummary(aggregateReport),
+                    annotations
+                } }));
             this.checkRunId = response.data.id;
             core.info(`${this.reportType} check finished.`);
         });
@@ -142,6 +162,15 @@ class Check {
         }
         return aggregate;
     }
+    resolveConclusion(annotations) {
+        if (annotations.filter(a => a.annotation_level === 'failure').length > 0) {
+            return 'failure';
+        }
+        if (annotations.filter(a => a.annotation_level === 'warning').length > 0) {
+            return 'neutral';
+        }
+        return 'success';
+    }
 }
 Check.workspacePath = process.env.GITHUB_WORKSPACE || '';
 var CheckCondition;
@@ -152,6 +181,69 @@ var CheckCondition;
     CheckCondition[CheckCondition["required"] = 3] = "required";
 })(CheckCondition || (CheckCondition = {}));
 exports.default = Check;
+
+
+/***/ }),
+
+/***/ 9337:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.findRelativePath = exports.findFile = exports.findFiles = void 0;
+const glob = __importStar(__webpack_require__(8090));
+function findFiles(searchPaths) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const globber = yield glob.create(searchPaths.join('\n'));
+        return yield globber.glob();
+    });
+}
+exports.findFiles = findFiles;
+function findFile(searchPath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const paths = yield findFiles([searchPath]);
+        return paths[0];
+    });
+}
+exports.findFile = findFile;
+function findRelativePath(searchPath) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const globber = yield glob.create(searchPath);
+        const searchRoot = globber.getSearchPaths()[0];
+        const absolutePaths = yield globber.glob();
+        return absolutePaths[0] && absolutePaths[0].slice(searchRoot.length + 1);
+    });
+}
+exports.findRelativePath = findRelativePath;
 
 
 /***/ }),
@@ -247,10 +339,19 @@ class CpdCheck extends check_1.default {
     resolveSearchPaths() {
         return ['**/target/cpd.xml'];
     }
-    aggregateReport(aggregate, report) {
-    }
     readReport(reportPath) {
         return undefined;
+    }
+    aggregateReport(aggregate, report) {
+    }
+    createAnnotations(aggregate) {
+        return Promise.reject();
+    }
+    resolveTitle(aggregate) {
+        return '';
+    }
+    resolveSummary(aggregate) {
+        return '';
     }
 }
 exports.default = CpdCheck;
@@ -339,10 +440,19 @@ class PmdCheck extends check_1.default {
     resolveSearchPaths() {
         return ['**/target/pmd.xml'];
     }
-    aggregateReport(aggregate, report) {
-    }
     readReport(reportPath) {
         return undefined;
+    }
+    aggregateReport(aggregate, report) {
+    }
+    createAnnotations(aggregate) {
+        return Promise.reject();
+    }
+    resolveTitle(aggregate) {
+        return '';
+    }
+    resolveSummary(aggregate) {
+        return '';
     }
 }
 exports.default = PmdCheck;
@@ -367,13 +477,102 @@ class SpotbugsCheck extends check_1.default {
     resolveSearchPaths() {
         return ['**/target/spotbugsXml.xml'];
     }
-    aggregateReport(aggregate, report) {
-    }
     readReport(reportPath) {
         return undefined;
     }
+    aggregateReport(aggregate, report) {
+    }
+    createAnnotations(aggregate) {
+        return Promise.reject();
+    }
+    resolveTitle(aggregate) {
+        return '';
+    }
+    resolveSummary(aggregate) {
+        return '';
+    }
 }
 exports.default = SpotbugsCheck;
+
+
+/***/ }),
+
+/***/ 9807:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const files_1 = __webpack_require__(9337);
+class SurefireAnnotator {
+    annotate(report) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Promise.all(report.testCases.map(testCase => this.annotateTestCase(testCase)));
+        });
+    }
+    annotateTestCase(testCase) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const line = this.resolveLine(testCase);
+            return {
+                path: yield this.resolvePath(testCase.className),
+                start_line: line,
+                end_line: line,
+                annotation_level: this.resolveAnnotationLevel(testCase),
+                title: this.resolveTitle(testCase),
+                message: this.resolveMessage(testCase),
+                raw_details: this.resolveRawDetails(testCase)
+            };
+        });
+    }
+    resolvePath(className) {
+        const searchPath = '**/' + className.split('.').join('/') + '.java';
+        return files_1.findRelativePath(searchPath);
+    }
+    resolveLine(testCase) {
+        if (testCase.stackTrace) {
+            const stackTrace = testCase.stackTrace;
+            const stackFrames = stackTrace.match(RegExp(`${testCase.className}.*:\\d+`));
+            if (stackFrames) {
+                const [stackFrame] = stackFrames.slice(-1);
+                const [, line] = stackFrame.split(':');
+                return Number(line);
+            }
+        }
+        return 0;
+    }
+    resolveAnnotationLevel(testCase) {
+        switch (testCase.result) {
+            case 'failure':
+            case 'error':
+                return 'failure';
+            case 'skipped':
+                return 'notice';
+            case 'success':
+            case undefined:
+                throw Error('unexpected test case');
+        }
+    }
+    resolveTitle(testCase) {
+        const [simpleClassName] = testCase.className.split('.').slice(-1);
+        return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
+    }
+    resolveMessage(testCase) {
+        return testCase.message || testCase.stackTrace || `Test ${testCase.result}`;
+    }
+    resolveRawDetails(testCase) {
+        return testCase.stackTrace;
+    }
+}
+exports.default = SurefireAnnotator;
 
 
 /***/ }),
@@ -389,6 +588,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
 const reader_1 = __importDefault(__webpack_require__(7265));
+const annotator_1 = __importDefault(__webpack_require__(9807));
 class SurefireCheck extends check_1.default {
     constructor() {
         super('surefire');
@@ -405,6 +605,28 @@ class SurefireCheck extends check_1.default {
         aggregate.errors += report.errors;
         aggregate.skipped += report.skipped;
         aggregate.testCases.push(...report.testCases);
+    }
+    createAnnotations(aggregate) {
+        return new annotator_1.default().annotate(aggregate);
+    }
+    resolveTitle(aggregate) {
+        if (aggregate.failures + aggregate.errors > 0) {
+            return `${aggregate.failures + aggregate.errors} tests failed`;
+        }
+        else {
+            return `${aggregate.tests - aggregate.skipped} tests passed`;
+        }
+    }
+    resolveSummary(aggregate) {
+        const passed = aggregate.tests - aggregate.failures - aggregate.errors - aggregate.skipped;
+        return [
+            `|Tests run|${aggregate.tests}|`,
+            `|:-|-:|`,
+            `|:green_square: Passed|${passed}|`,
+            `|:orange_square: Failures|${aggregate.failures}|`,
+            `|:red_square: Errors|${aggregate.errors}|`,
+            `|:black_large_square: Skipped|${aggregate.skipped}|`
+        ].join('\n');
     }
 }
 exports.default = SurefireCheck;

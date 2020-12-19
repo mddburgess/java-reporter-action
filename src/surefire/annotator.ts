@@ -1,68 +1,69 @@
-import {SurefireTestCase} from './report';
+import SurefireReport, {SurefireTestCase} from './report';
 import {Annotation, AnnotationLevel} from '../common/github';
 import {findRelativePath} from '../common/files';
 
-export async function toAnnotation(testCase: SurefireTestCase): Promise<Annotation> {
-    const path = await resolvePath(testCase.className);
-    const line = resolveLine(testCase);
-    const annotation_level = resolveAnnotationLevel(testCase);
-    const title = resolveTitle(testCase);
-    const message = resolveMessage(testCase);
-    const raw_details = resolveRawDetails(testCase);
+class SurefireAnnotator {
 
-    return {
-        path,
-        start_line: line,
-        end_line: line,
-        annotation_level,
-        title,
-        message,
-        raw_details
+    public async annotate(report: SurefireReport): Promise<Annotation[]> {
+        return Promise.all(report.testCases.map(testCase => this.annotateTestCase(testCase)));
     }
-}
 
-export async function resolvePath(className: string): Promise<string> {
-    const searchPath = '**/' + className.split('.').join('/') + '.java';
-    return await findRelativePath(searchPath);
-}
+    private async annotateTestCase(testCase: SurefireTestCase): Promise<Annotation> {
+        const line = this.resolveLine(testCase);
+        return {
+            path: await this.resolvePath(testCase.className),
+            start_line: line,
+            end_line: line,
+            annotation_level: this.resolveAnnotationLevel(testCase),
+            title: this.resolveTitle(testCase),
+            message: this.resolveMessage(testCase),
+            raw_details: this.resolveRawDetails(testCase)
+        };
+    }
 
-export function resolveLine(testCase: SurefireTestCase): number {
-    if (testCase.stackTrace) {
-        const className = testCase.className;
-        const stackTrace = testCase.stackTrace;
-        const stackFrames = stackTrace.match(RegExp(`${className}.*:\\d+`));
+    private resolvePath(className: string) {
+        const searchPath = '**/' + className.split('.').join('/') + '.java';
+        return findRelativePath(searchPath);
+    }
 
-        if (stackFrames) {
-            const [stackFrame] = stackFrames.slice(-1);
-            const [, line] = stackFrame.split(':');
-            return Number(line);
+    private resolveLine(testCase: SurefireTestCase): number {
+        if (testCase.stackTrace) {
+            const stackTrace = testCase.stackTrace;
+            const stackFrames = stackTrace.match(RegExp(`${testCase.className}.*:\\d+`));
+            if (stackFrames) {
+                const [stackFrame] = stackFrames.slice(-1);
+                const [, line] = stackFrame.split(':');
+                return Number(line);
+            }
+        }
+        return 0;
+    }
+
+    private resolveAnnotationLevel(testCase: SurefireTestCase): AnnotationLevel {
+        switch (testCase.result) {
+            case 'failure':
+            case 'error':
+                return 'failure';
+            case 'skipped':
+                return 'notice';
+            case 'success':
+            case undefined:
+                throw Error('unexpected test case');
         }
     }
-    return 0;
-}
 
-function resolveAnnotationLevel(testCase: SurefireTestCase): AnnotationLevel {
-    switch (testCase.result) {
-        case 'failure':
-        case 'error':
-            return 'failure';
-        case 'skipped':
-            return 'notice';
-        case 'success':
-        case undefined:
-            throw Error('unexpected test case');
+    private resolveTitle(testCase: SurefireTestCase): string {
+        const [simpleClassName] = testCase.className.split('.').slice(-1);
+        return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
+    }
+
+    private resolveMessage(testCase: SurefireTestCase): string {
+        return testCase.message || testCase.stackTrace || `Test ${testCase.result}`;
+    }
+
+    private resolveRawDetails(testCase: SurefireTestCase): string | undefined {
+        return testCase.stackTrace;
     }
 }
 
-function resolveTitle(testCase: SurefireTestCase): string {
-    const [simpleClassName] = testCase.className.split('.').slice(-1);
-    return simpleClassName + '.' + testCase.testName;
-}
-
-function resolveMessage(testCase: SurefireTestCase): string {
-    return testCase.message || testCase.stackTrace || `Test ${testCase.result}`;
-}
-
-function resolveRawDetails(testCase: SurefireTestCase): string | undefined {
-    return testCase.stackTrace;
-}
+export default SurefireAnnotator;

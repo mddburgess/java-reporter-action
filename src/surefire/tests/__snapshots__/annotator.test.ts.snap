@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Surefire annotator can annotate a Surefire report 1`] = `
+Array [
+  Object {
+    "annotation_level": "notice",
+    "end_line": 0,
+    "message": "void org.example.SimpleTest.disabledTest() is @Disabled",
+    "path": "example/src/test/java/org/example/SimpleTest.java",
+    "raw_details": undefined,
+    "start_line": 0,
+    "title": "Test skipped: SimpleTest.disabledTest",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 29,
+    "message": "java.lang.RuntimeException: error message
+	at org.example.SimpleTest.errorTestWithMessage(SimpleTest.java:29)",
+    "path": "example/src/test/java/org/example/SimpleTest.java",
+    "raw_details": "java.lang.RuntimeException: error message
+	at org.example.SimpleTest.errorTestWithMessage(SimpleTest.java:29)",
+    "start_line": 29,
+    "title": "Test error: SimpleTest.errorTestWithMessage",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 24,
+    "message": "org.opentest4j.AssertionFailedError: 
+	at org.example.SimpleTest.failingTestWithoutMessage(SimpleTest.java:24)",
+    "path": "example/src/test/java/org/example/SimpleTest.java",
+    "raw_details": "org.opentest4j.AssertionFailedError: 
+	at org.example.SimpleTest.failingTestWithoutMessage(SimpleTest.java:24)",
+    "start_line": 24,
+    "title": "Test failure: SimpleTest.failingTestWithoutMessage",
+  },
+  Object {
+    "annotation_level": "notice",
+    "end_line": 45,
+    "message": "org.opentest4j.TestAbortedException: Assumption failed: assumption is not true
+	at org.example.SimpleTest.skippedTest(SimpleTest.java:45)",
+    "path": "example/src/test/java/org/example/SimpleTest.java",
+    "raw_details": "org.opentest4j.TestAbortedException: Assumption failed: assumption is not true
+	at org.example.SimpleTest.skippedTest(SimpleTest.java:45)",
+    "start_line": 45,
+    "title": "Test skipped: SimpleTest.skippedTest",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 34,
+    "message": "java.lang.RuntimeException
+	at org.example.SimpleTest.errorTestWithoutMessage(SimpleTest.java:34)",
+    "path": "example/src/test/java/org/example/SimpleTest.java",
+    "raw_details": "java.lang.RuntimeException
+	at org.example.SimpleTest.errorTestWithoutMessage(SimpleTest.java:34)",
+    "start_line": 34,
+    "title": "Test error: SimpleTest.errorTestWithoutMessage",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 19,
+    "message": "org.opentest4j.AssertionFailedError: expected: <5> but was: <4>
+	at org.example.SimpleTest.failingTestWithMessage(SimpleTest.java:19)",
+    "path": "example/src/test/java/org/example/SimpleTest.java",
+    "raw_details": "org.opentest4j.AssertionFailedError: expected: <5> but was: <4>
+	at org.example.SimpleTest.failingTestWithMessage(SimpleTest.java:19)",
+    "start_line": 19,
+    "title": "Test failure: SimpleTest.failingTestWithMessage",
+  },
+]
+`;
