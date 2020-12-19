@@ -8,6 +8,8 @@ describe('PMD annotator', () => {
         const reportPath = await findFile('**/pmd.xml');
         const report = new PmdReportReader().readReport(reportPath) || fail();
         const annotations = await new PmdAnnotator().annotate(report);
-        expect(annotations).toMatchSnapshot();
+        annotations.forEach(annotation => expect(annotation).toMatchSnapshot({
+            path: expect.any(String)
+        }));
     });
 });

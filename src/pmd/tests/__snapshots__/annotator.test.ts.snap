@@ -1,1026 +1,1327 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PMD annotator can annotate a PMD report 1`] = `
-Array [
-  Object {
-    "annotation_level": "warning",
-    "end_column": 13,
-    "end_line": 11,
-    "message": "Empty initializer was found.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 12,
-    "start_line": 11,
-    "title": "Error Prone: EmptyInitializer",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 48,
-    "end_line": 14,
-    "message": "The null check here is misplaced; if the variable 'string' is null there will be a NullPointerException.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 43,
-    "start_line": 14,
-    "title": "Error Prone: MisplacedNullCheck",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 39,
-    "end_line": 17,
-    "message": "Ensure you override both equals() and hashCode().",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 20,
-    "start_line": 17,
-    "title": "Error Prone: OverrideBothEqualsAndHashcode",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 25,
-    "end_line": 25,
-    "message": "Avoid returning from a finally block.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 13,
-    "start_line": 25,
-    "title": "Error Prone: ReturnFromFinallyBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 16,
-    "end_line": 30,
-    "message": "Do not use if statements that are always true or always false.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 13,
-    "start_line": 30,
-    "title": "Error Prone: UnconditionalIfStatement",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 38,
-    "end_line": 37,
-    "message": "Avoid unnecessary temporaries when converting primitives to Strings.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 30,
-    "start_line": 37,
-    "title": "Error Prone: UnnecessaryConversionTemporary",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 38,
-    "end_line": 41,
-    "message": "Invoke equals() on the object you've already ensured is not null.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 38,
-    "start_line": 41,
-    "title": "Error Prone: UnusedNullCheckInEquals",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 14,
-    "end_line": 46,
-    "message": "An operation on an Immutable object (String, BigDecimal or BigInteger) wont change the object itself.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 9,
-    "start_line": 46,
-    "title": "Error Prone: UselessOperationOnImmutable",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 18,
-    "end_line": 50,
-    "message": "Dont use floating point for loop indices. If you must use floating point, use double.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 14,
-    "start_line": 50,
-    "title": "Error Prone: DontUseFloatTypeForLoopIndices",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 58,
-    "message": "Avoid empty try blocks.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 56,
-    "title": "Error Prone: EmptyTryBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 60,
-    "message": "Avoid empty catch blocks.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 58,
-    "title": "Error Prone: EmptyCatchBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 62,
-    "message": "Avoid empty finally blocks.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 60,
-    "title": "Error Prone: EmptyFinallyBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 68,
-    "message": "Avoid empty if statements.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 66,
-    "title": "Error Prone: EmptyIfStmt",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 10,
-    "end_line": 72,
-    "message": "Avoid empty block statements.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 9,
-    "start_line": 72,
-    "title": "Error Prone: EmptyStatementBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 9,
-    "end_line": 76,
-    "message": "An empty statement (semicolon) not part of a loop.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 9,
-    "start_line": 76,
-    "title": "Error Prone: EmptyStatementNotInLoop",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 83,
-    "message": "Avoid empty switch statements.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 81,
-    "title": "Error Prone: EmptySwitchStatements",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 89,
-    "message": "Avoid empty synchronized blocks.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 87,
-    "title": "Error Prone: EmptySynchronizedBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 95,
-    "message": "Avoid empty while statements.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 93,
-    "title": "Error Prone: EmptyWhileStmt",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 102,
-    "message": "Avoid modifying an outer loop incrementer in an inner loop for update expression.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 100,
-    "title": "Error Prone: JumbledIncrementer",
-  },
-  Object {
-    "annotation_level": "failure",
-    "end_column": 18,
-    "end_line": 111,
-    "message": "Avoid using a branching statement as the last in a loop.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 13,
-    "start_line": 111,
-    "title": "Error Prone: AvoidBranchingStatementAsLastInLoop",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 36,
-    "end_line": 116,
-    "message": "Avoid creating BigDecimal with a decimal (float/double) literal. Use a String literal.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 16,
-    "start_line": 116,
-    "title": "Error Prone: AvoidDecimalLiteralsInBigDecimalConstructor",
-  },
-  Object {
-    "annotation_level": "failure",
-    "end_column": 21,
-    "end_line": 120,
-    "message": "Using multiple unary operators may be a bug, and/or is confusing.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 16,
-    "start_line": 120,
-    "title": "Error Prone: AvoidMultipleUnaryOperators",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 18,
-    "end_line": 124,
-    "message": "Do not start a literal by 0 unless its an octal value.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 16,
-    "start_line": 124,
-    "title": "Error Prone: AvoidUsingOctalValues",
-  },
-  Object {
-    "annotation_level": "failure",
-    "end_column": undefined,
-    "end_line": 130,
-    "message": "Method call on object which may be null.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 128,
-    "title": "Error Prone: BrokenNullCheck",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 16,
-    "end_line": 136,
-    "message": "Check the value returned by the skip() method of an InputStream to see if the requested number of bytes has been skipped.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 9,
-    "start_line": 136,
-    "title": "Error Prone: CheckSkipResult",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 58,
-    "end_line": 142,
-    "message": "This usage of the Collection.toArray() method will throw a ClassCastException.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
-    "start_column": 39,
-    "start_line": 142,
-    "title": "Error Prone: ClassCastExceptionWithToArray",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 20,
-    "end_line": 3,
-    "message": "Avoid unused imports such as 'java.io.File'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/BestPractices.java",
-    "start_column": 1,
-    "start_line": 3,
-    "title": "Best Practices: UnusedImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 41,
-    "end_line": 11,
-    "message": "Do not hard code the IP address.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/BestPractices.java",
-    "start_column": 31,
-    "start_line": 11,
-    "title": "Best Practices: AvoidUsingHardCodedIP",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 37,
-    "end_line": 12,
-    "message": "Avoid unused private fields such as 'unusedPrivateField'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/BestPractices.java",
-    "start_column": 20,
-    "start_line": 12,
-    "title": "Best Practices: UnusedPrivateField",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 66,
-    "end_line": 17,
-    "message": "Always check the return of one of the navigation method (next,previous,first,last) of a ResultSet.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/BestPractices.java",
-    "start_column": 9,
-    "start_line": 17,
-    "title": "Best Practices: CheckResultSet",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 65,
-    "end_line": 21,
-    "message": "Avoid unused method parameters such as 'unusedFormalParameter'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/BestPractices.java",
-    "start_column": 45,
-    "start_line": 21,
-    "title": "Best Practices: UnusedFormalParameter",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 66,
-    "end_line": 21,
-    "message": "Avoid unused private methods such as 'unusedPrivateMethod(String)'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/BestPractices.java",
-    "start_column": 18,
-    "start_line": 21,
-    "title": "Best Practices: UnusedPrivateMethod",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 31,
-    "end_line": 22,
-    "message": "Avoid unused local variables such as 'unusedLocalVariable'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/BestPractices.java",
-    "start_column": 13,
-    "start_line": 22,
-    "title": "Best Practices: UnusedLocalVariable",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 59,
-    "message": "Too many static imports may lead to messy code.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": undefined,
-    "start_line": 1,
-    "title": "Code Style: TooManyStaticImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 24,
-    "end_line": 3,
-    "message": "Avoid importing anything from the package java.lang.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 1,
-    "start_line": 3,
-    "title": "Code Style: DontImportJavaLang",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 24,
-    "end_line": 3,
-    "message": "Avoid unused imports such as 'java.lang.String'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 1,
-    "start_line": 3,
-    "title": "Best Practices: UnusedImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 24,
-    "end_line": 4,
-    "message": "Avoid duplicate imports such as 'java.lang.String'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 1,
-    "start_line": 4,
-    "title": "Code Style: DuplicateImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 24,
-    "end_line": 4,
-    "message": "Avoid importing anything from the package java.lang.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 1,
-    "start_line": 4,
-    "title": "Code Style: DontImportJavaLang",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 64,
-    "end_line": 6,
-    "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.BASIC_ISO_DATE'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 1,
-    "start_line": 6,
-    "title": "Best Practices: UnusedImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 58,
-    "end_line": 7,
-    "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_DATE'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 1,
-    "start_line": 7,
-    "title": "Best Practices: UnusedImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 63,
-    "end_line": 8,
-    "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_DATE_TIME'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 1,
-    "start_line": 8,
-    "title": "Best Practices: UnusedImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 64,
-    "end_line": 9,
-    "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_LOCAL_TIME'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 1,
-    "start_line": 9,
-    "title": "Best Practices: UnusedImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 61,
-    "end_line": 10,
-    "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_INSTANT'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 1,
-    "start_line": 10,
-    "title": "Best Practices: UnusedImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 37,
-    "end_line": 12,
-    "message": "No need to explicitly extend Object.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 32,
-    "start_line": 12,
-    "title": "Code Style: ExtendsObject",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 17,
-    "message": "This for loop could be simplified to a while loop.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": undefined,
-    "start_line": 15,
-    "title": "Code Style: ForLoopShouldBeWhileLoop",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 30,
-    "end_line": 21,
-    "message": "Avoid unused local variables such as 'value'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 26,
-    "start_line": 21,
-    "title": "Best Practices: UnusedLocalVariable",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 24,
-    "end_line": 21,
-    "message": "Unnecessary use of fully qualified name 'java.lang.String' due to existing import 'java.lang.String'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 9,
-    "start_line": 21,
-    "title": "Code Style: UnnecessaryFullyQualifiedName",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 26,
-    "message": "Unnecessary modifier 'static' on interface 'UnnecessaryModifier': member interfaces are implicitly static.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": undefined,
-    "start_line": 24,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 30,
-    "message": "Unnecessary modifier 'static' on enum 'UnnecessaryModifierEnum': nested enums are implicitly static.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": undefined,
-    "start_line": 28,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 15,
-    "end_line": 33,
-    "message": "Avoid unnecessary return statements.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 9,
-    "start_line": 33,
-    "title": "Code Style: UnnecessaryReturn",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 17,
-    "end_line": 37,
-    "message": "Useless parentheses.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 17,
-    "start_line": 37,
-    "title": "Code Style: UselessParentheses",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 26,
-    "end_line": 41,
-    "message": "Avoid unused local variables such as 'instance'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 19,
-    "start_line": 41,
-    "title": "Best Practices: UnusedLocalVariable",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 38,
-    "end_line": 41,
-    "message": "Useless qualified this usage in the same class.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 30,
-    "start_line": 41,
-    "title": "Code Style: UselessQualifiedThis",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 42,
-    "end_line": 47,
-    "message": "Unnecessary modifiers 'public abstract' on method 'publicAbstract': the method is declared in an interface type.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 21,
-    "start_line": 47,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 50,
-    "end_line": 48,
-    "message": "Unnecessary modifiers 'public static final' on field 'publicStaticFinal': the field is declared in an interface type.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 25,
-    "start_line": 48,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 44,
-    "end_line": 49,
-    "message": "Unnecessary modifier 'public' on class 'PublicStaticClass': members of interface types are implicitly public.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 19,
-    "start_line": 49,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 44,
-    "end_line": 49,
-    "message": "Unnecessary modifier 'static' on class 'PublicStaticClass': types nested within an interface type are implicitly static.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 19,
-    "start_line": 49,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 52,
-    "end_line": 50,
-    "message": "Unnecessary modifier 'public' on interface 'PublicStaticInterface': members of interface types are implicitly public.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 19,
-    "start_line": 50,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 52,
-    "end_line": 50,
-    "message": "Unnecessary modifier 'static' on interface 'PublicStaticInterface': member interfaces are implicitly static.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 19,
-    "start_line": 50,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 41,
-    "end_line": 55,
-    "message": "Unnecessary modifiers 'public abstract' on method 'publicAbstract': the method is declared in an annotation type.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 21,
-    "start_line": 55,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 50,
-    "end_line": 56,
-    "message": "Unnecessary modifiers 'public static final' on field 'publicStaticFinal': the field is declared in an annotation type.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 25,
-    "start_line": 56,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 44,
-    "end_line": 57,
-    "message": "Unnecessary modifier 'public' on class 'PublicStaticClass': members of annotation types are implicitly public.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 19,
-    "start_line": 57,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 44,
-    "end_line": 57,
-    "message": "Unnecessary modifier 'static' on class 'PublicStaticClass': types nested within an interface type are implicitly static.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 19,
-    "start_line": 57,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 52,
-    "end_line": 58,
-    "message": "Unnecessary modifier 'public' on interface 'PublicStaticInterface': members of annotation types are implicitly public.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 19,
-    "start_line": 58,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 52,
-    "end_line": 58,
-    "message": "Unnecessary modifier 'static' on interface 'PublicStaticInterface': member interfaces are implicitly static.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/CodeStyle.java",
-    "start_column": 19,
-    "start_line": 58,
-    "title": "Code Style: UnnecessaryModifier",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 9,
-    "message": "These nested if statements could be combined.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Design.java",
-    "start_column": undefined,
-    "start_line": 7,
-    "title": "Design: CollapsibleIfStatements",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 43,
-    "end_line": 14,
-    "message": "Ternary operators that can be simplified with || or &amp;&amp;.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Design.java",
-    "start_column": 16,
-    "start_line": 14,
-    "title": "Design: SimplifiedTernary",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 19,
-    "message": "Overriding method merely calls super.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Design.java",
-    "start_column": undefined,
-    "start_line": 17,
-    "title": "Design: UselessOverridingMethod",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 37,
-    "end_line": 9,
-    "message": "Avoid unused imports such as 'org.example.pmd.BestPractices'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 1,
-    "start_line": 9,
-    "title": "Best Practices: UnusedImports",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 37,
-    "end_line": 9,
-    "message": "No need to import a type that lives in the same package.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 1,
-    "start_line": 9,
-    "title": "Error Prone: ImportFromSamePackage",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 13,
-    "end_line": 13,
-    "message": "Empty initializer was found.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 12,
-    "start_line": 13,
-    "title": "Error Prone: EmptyInitializer",
-  },
-  Object {
-    "annotation_level": "failure",
-    "end_column": 18,
-    "end_line": 20,
-    "message": "Avoid using a branching statement as the last in a loop.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 13,
-    "start_line": 20,
-    "title": "Error Prone: AvoidBranchingStatementAsLastInLoop",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 36,
-    "end_line": 25,
-    "message": "Avoid creating BigDecimal with a decimal (float/double) literal. Use a String literal.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 16,
-    "start_line": 25,
-    "title": "Error Prone: AvoidDecimalLiteralsInBigDecimalConstructor",
-  },
-  Object {
-    "annotation_level": "failure",
-    "end_column": 21,
-    "end_line": 29,
-    "message": "Using multiple unary operators may be a bug, and/or is confusing.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 16,
-    "start_line": 29,
-    "title": "Error Prone: AvoidMultipleUnaryOperators",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 18,
-    "end_line": 33,
-    "message": "Do not start a literal by 0 unless its an octal value.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 16,
-    "start_line": 33,
-    "title": "Error Prone: AvoidUsingOctalValues",
-  },
-  Object {
-    "annotation_level": "failure",
-    "end_column": undefined,
-    "end_line": 39,
-    "message": "Method call on object which may be null.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 37,
-    "title": "Error Prone: BrokenNullCheck",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 16,
-    "end_line": 45,
-    "message": "Check the value returned by the skip() method of an InputStream to see if the requested number of bytes has been skipped.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 9,
-    "start_line": 45,
-    "title": "Error Prone: CheckSkipResult",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 58,
-    "end_line": 51,
-    "message": "This usage of the Collection.toArray() method will throw a ClassCastException.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 39,
-    "start_line": 51,
-    "title": "Error Prone: ClassCastExceptionWithToArray",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 18,
-    "end_line": 55,
-    "message": "Dont use floating point for loop indices. If you must use floating point, use double.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 14,
-    "start_line": 55,
-    "title": "Error Prone: DontUseFloatTypeForLoopIndices",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 63,
-    "message": "Avoid empty try blocks.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 61,
-    "title": "Error Prone: EmptyTryBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 65,
-    "message": "Avoid empty catch blocks.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 63,
-    "title": "Error Prone: EmptyCatchBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 67,
-    "message": "Avoid empty finally blocks.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 65,
-    "title": "Error Prone: EmptyFinallyBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 73,
-    "message": "Avoid empty if statements.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 71,
-    "title": "Error Prone: EmptyIfStmt",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 10,
-    "end_line": 77,
-    "message": "Avoid empty block statements.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 9,
-    "start_line": 77,
-    "title": "Error Prone: EmptyStatementBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 9,
-    "end_line": 81,
-    "message": "An empty statement (semicolon) not part of a loop.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 9,
-    "start_line": 81,
-    "title": "Error Prone: EmptyStatementNotInLoop",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 88,
-    "message": "Avoid empty switch statements.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 86,
-    "title": "Error Prone: EmptySwitchStatements",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 94,
-    "message": "Avoid empty synchronized blocks.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 92,
-    "title": "Error Prone: EmptySynchronizedBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 100,
-    "message": "Avoid empty while statements.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 98,
-    "title": "Error Prone: EmptyWhileStmt",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": undefined,
-    "end_line": 107,
-    "message": "Avoid modifying an outer loop incrementer in an inner loop for update expression.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": undefined,
-    "start_line": 105,
-    "title": "Error Prone: JumbledIncrementer",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 48,
-    "end_line": 112,
-    "message": "The null check here is misplaced; if the variable 'string' is null there will be a NullPointerException.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 43,
-    "start_line": 112,
-    "title": "Error Prone: MisplacedNullCheck",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 39,
-    "end_line": 115,
-    "message": "Ensure you override both equals() and hashCode().",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 20,
-    "start_line": 115,
-    "title": "Error Prone: OverrideBothEqualsAndHashcode",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 25,
-    "end_line": 123,
-    "message": "Avoid returning from a finally block.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 13,
-    "start_line": 123,
-    "title": "Error Prone: ReturnFromFinallyBlock",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 16,
-    "end_line": 128,
-    "message": "Do not use if statements that are always true or always false.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 13,
-    "start_line": 128,
-    "title": "Error Prone: UnconditionalIfStatement",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 38,
-    "end_line": 135,
-    "message": "Avoid unnecessary temporaries when converting primitives to Strings.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 30,
-    "start_line": 135,
-    "title": "Error Prone: UnnecessaryConversionTemporary",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 38,
-    "end_line": 139,
-    "message": "Invoke equals() on the object you've already ensured is not null.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 38,
-    "start_line": 139,
-    "title": "Error Prone: UnusedNullCheckInEquals",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 14,
-    "end_line": 144,
-    "message": "An operation on an Immutable object (String, BigDecimal or BigInteger) wont change the object itself.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
-    "start_column": 9,
-    "start_line": 144,
-    "title": "Error Prone: UselessOperationOnImmutable",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 22,
-    "end_line": 8,
-    "message": "Avoid unused local variables such as 'tg'.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Multithreading.java",
-    "start_column": 21,
-    "start_line": 8,
-    "title": "Best Practices: UnusedLocalVariable",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 40,
-    "end_line": 8,
-    "message": "Avoid using java.lang.ThreadGroup; it is not thread safe.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Multithreading.java",
-    "start_column": 30,
-    "start_line": 8,
-    "title": "Multithreading: AvoidThreadGroup",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 26,
-    "end_line": 12,
-    "message": "Dont call Thread.run() explicitly, use Thread.start().",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Multithreading.java",
-    "start_column": 9,
-    "start_line": 12,
-    "title": "Multithreading: DontCallThreadRun",
-  },
-  Object {
-    "annotation_level": "failure",
-    "end_column": undefined,
-    "end_line": 24,
-    "message": "Double checked locking is not thread safe in Java.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Multithreading.java",
-    "start_column": undefined,
-    "start_line": 15,
-    "title": "Multithreading: DoubleCheckedLocking",
-  },
-  Object {
-    "annotation_level": "warning",
-    "end_column": 34,
-    "end_line": 8,
-    "message": "Dont create instances of already existing BigInteger and BigDecimal (ZERO, ONE, TEN).",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Performance.java",
-    "start_column": 16,
-    "start_line": 8,
-    "title": "Performance: BigIntegerInstantiation",
-  },
-  Object {
-    "annotation_level": "failure",
-    "end_column": 34,
-    "end_line": 12,
-    "message": "Avoid instantiating Boolean objects; reference Boolean.TRUE or Boolean.FALSE or call Boolean.valueOf() instead.",
-    "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Performance.java",
-    "start_column": 16,
-    "start_line": 12,
-    "title": "Performance: BooleanInstantiation",
-  },
-]
+Object {
+  "annotation_level": "warning",
+  "end_column": 13,
+  "end_line": 11,
+  "message": "Empty initializer was found.",
+  "path": Any<String>,
+  "start_column": 12,
+  "start_line": 11,
+  "title": "Error Prone: EmptyInitializer",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 2`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 48,
+  "end_line": 14,
+  "message": "The null check here is misplaced; if the variable 'string' is null there will be a NullPointerException.",
+  "path": Any<String>,
+  "start_column": 43,
+  "start_line": 14,
+  "title": "Error Prone: MisplacedNullCheck",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 3`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 39,
+  "end_line": 17,
+  "message": "Ensure you override both equals() and hashCode().",
+  "path": Any<String>,
+  "start_column": 20,
+  "start_line": 17,
+  "title": "Error Prone: OverrideBothEqualsAndHashcode",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 4`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 25,
+  "end_line": 25,
+  "message": "Avoid returning from a finally block.",
+  "path": Any<String>,
+  "start_column": 13,
+  "start_line": 25,
+  "title": "Error Prone: ReturnFromFinallyBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 5`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 16,
+  "end_line": 30,
+  "message": "Do not use if statements that are always true or always false.",
+  "path": Any<String>,
+  "start_column": 13,
+  "start_line": 30,
+  "title": "Error Prone: UnconditionalIfStatement",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 6`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 38,
+  "end_line": 37,
+  "message": "Avoid unnecessary temporaries when converting primitives to Strings.",
+  "path": Any<String>,
+  "start_column": 30,
+  "start_line": 37,
+  "title": "Error Prone: UnnecessaryConversionTemporary",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 7`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 38,
+  "end_line": 41,
+  "message": "Invoke equals() on the object you've already ensured is not null.",
+  "path": Any<String>,
+  "start_column": 38,
+  "start_line": 41,
+  "title": "Error Prone: UnusedNullCheckInEquals",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 8`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 14,
+  "end_line": 46,
+  "message": "An operation on an Immutable object (String, BigDecimal or BigInteger) wont change the object itself.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 46,
+  "title": "Error Prone: UselessOperationOnImmutable",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 9`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 18,
+  "end_line": 50,
+  "message": "Dont use floating point for loop indices. If you must use floating point, use double.",
+  "path": Any<String>,
+  "start_column": 14,
+  "start_line": 50,
+  "title": "Error Prone: DontUseFloatTypeForLoopIndices",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 10`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 58,
+  "message": "Avoid empty try blocks.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 56,
+  "title": "Error Prone: EmptyTryBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 11`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 60,
+  "message": "Avoid empty catch blocks.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 58,
+  "title": "Error Prone: EmptyCatchBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 12`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 62,
+  "message": "Avoid empty finally blocks.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 60,
+  "title": "Error Prone: EmptyFinallyBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 13`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 68,
+  "message": "Avoid empty if statements.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 66,
+  "title": "Error Prone: EmptyIfStmt",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 14`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 10,
+  "end_line": 72,
+  "message": "Avoid empty block statements.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 72,
+  "title": "Error Prone: EmptyStatementBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 15`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 9,
+  "end_line": 76,
+  "message": "An empty statement (semicolon) not part of a loop.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 76,
+  "title": "Error Prone: EmptyStatementNotInLoop",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 16`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 83,
+  "message": "Avoid empty switch statements.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 81,
+  "title": "Error Prone: EmptySwitchStatements",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 17`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 89,
+  "message": "Avoid empty synchronized blocks.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 87,
+  "title": "Error Prone: EmptySynchronizedBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 18`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 95,
+  "message": "Avoid empty while statements.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 93,
+  "title": "Error Prone: EmptyWhileStmt",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 19`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 102,
+  "message": "Avoid modifying an outer loop incrementer in an inner loop for update expression.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 100,
+  "title": "Error Prone: JumbledIncrementer",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 20`] = `
+Object {
+  "annotation_level": "failure",
+  "end_column": 18,
+  "end_line": 111,
+  "message": "Avoid using a branching statement as the last in a loop.",
+  "path": Any<String>,
+  "start_column": 13,
+  "start_line": 111,
+  "title": "Error Prone: AvoidBranchingStatementAsLastInLoop",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 21`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 36,
+  "end_line": 116,
+  "message": "Avoid creating BigDecimal with a decimal (float/double) literal. Use a String literal.",
+  "path": Any<String>,
+  "start_column": 16,
+  "start_line": 116,
+  "title": "Error Prone: AvoidDecimalLiteralsInBigDecimalConstructor",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 22`] = `
+Object {
+  "annotation_level": "failure",
+  "end_column": 21,
+  "end_line": 120,
+  "message": "Using multiple unary operators may be a bug, and/or is confusing.",
+  "path": Any<String>,
+  "start_column": 16,
+  "start_line": 120,
+  "title": "Error Prone: AvoidMultipleUnaryOperators",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 23`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 18,
+  "end_line": 124,
+  "message": "Do not start a literal by 0 unless its an octal value.",
+  "path": Any<String>,
+  "start_column": 16,
+  "start_line": 124,
+  "title": "Error Prone: AvoidUsingOctalValues",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 24`] = `
+Object {
+  "annotation_level": "failure",
+  "end_column": undefined,
+  "end_line": 130,
+  "message": "Method call on object which may be null.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 128,
+  "title": "Error Prone: BrokenNullCheck",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 25`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 16,
+  "end_line": 136,
+  "message": "Check the value returned by the skip() method of an InputStream to see if the requested number of bytes has been skipped.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 136,
+  "title": "Error Prone: CheckSkipResult",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 26`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 58,
+  "end_line": 142,
+  "message": "This usage of the Collection.toArray() method will throw a ClassCastException.",
+  "path": Any<String>,
+  "start_column": 39,
+  "start_line": 142,
+  "title": "Error Prone: ClassCastExceptionWithToArray",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 27`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 20,
+  "end_line": 3,
+  "message": "Avoid unused imports such as 'java.io.File'.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 3,
+  "title": "Best Practices: UnusedImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 28`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 41,
+  "end_line": 11,
+  "message": "Do not hard code the IP address.",
+  "path": Any<String>,
+  "start_column": 31,
+  "start_line": 11,
+  "title": "Best Practices: AvoidUsingHardCodedIP",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 29`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 37,
+  "end_line": 12,
+  "message": "Avoid unused private fields such as 'unusedPrivateField'.",
+  "path": Any<String>,
+  "start_column": 20,
+  "start_line": 12,
+  "title": "Best Practices: UnusedPrivateField",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 30`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 66,
+  "end_line": 17,
+  "message": "Always check the return of one of the navigation method (next,previous,first,last) of a ResultSet.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 17,
+  "title": "Best Practices: CheckResultSet",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 31`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 65,
+  "end_line": 21,
+  "message": "Avoid unused method parameters such as 'unusedFormalParameter'.",
+  "path": Any<String>,
+  "start_column": 45,
+  "start_line": 21,
+  "title": "Best Practices: UnusedFormalParameter",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 32`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 66,
+  "end_line": 21,
+  "message": "Avoid unused private methods such as 'unusedPrivateMethod(String)'.",
+  "path": Any<String>,
+  "start_column": 18,
+  "start_line": 21,
+  "title": "Best Practices: UnusedPrivateMethod",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 33`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 31,
+  "end_line": 22,
+  "message": "Avoid unused local variables such as 'unusedLocalVariable'.",
+  "path": Any<String>,
+  "start_column": 13,
+  "start_line": 22,
+  "title": "Best Practices: UnusedLocalVariable",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 34`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 59,
+  "message": "Too many static imports may lead to messy code.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 1,
+  "title": "Code Style: TooManyStaticImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 35`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 24,
+  "end_line": 3,
+  "message": "Avoid importing anything from the package java.lang.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 3,
+  "title": "Code Style: DontImportJavaLang",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 36`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 24,
+  "end_line": 3,
+  "message": "Avoid unused imports such as 'java.lang.String'.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 3,
+  "title": "Best Practices: UnusedImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 37`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 24,
+  "end_line": 4,
+  "message": "Avoid duplicate imports such as 'java.lang.String'.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 4,
+  "title": "Code Style: DuplicateImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 38`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 24,
+  "end_line": 4,
+  "message": "Avoid importing anything from the package java.lang.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 4,
+  "title": "Code Style: DontImportJavaLang",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 39`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 64,
+  "end_line": 6,
+  "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.BASIC_ISO_DATE'.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 6,
+  "title": "Best Practices: UnusedImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 40`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 58,
+  "end_line": 7,
+  "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_DATE'.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 7,
+  "title": "Best Practices: UnusedImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 41`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 63,
+  "end_line": 8,
+  "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_DATE_TIME'.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 8,
+  "title": "Best Practices: UnusedImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 42`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 64,
+  "end_line": 9,
+  "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_LOCAL_TIME'.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 9,
+  "title": "Best Practices: UnusedImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 43`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 61,
+  "end_line": 10,
+  "message": "Avoid unused imports such as 'java.time.format.DateTimeFormatter.ISO_INSTANT'.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 10,
+  "title": "Best Practices: UnusedImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 44`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 37,
+  "end_line": 12,
+  "message": "No need to explicitly extend Object.",
+  "path": Any<String>,
+  "start_column": 32,
+  "start_line": 12,
+  "title": "Code Style: ExtendsObject",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 45`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 17,
+  "message": "This for loop could be simplified to a while loop.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 15,
+  "title": "Code Style: ForLoopShouldBeWhileLoop",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 46`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 30,
+  "end_line": 21,
+  "message": "Avoid unused local variables such as 'value'.",
+  "path": Any<String>,
+  "start_column": 26,
+  "start_line": 21,
+  "title": "Best Practices: UnusedLocalVariable",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 47`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 24,
+  "end_line": 21,
+  "message": "Unnecessary use of fully qualified name 'java.lang.String' due to existing import 'java.lang.String'.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 21,
+  "title": "Code Style: UnnecessaryFullyQualifiedName",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 48`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 26,
+  "message": "Unnecessary modifier 'static' on interface 'UnnecessaryModifier': member interfaces are implicitly static.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 24,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 49`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 30,
+  "message": "Unnecessary modifier 'static' on enum 'UnnecessaryModifierEnum': nested enums are implicitly static.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 28,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 50`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 15,
+  "end_line": 33,
+  "message": "Avoid unnecessary return statements.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 33,
+  "title": "Code Style: UnnecessaryReturn",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 51`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 17,
+  "end_line": 37,
+  "message": "Useless parentheses.",
+  "path": Any<String>,
+  "start_column": 17,
+  "start_line": 37,
+  "title": "Code Style: UselessParentheses",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 52`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 26,
+  "end_line": 41,
+  "message": "Avoid unused local variables such as 'instance'.",
+  "path": Any<String>,
+  "start_column": 19,
+  "start_line": 41,
+  "title": "Best Practices: UnusedLocalVariable",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 53`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 38,
+  "end_line": 41,
+  "message": "Useless qualified this usage in the same class.",
+  "path": Any<String>,
+  "start_column": 30,
+  "start_line": 41,
+  "title": "Code Style: UselessQualifiedThis",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 54`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 42,
+  "end_line": 47,
+  "message": "Unnecessary modifiers 'public abstract' on method 'publicAbstract': the method is declared in an interface type.",
+  "path": Any<String>,
+  "start_column": 21,
+  "start_line": 47,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 55`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 50,
+  "end_line": 48,
+  "message": "Unnecessary modifiers 'public static final' on field 'publicStaticFinal': the field is declared in an interface type.",
+  "path": Any<String>,
+  "start_column": 25,
+  "start_line": 48,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 56`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 44,
+  "end_line": 49,
+  "message": "Unnecessary modifier 'public' on class 'PublicStaticClass': members of interface types are implicitly public.",
+  "path": Any<String>,
+  "start_column": 19,
+  "start_line": 49,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 57`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 44,
+  "end_line": 49,
+  "message": "Unnecessary modifier 'static' on class 'PublicStaticClass': types nested within an interface type are implicitly static.",
+  "path": Any<String>,
+  "start_column": 19,
+  "start_line": 49,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 58`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 52,
+  "end_line": 50,
+  "message": "Unnecessary modifier 'public' on interface 'PublicStaticInterface': members of interface types are implicitly public.",
+  "path": Any<String>,
+  "start_column": 19,
+  "start_line": 50,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 59`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 52,
+  "end_line": 50,
+  "message": "Unnecessary modifier 'static' on interface 'PublicStaticInterface': member interfaces are implicitly static.",
+  "path": Any<String>,
+  "start_column": 19,
+  "start_line": 50,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 60`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 41,
+  "end_line": 55,
+  "message": "Unnecessary modifiers 'public abstract' on method 'publicAbstract': the method is declared in an annotation type.",
+  "path": Any<String>,
+  "start_column": 21,
+  "start_line": 55,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 61`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 50,
+  "end_line": 56,
+  "message": "Unnecessary modifiers 'public static final' on field 'publicStaticFinal': the field is declared in an annotation type.",
+  "path": Any<String>,
+  "start_column": 25,
+  "start_line": 56,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 62`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 44,
+  "end_line": 57,
+  "message": "Unnecessary modifier 'public' on class 'PublicStaticClass': members of annotation types are implicitly public.",
+  "path": Any<String>,
+  "start_column": 19,
+  "start_line": 57,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 63`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 44,
+  "end_line": 57,
+  "message": "Unnecessary modifier 'static' on class 'PublicStaticClass': types nested within an interface type are implicitly static.",
+  "path": Any<String>,
+  "start_column": 19,
+  "start_line": 57,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 64`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 52,
+  "end_line": 58,
+  "message": "Unnecessary modifier 'public' on interface 'PublicStaticInterface': members of annotation types are implicitly public.",
+  "path": Any<String>,
+  "start_column": 19,
+  "start_line": 58,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 65`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 52,
+  "end_line": 58,
+  "message": "Unnecessary modifier 'static' on interface 'PublicStaticInterface': member interfaces are implicitly static.",
+  "path": Any<String>,
+  "start_column": 19,
+  "start_line": 58,
+  "title": "Code Style: UnnecessaryModifier",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 66`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 9,
+  "message": "These nested if statements could be combined.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 7,
+  "title": "Design: CollapsibleIfStatements",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 67`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 43,
+  "end_line": 14,
+  "message": "Ternary operators that can be simplified with || or &amp;&amp;.",
+  "path": Any<String>,
+  "start_column": 16,
+  "start_line": 14,
+  "title": "Design: SimplifiedTernary",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 68`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 19,
+  "message": "Overriding method merely calls super.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 17,
+  "title": "Design: UselessOverridingMethod",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 69`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 37,
+  "end_line": 9,
+  "message": "Avoid unused imports such as 'org.example.pmd.BestPractices'.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 9,
+  "title": "Best Practices: UnusedImports",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 70`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 37,
+  "end_line": 9,
+  "message": "No need to import a type that lives in the same package.",
+  "path": Any<String>,
+  "start_column": 1,
+  "start_line": 9,
+  "title": "Error Prone: ImportFromSamePackage",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 71`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 13,
+  "end_line": 13,
+  "message": "Empty initializer was found.",
+  "path": Any<String>,
+  "start_column": 12,
+  "start_line": 13,
+  "title": "Error Prone: EmptyInitializer",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 72`] = `
+Object {
+  "annotation_level": "failure",
+  "end_column": 18,
+  "end_line": 20,
+  "message": "Avoid using a branching statement as the last in a loop.",
+  "path": Any<String>,
+  "start_column": 13,
+  "start_line": 20,
+  "title": "Error Prone: AvoidBranchingStatementAsLastInLoop",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 73`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 36,
+  "end_line": 25,
+  "message": "Avoid creating BigDecimal with a decimal (float/double) literal. Use a String literal.",
+  "path": Any<String>,
+  "start_column": 16,
+  "start_line": 25,
+  "title": "Error Prone: AvoidDecimalLiteralsInBigDecimalConstructor",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 74`] = `
+Object {
+  "annotation_level": "failure",
+  "end_column": 21,
+  "end_line": 29,
+  "message": "Using multiple unary operators may be a bug, and/or is confusing.",
+  "path": Any<String>,
+  "start_column": 16,
+  "start_line": 29,
+  "title": "Error Prone: AvoidMultipleUnaryOperators",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 75`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 18,
+  "end_line": 33,
+  "message": "Do not start a literal by 0 unless its an octal value.",
+  "path": Any<String>,
+  "start_column": 16,
+  "start_line": 33,
+  "title": "Error Prone: AvoidUsingOctalValues",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 76`] = `
+Object {
+  "annotation_level": "failure",
+  "end_column": undefined,
+  "end_line": 39,
+  "message": "Method call on object which may be null.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 37,
+  "title": "Error Prone: BrokenNullCheck",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 77`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 16,
+  "end_line": 45,
+  "message": "Check the value returned by the skip() method of an InputStream to see if the requested number of bytes has been skipped.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 45,
+  "title": "Error Prone: CheckSkipResult",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 78`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 58,
+  "end_line": 51,
+  "message": "This usage of the Collection.toArray() method will throw a ClassCastException.",
+  "path": Any<String>,
+  "start_column": 39,
+  "start_line": 51,
+  "title": "Error Prone: ClassCastExceptionWithToArray",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 79`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 18,
+  "end_line": 55,
+  "message": "Dont use floating point for loop indices. If you must use floating point, use double.",
+  "path": Any<String>,
+  "start_column": 14,
+  "start_line": 55,
+  "title": "Error Prone: DontUseFloatTypeForLoopIndices",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 80`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 63,
+  "message": "Avoid empty try blocks.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 61,
+  "title": "Error Prone: EmptyTryBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 81`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 65,
+  "message": "Avoid empty catch blocks.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 63,
+  "title": "Error Prone: EmptyCatchBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 82`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 67,
+  "message": "Avoid empty finally blocks.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 65,
+  "title": "Error Prone: EmptyFinallyBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 83`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 73,
+  "message": "Avoid empty if statements.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 71,
+  "title": "Error Prone: EmptyIfStmt",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 84`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 10,
+  "end_line": 77,
+  "message": "Avoid empty block statements.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 77,
+  "title": "Error Prone: EmptyStatementBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 85`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 9,
+  "end_line": 81,
+  "message": "An empty statement (semicolon) not part of a loop.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 81,
+  "title": "Error Prone: EmptyStatementNotInLoop",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 86`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 88,
+  "message": "Avoid empty switch statements.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 86,
+  "title": "Error Prone: EmptySwitchStatements",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 87`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 94,
+  "message": "Avoid empty synchronized blocks.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 92,
+  "title": "Error Prone: EmptySynchronizedBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 88`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 100,
+  "message": "Avoid empty while statements.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 98,
+  "title": "Error Prone: EmptyWhileStmt",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 89`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": undefined,
+  "end_line": 107,
+  "message": "Avoid modifying an outer loop incrementer in an inner loop for update expression.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 105,
+  "title": "Error Prone: JumbledIncrementer",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 90`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 48,
+  "end_line": 112,
+  "message": "The null check here is misplaced; if the variable 'string' is null there will be a NullPointerException.",
+  "path": Any<String>,
+  "start_column": 43,
+  "start_line": 112,
+  "title": "Error Prone: MisplacedNullCheck",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 91`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 39,
+  "end_line": 115,
+  "message": "Ensure you override both equals() and hashCode().",
+  "path": Any<String>,
+  "start_column": 20,
+  "start_line": 115,
+  "title": "Error Prone: OverrideBothEqualsAndHashcode",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 92`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 25,
+  "end_line": 123,
+  "message": "Avoid returning from a finally block.",
+  "path": Any<String>,
+  "start_column": 13,
+  "start_line": 123,
+  "title": "Error Prone: ReturnFromFinallyBlock",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 93`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 16,
+  "end_line": 128,
+  "message": "Do not use if statements that are always true or always false.",
+  "path": Any<String>,
+  "start_column": 13,
+  "start_line": 128,
+  "title": "Error Prone: UnconditionalIfStatement",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 94`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 38,
+  "end_line": 135,
+  "message": "Avoid unnecessary temporaries when converting primitives to Strings.",
+  "path": Any<String>,
+  "start_column": 30,
+  "start_line": 135,
+  "title": "Error Prone: UnnecessaryConversionTemporary",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 95`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 38,
+  "end_line": 139,
+  "message": "Invoke equals() on the object you've already ensured is not null.",
+  "path": Any<String>,
+  "start_column": 38,
+  "start_line": 139,
+  "title": "Error Prone: UnusedNullCheckInEquals",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 96`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 14,
+  "end_line": 144,
+  "message": "An operation on an Immutable object (String, BigDecimal or BigInteger) wont change the object itself.",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 144,
+  "title": "Error Prone: UselessOperationOnImmutable",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 97`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 22,
+  "end_line": 8,
+  "message": "Avoid unused local variables such as 'tg'.",
+  "path": Any<String>,
+  "start_column": 21,
+  "start_line": 8,
+  "title": "Best Practices: UnusedLocalVariable",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 98`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 40,
+  "end_line": 8,
+  "message": "Avoid using java.lang.ThreadGroup; it is not thread safe.",
+  "path": Any<String>,
+  "start_column": 30,
+  "start_line": 8,
+  "title": "Multithreading: AvoidThreadGroup",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 99`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 26,
+  "end_line": 12,
+  "message": "Dont call Thread.run() explicitly, use Thread.start().",
+  "path": Any<String>,
+  "start_column": 9,
+  "start_line": 12,
+  "title": "Multithreading: DontCallThreadRun",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 100`] = `
+Object {
+  "annotation_level": "failure",
+  "end_column": undefined,
+  "end_line": 24,
+  "message": "Double checked locking is not thread safe in Java.",
+  "path": Any<String>,
+  "start_column": undefined,
+  "start_line": 15,
+  "title": "Multithreading: DoubleCheckedLocking",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 101`] = `
+Object {
+  "annotation_level": "warning",
+  "end_column": 34,
+  "end_line": 8,
+  "message": "Dont create instances of already existing BigInteger and BigDecimal (ZERO, ONE, TEN).",
+  "path": Any<String>,
+  "start_column": 16,
+  "start_line": 8,
+  "title": "Performance: BigIntegerInstantiation",
+}
+`;
+
+exports[`PMD annotator can annotate a PMD report 102`] = `
+Object {
+  "annotation_level": "failure",
+  "end_column": 34,
+  "end_line": 12,
+  "message": "Avoid instantiating Boolean objects; reference Boolean.TRUE or Boolean.FALSE or call Boolean.valueOf() instead.",
+  "path": Any<String>,
+  "start_column": 16,
+  "start_line": 12,
+  "title": "Performance: BooleanInstantiation",
+}
 `;
