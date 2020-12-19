@@ -42,6 +42,7 @@
                         <phase>verify</phase>
                         <goals>
                             <goal>pmd</goal>
+                            <goal>cpd</goal>
                         </goals>
                     </execution>
                 </executions>
