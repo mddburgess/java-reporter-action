@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CPD annotator can annotate a CPD report 1`] = `
+Object {
+  "annotation_level": "warning",
+  "end_line": 106,
+  "message": Any<String>,
+  "path": Any<String>,
+  "start_line": 46,
+  "title": "61 duplicated lines",
+}
+`;
+
+exports[`CPD annotator can annotate a CPD report 2`] = `
+Object {
+  "annotation_level": "warning",
+  "end_line": 111,
+  "message": Any<String>,
+  "path": Any<String>,
+  "start_line": 51,
+  "title": "61 duplicated lines",
+}
+`;
+
+exports[`CPD annotator can annotate a CPD report 3`] = `
+Object {
+  "annotation_level": "warning",
+  "end_line": 143,
+  "message": Any<String>,
+  "path": Any<String>,
+  "start_line": 104,
+  "title": "40 duplicated lines",
+}
+`;
+
+exports[`CPD annotator can annotate a CPD report 4`] = `
+Object {
+  "annotation_level": "warning",
+  "end_line": 52,
+  "message": Any<String>,
+  "path": Any<String>,
+  "start_line": 13,
+  "title": "40 duplicated lines",
+}
+`;
+
+exports[`CPD annotator can annotate a CPD report 5`] = `
+Object {
+  "annotation_level": "warning",
+  "end_line": 47,
+  "message": Any<String>,
+  "path": Any<String>,
+  "start_line": 11,
+  "title": "37 duplicated lines",
+}
+`;
+
+exports[`CPD annotator can annotate a CPD report 6`] = `
+Object {
+  "annotation_level": "warning",
+  "end_line": 145,
+  "message": Any<String>,
+  "path": Any<String>,
+  "start_line": 109,
+  "title": "37 duplicated lines",
+}
+`;

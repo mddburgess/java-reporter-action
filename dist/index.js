@@ -323,6 +323,58 @@ exports.default = ReportReader;
 
 /***/ }),
 
+/***/ 2623:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const path_1 = __importDefault(__webpack_require__(5622));
+class CpdAnnotator {
+    annotate(report) {
+        return report.duplications
+            .map(duplication => this.annotateDuplication(duplication))
+            .reduce((a, b) => a.concat(b));
+    }
+    annotateDuplication(duplication) {
+        duplication.files.forEach(file => file.path = this.resolvePath(file.path));
+        return duplication.files.map(file => this.annotateFile(duplication, file));
+    }
+    resolvePath(filePath) {
+        return process.env.GITHUB_WORKSPACE
+            ? path_1.default.relative(process.env.GITHUB_WORKSPACE, filePath)
+            : filePath;
+    }
+    annotateFile(duplication, file) {
+        return {
+            path: file.path,
+            start_line: file.startLine,
+            end_line: file.endLine,
+            annotation_level: 'warning',
+            title: this.resolveTitle(duplication.lines),
+            message: this.resolveMessage(duplication, file.path)
+        };
+    }
+    resolveTitle(lines) {
+        return `${lines} duplicated lines`;
+    }
+    resolveMessage(duplication, path) {
+        return [
+            `Found ${duplication.lines} lines duplicated at:`,
+            ...duplication.files
+                .filter(file => file.path !== path)
+                .map(file => `\t${file.path} line ${file.startLine}`)
+        ].join('\n');
+    }
+}
+exports.default = CpdAnnotator;
+
+
+/***/ }),
+
 /***/ 3265:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -333,6 +385,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
+const reader_1 = __importDefault(__webpack_require__(4162));
+const annotator_1 = __importDefault(__webpack_require__(2623));
 class CpdCheck extends check_1.default {
     constructor() {
         super('cpd');
@@ -341,21 +395,92 @@ class CpdCheck extends check_1.default {
         return ['**/target/cpd.xml'];
     }
     readReport(reportPath) {
-        return undefined;
+        return new reader_1.default().readReport(reportPath);
     }
     aggregateReport(aggregate, report) {
+        aggregate.duplications.push(...report.duplications);
     }
     createAnnotations(aggregate) {
-        return Promise.reject();
+        const annotations = new annotator_1.default().annotate(aggregate);
+        return Promise.resolve(annotations);
     }
     resolveTitle(aggregate) {
-        return '';
+        return aggregate.duplications.length
+            ? `${aggregate.duplications.length} duplications`
+            : `No duplications`;
     }
     resolveSummary(aggregate) {
-        return '';
+        return this.resolveTitle(aggregate);
     }
 }
 exports.default = CpdCheck;
+
+
+/***/ }),
+
+/***/ 4162:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const reader_1 = __importDefault(__webpack_require__(3900));
+const saxophone_ts_1 = __webpack_require__(3902);
+class CpdReportReader extends reader_1.default {
+    constructor() {
+        super(...arguments);
+        this.duplication = {
+            lines: 0,
+            tokens: 0,
+            files: []
+        };
+    }
+    onTagOpen(tag) {
+        switch (tag.name) {
+            case 'pmd-cpd':
+                this.onPmdCpdOpen();
+                break;
+            case 'duplication':
+                this.onDuplicationOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case 'file':
+                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+        }
+    }
+    onPmdCpdOpen() {
+        this.report = {
+            duplications: []
+        };
+    }
+    onDuplicationOpen(attrs) {
+        this.duplication = {
+            lines: Number(attrs.lines),
+            tokens: Number(attrs.tokens),
+            files: []
+        };
+        this.report && this.report.duplications.push(this.duplication);
+    }
+    onFileOpen(attrs) {
+        this.duplication.files.push({
+            path: attrs.path,
+            startLine: Number(attrs.line),
+            endLine: Number(attrs.endline),
+            startColumn: Number(attrs.column),
+            endColumn: Number(attrs.endcolumn)
+        });
+    }
+    onTagClose(tag) {
+        // do nothing
+    }
+    onText(tag) {
+        // do nothing
+    }
+}
+exports.default = CpdReportReader;
 
 
 /***/ }),

@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CPD report reader can read a PMD report 1`] = `
+Object {
+  "duplications": Array [
+    Object {
+      "files": Array [
+        Object {
+          "endColumn": 10,
+          "endLine": 106,
+          "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
+          "startColumn": 33,
+          "startLine": 46,
+        },
+        Object {
+          "endColumn": 10,
+          "endLine": 111,
+          "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
+          "startColumn": 58,
+          "startLine": 51,
+        },
+      ],
+      "lines": 61,
+      "tokens": 163,
+    },
+    Object {
+      "files": Array [
+        Object {
+          "endColumn": 5,
+          "endLine": 143,
+          "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
+          "startColumn": 5,
+          "startLine": 104,
+        },
+        Object {
+          "endColumn": 5,
+          "endLine": 52,
+          "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
+          "startColumn": 13,
+          "startLine": 13,
+        },
+      ],
+      "lines": 40,
+      "tokens": 154,
+    },
+    Object {
+      "files": Array [
+        Object {
+          "endColumn": 5,
+          "endLine": 47,
+          "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/cpd/ErrorProne.java",
+          "startColumn": 13,
+          "startLine": 11,
+        },
+        Object {
+          "endColumn": 5,
+          "endLine": 145,
+          "path": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/ErrorProne.java",
+          "startColumn": 5,
+          "startLine": 109,
+        },
+      ],
+      "lines": 37,
+      "tokens": 135,
+    },
+  ],
+}
+`;
