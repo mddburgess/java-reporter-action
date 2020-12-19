@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const path_1 = __importDefault(__webpack_require__(5622));
+const word_wrap_1 = __importDefault(__webpack_require__(3578));
 class CheckstyleAnnotator {
     annotate(report) {
         return report.violations.map(violation => this.annotateViolation(violation));
@@ -25,7 +26,7 @@ class CheckstyleAnnotator {
             end_column: violation.column,
             annotation_level: this.resolveAnnotationLevel(violation),
             title: this.resolveTitle(violation),
-            message: violation.message
+            message: word_wrap_1.default(violation.message, { width: 100, indent: '' })
         };
     }
     resolvePath(filePath) {
@@ -13695,6 +13696,59 @@ exports.getUserAgent = getUserAgent;
  */
 
 module.exports = __webpack_require__(1669).deprecate;
+
+
+/***/ }),
+
+/***/ 3578:
+/***/ ((module) => {
+
+/*!
+ * word-wrap <https://github.com/jonschlinkert/word-wrap>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+module.exports = function(str, options) {
+  options = options || {};
+  if (str == null) {
+    return str;
+  }
+
+  var width = options.width || 50;
+  var indent = (typeof options.indent === 'string')
+    ? options.indent
+    : '  ';
+
+  var newline = options.newline || '\n' + indent;
+  var escape = typeof options.escape === 'function'
+    ? options.escape
+    : identity;
+
+  var regexString = '.{1,' + width + '}';
+  if (options.cut !== true) {
+    regexString += '([\\s\u200B]+|$)|[^\\s\u200B]+?([\\s\u200B]+|$)';
+  }
+
+  var re = new RegExp(regexString, 'g');
+  var lines = str.match(re) || [];
+  var result = indent + lines.map(function(line) {
+    if (line.slice(-1) === '\n') {
+      line = line.slice(0, line.length - 1);
+    }
+    return escape(line);
+  }).join(newline);
+
+  if (options.trim === true) {
+    result = result.replace(/[ \t]*$/gm, '');
+  }
+  return result;
+};
+
+function identity(str) {
+  return str;
+}
 
 
 /***/ }),

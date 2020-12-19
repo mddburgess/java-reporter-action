@@ -1,6 +1,7 @@
 import CheckstyleReport, {CheckstyleViolation} from './report';
 import {Annotation, AnnotationLevel} from '../common/github';
 import path from 'path';
+import wrap from 'word-wrap';
 
 class CheckstyleAnnotator {
 
@@ -17,7 +18,7 @@ class CheckstyleAnnotator {
             end_column: violation.column,
             annotation_level: this.resolveAnnotationLevel(violation),
             title: this.resolveTitle(violation),
-            message: violation.message
+            message: wrap(violation.message, {width: 100, indent: ''})
         }
     }
 

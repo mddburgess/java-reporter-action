@@ -57,7 +57,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 13,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'misplacedNullCheck' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'misplacedNullCheck' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'misplacedNullCheck' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'misplacedNullCheck' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 13,
@@ -96,7 +99,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 17,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'equals' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'equals' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'equals' 
+does not have javadoc that explains how to do that safely. If class is not designed for extension 
+consider making the class 'ErrorProne' final or making the method 'equals' 
+static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 17,
@@ -148,7 +154,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 21,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'returnFromFinallyBlock' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'returnFromFinallyBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'returnFromFinallyBlock' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'returnFromFinallyBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 21,
@@ -174,7 +183,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 29,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'unconditionalIfStatement' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'unconditionalIfStatement' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'unconditionalIfStatement' does not have javadoc that explains how to do that safely. If class is 
+not designed for extension consider making the class 'ErrorProne' final or making the method 
+'unconditionalIfStatement' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 29,
@@ -200,7 +212,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 36,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'unnecessaryConversionTemporary' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'unnecessaryConversionTemporary' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'unnecessaryConversionTemporary' does not have javadoc that explains how to do that safely. If class 
+is not designed for extension consider making the class 'ErrorProne' final or making the method 
+'unnecessaryConversionTemporary' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 36,
@@ -239,7 +255,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 40,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'unusedNullCheckInEquals' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'unusedNullCheckInEquals' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'unusedNullCheckInEquals' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'unusedNullCheckInEquals' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 40,
@@ -291,7 +310,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 44,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'uselessOperationOnImmutable' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'uselessOperationOnImmutable' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'uselessOperationOnImmutable' does not have javadoc that explains how to do that safely. If class is 
+not designed for extension consider making the class 'ErrorProne' final or making the method 
+'uselessOperationOnImmutable' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 44,
@@ -343,7 +366,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 49,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'dontUseFloatTypeForLoopIndices' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'dontUseFloatTypeForLoopIndices' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'dontUseFloatTypeForLoopIndices' does not have javadoc that explains how to do that safely. If class 
+is not designed for extension consider making the class 'ErrorProne' final or making the method 
+'dontUseFloatTypeForLoopIndices' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 49,
@@ -395,7 +422,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 55,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyTryCatchFinallyBlocks' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyTryCatchFinallyBlocks' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyTryCatchFinallyBlocks' does not have javadoc that explains how to do that safely. If class is 
+not designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptyTryCatchFinallyBlocks' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 55,
@@ -447,7 +478,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 65,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyIfBlock' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyIfBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyIfBlock' does not have javadoc that explains how to do that safely. If class is not designed 
+for extension consider making the class 'ErrorProne' final or making the method 'emptyIfBlock' 
+static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 65,
@@ -499,7 +533,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 71,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyStatementBlock' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyStatementBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyStatementBlock' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptyStatementBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 71,
@@ -564,7 +601,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 75,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyStatementNotInLoop' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyStatementNotInLoop' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyStatementNotInLoop' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptyStatementNotInLoop' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 75,
@@ -603,7 +643,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 79,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptySwitchStatements' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptySwitchStatements' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptySwitchStatements' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptySwitchStatements' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 79,
@@ -655,7 +698,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 86,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptySynchronizedBlock' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptySynchronizedBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptySynchronizedBlock' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptySynchronizedBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 86,
@@ -694,7 +740,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 92,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyWhileStmt' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyWhileStmt' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyWhileStmt' does not have javadoc that explains how to do that safely. If class is not designed 
+for extension consider making the class 'ErrorProne' final or making the method 'emptyWhileStmt' 
+static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 92,
@@ -733,7 +782,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 98,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'jumbledIncrementer' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'jumbledIncrementer' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'jumbledIncrementer' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'jumbledIncrementer' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 98,
@@ -785,7 +837,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 106,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'avoidBranchingStatementAsLastInLoop' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'avoidBranchingStatementAsLastInLoop' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'avoidBranchingStatementAsLastInLoop' does not have javadoc that explains how to do that safely. If 
+class is not designed for extension consider making the class 'ErrorProne' final or making the 
+method 'avoidBranchingStatementAsLastInLoop' static/final/abstract/empty, or adding allowed 
+annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 106,
@@ -837,7 +893,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 115,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'avoidDecimalLiteralsInBigDecimalConstructor' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'avoidDecimalLiteralsInBigDecimalConstructor' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'avoidDecimalLiteralsInBigDecimalConstructor' does not have javadoc that explains how to do that 
+safely. If class is not designed for extension consider making the class 'ErrorProne' final or 
+making the method 'avoidDecimalLiteralsInBigDecimalConstructor' static/final/abstract/empty, or 
+adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 115,
@@ -876,7 +936,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 119,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'avoidMultipleUnaryOperators' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'avoidMultipleUnaryOperators' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'avoidMultipleUnaryOperators' does not have javadoc that explains how to do that safely. If class is 
+not designed for extension consider making the class 'ErrorProne' final or making the method 
+'avoidMultipleUnaryOperators' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 119,
@@ -915,7 +979,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 123,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'avoidUsingOctalValues' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'avoidUsingOctalValues' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'avoidUsingOctalValues' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'avoidUsingOctalValues' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 123,
@@ -954,7 +1021,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 127,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'brokenNullCheck' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'brokenNullCheck' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'brokenNullCheck' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'brokenNullCheck' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 127,
@@ -993,7 +1063,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 134,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'checkSkipResult' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'checkSkipResult' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'checkSkipResult' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'checkSkipResult' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 134,
@@ -1019,7 +1092,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 139,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'classCastExceptionWithToArray' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'classCastExceptionWithToArray' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'classCastExceptionWithToArray' does not have javadoc that explains how to do that safely. If class 
+is not designed for extension consider making the class 'ErrorProne' final or making the method 
+'classCastExceptionWithToArray' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 139,
@@ -1058,7 +1135,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 5,
-  "message": "Class 'Design' looks like designed for extension (can be subclassed), but the method 'collapsibleIfStatements' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Design' final or making the method 'collapsibleIfStatements' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'Design' looks like designed for extension (can be subclassed), but the method 
+'collapsibleIfStatements' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'Design' final or making the method 
+'collapsibleIfStatements' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 5,
@@ -1110,7 +1190,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 13,
-  "message": "Class 'Design' looks like designed for extension (can be subclassed), but the method 'simplifiedTernary' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Design' final or making the method 'simplifiedTernary' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'Design' looks like designed for extension (can be subclassed), but the method 
+'simplifiedTernary' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'Design' final or making the method 
+'simplifiedTernary' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 13,
@@ -1162,7 +1245,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 17,
-  "message": "Class 'Design' looks like designed for extension (can be subclassed), but the method 'toString' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Design' final or making the method 'toString' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'Design' looks like designed for extension (can be subclassed), but the method 'toString' does 
+not have javadoc that explains how to do that safely. If class is not designed for extension 
+consider making the class 'Design' final or making the method 'toString' 
+static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 17,
@@ -1318,7 +1404,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 14,
-  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 'forLoopShouldBeWhileLoop' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'CodeStyle' final or making the method 'forLoopShouldBeWhileLoop' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 
+'forLoopShouldBeWhileLoop' does not have javadoc that explains how to do that safely. If class is 
+not designed for extension consider making the class 'CodeStyle' final or making the method 
+'forLoopShouldBeWhileLoop' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 14,
@@ -1383,7 +1472,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 20,
-  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 'unnecessaryFullyQualifiedName' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'CodeStyle' final or making the method 'unnecessaryFullyQualifiedName' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 
+'unnecessaryFullyQualifiedName' does not have javadoc that explains how to do that safely. If class 
+is not designed for extension consider making the class 'CodeStyle' final or making the method 
+'unnecessaryFullyQualifiedName' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 20,
@@ -1435,7 +1528,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 32,
-  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 'unnecessaryReturn' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'CodeStyle' final or making the method 'unnecessaryReturn' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 
+'unnecessaryReturn' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'CodeStyle' final or making the method 
+'unnecessaryReturn' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 32,
@@ -1461,7 +1557,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 36,
-  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 'uselessParentheses' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'CodeStyle' final or making the method 'uselessParentheses' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 
+'uselessParentheses' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'CodeStyle' final or making the method 
+'uselessParentheses' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 36,
@@ -1487,7 +1586,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 40,
-  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 'uselessQualifiedThis' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'CodeStyle' final or making the method 'uselessQualifiedThis' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'CodeStyle' looks like designed for extension (can be subclassed), but the method 
+'uselessQualifiedThis' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'CodeStyle' final or making the method 
+'uselessQualifiedThis' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 40,
@@ -1838,7 +1940,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 15,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'avoidBranchingStatementAsLastInLoop' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'avoidBranchingStatementAsLastInLoop' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'avoidBranchingStatementAsLastInLoop' does not have javadoc that explains how to do that safely. If 
+class is not designed for extension consider making the class 'ErrorProne' final or making the 
+method 'avoidBranchingStatementAsLastInLoop' static/final/abstract/empty, or adding allowed 
+annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 15,
@@ -1890,7 +1996,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 24,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'avoidDecimalLiteralsInBigDecimalConstructor' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'avoidDecimalLiteralsInBigDecimalConstructor' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'avoidDecimalLiteralsInBigDecimalConstructor' does not have javadoc that explains how to do that 
+safely. If class is not designed for extension consider making the class 'ErrorProne' final or 
+making the method 'avoidDecimalLiteralsInBigDecimalConstructor' static/final/abstract/empty, or 
+adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 24,
@@ -1929,7 +2039,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 28,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'avoidMultipleUnaryOperators' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'avoidMultipleUnaryOperators' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'avoidMultipleUnaryOperators' does not have javadoc that explains how to do that safely. If class is 
+not designed for extension consider making the class 'ErrorProne' final or making the method 
+'avoidMultipleUnaryOperators' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 28,
@@ -1968,7 +2082,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 32,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'avoidUsingOctalValues' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'avoidUsingOctalValues' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'avoidUsingOctalValues' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'avoidUsingOctalValues' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 32,
@@ -2007,7 +2124,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 36,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'brokenNullCheck' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'brokenNullCheck' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'brokenNullCheck' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'brokenNullCheck' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 36,
@@ -2046,7 +2166,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 43,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'checkSkipResult' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'checkSkipResult' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'checkSkipResult' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'checkSkipResult' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 43,
@@ -2072,7 +2195,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 48,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'classCastExceptionWithToArray' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'classCastExceptionWithToArray' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'classCastExceptionWithToArray' does not have javadoc that explains how to do that safely. If class 
+is not designed for extension consider making the class 'ErrorProne' final or making the method 
+'classCastExceptionWithToArray' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 48,
@@ -2098,7 +2225,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 54,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'dontUseFloatTypeForLoopIndices' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'dontUseFloatTypeForLoopIndices' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'dontUseFloatTypeForLoopIndices' does not have javadoc that explains how to do that safely. If class 
+is not designed for extension consider making the class 'ErrorProne' final or making the method 
+'dontUseFloatTypeForLoopIndices' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 54,
@@ -2150,7 +2281,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 60,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyTryCatchFinallyBlocks' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyTryCatchFinallyBlocks' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyTryCatchFinallyBlocks' does not have javadoc that explains how to do that safely. If class is 
+not designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptyTryCatchFinallyBlocks' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 60,
@@ -2202,7 +2337,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 70,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyIfBlock' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyIfBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyIfBlock' does not have javadoc that explains how to do that safely. If class is not designed 
+for extension consider making the class 'ErrorProne' final or making the method 'emptyIfBlock' 
+static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 70,
@@ -2254,7 +2392,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 76,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyStatementBlock' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyStatementBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyStatementBlock' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptyStatementBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 76,
@@ -2319,7 +2460,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 80,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyStatementNotInLoop' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyStatementNotInLoop' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyStatementNotInLoop' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptyStatementNotInLoop' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 80,
@@ -2358,7 +2502,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 84,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptySwitchStatements' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptySwitchStatements' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptySwitchStatements' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptySwitchStatements' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 84,
@@ -2410,7 +2557,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 91,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptySynchronizedBlock' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptySynchronizedBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptySynchronizedBlock' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'emptySynchronizedBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 91,
@@ -2449,7 +2599,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 97,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'emptyWhileStmt' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'emptyWhileStmt' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'emptyWhileStmt' does not have javadoc that explains how to do that safely. If class is not designed 
+for extension consider making the class 'ErrorProne' final or making the method 'emptyWhileStmt' 
+static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 97,
@@ -2488,7 +2641,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 103,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'jumbledIncrementer' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'jumbledIncrementer' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'jumbledIncrementer' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'jumbledIncrementer' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 103,
@@ -2540,7 +2696,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 111,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'misplacedNullCheck' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'misplacedNullCheck' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'misplacedNullCheck' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'misplacedNullCheck' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 111,
@@ -2579,7 +2738,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 115,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'equals' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'equals' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'equals' 
+does not have javadoc that explains how to do that safely. If class is not designed for extension 
+consider making the class 'ErrorProne' final or making the method 'equals' 
+static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 115,
@@ -2631,7 +2793,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 119,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'returnFromFinallyBlock' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'returnFromFinallyBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'returnFromFinallyBlock' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'returnFromFinallyBlock' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 119,
@@ -2657,7 +2822,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 127,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'unconditionalIfStatement' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'unconditionalIfStatement' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'unconditionalIfStatement' does not have javadoc that explains how to do that safely. If class is 
+not designed for extension consider making the class 'ErrorProne' final or making the method 
+'unconditionalIfStatement' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 127,
@@ -2683,7 +2851,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 134,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'unnecessaryConversionTemporary' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'unnecessaryConversionTemporary' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'unnecessaryConversionTemporary' does not have javadoc that explains how to do that safely. If class 
+is not designed for extension consider making the class 'ErrorProne' final or making the method 
+'unnecessaryConversionTemporary' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 134,
@@ -2722,7 +2894,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 138,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'unusedNullCheckInEquals' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'unusedNullCheckInEquals' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'unusedNullCheckInEquals' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'ErrorProne' final or making the method 
+'unusedNullCheckInEquals' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 138,
@@ -2774,7 +2949,11 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 142,
-  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 'uselessOperationOnImmutable' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'ErrorProne' final or making the method 'uselessOperationOnImmutable' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'ErrorProne' looks like designed for extension (can be subclassed), but the method 
+'uselessOperationOnImmutable' does not have javadoc that explains how to do that safely. If class is 
+not designed for extension consider making the class 'ErrorProne' final or making the method 
+'uselessOperationOnImmutable' static/final/abstract/empty, or adding allowed annotation for the 
+method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 142,
@@ -2852,7 +3031,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 7,
-  "message": "Class 'Multithreading' looks like designed for extension (can be subclassed), but the method 'avoidThreadGroup' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Multithreading' final or making the method 'avoidThreadGroup' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'Multithreading' looks like designed for extension (can be subclassed), but the method 
+'avoidThreadGroup' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'Multithreading' final or making the method 
+'avoidThreadGroup' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 7,
@@ -2878,7 +3060,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 11,
-  "message": "Class 'Multithreading' looks like designed for extension (can be subclassed), but the method 'dontCallThreadRun' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Multithreading' final or making the method 'dontCallThreadRun' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'Multithreading' looks like designed for extension (can be subclassed), but the method 
+'dontCallThreadRun' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'Multithreading' final or making the method 
+'dontCallThreadRun' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 11,
@@ -2904,7 +3089,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 15,
-  "message": "Class 'Multithreading' looks like designed for extension (can be subclassed), but the method 'doubleCheckedLocking' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Multithreading' final or making the method 'doubleCheckedLocking' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'Multithreading' looks like designed for extension (can be subclassed), but the method 
+'doubleCheckedLocking' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'Multithreading' final or making the method 
+'doubleCheckedLocking' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 15,
@@ -2930,7 +3118,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 7,
-  "message": "Class 'Performance' looks like designed for extension (can be subclassed), but the method 'bigIntegerInstantiation' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Performance' final or making the method 'bigIntegerInstantiation' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'Performance' looks like designed for extension (can be subclassed), but the method 
+'bigIntegerInstantiation' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'Performance' final or making the method 
+'bigIntegerInstantiation' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 7,
@@ -2956,7 +3147,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 11,
-  "message": "Class 'Performance' looks like designed for extension (can be subclassed), but the method 'booleanInstantiation' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Performance' final or making the method 'booleanInstantiation' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'Performance' looks like designed for extension (can be subclassed), but the method 
+'booleanInstantiation' does not have javadoc that explains how to do that safely. If class is not 
+designed for extension consider making the class 'Performance' final or making the method 
+'booleanInstantiation' static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 11,
@@ -3034,7 +3228,10 @@ Object {
   "annotation_level": "failure",
   "end_column": 5,
   "end_line": 14,
-  "message": "Class 'BestPractices' looks like designed for extension (can be subclassed), but the method 'checkResultSet' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'BestPractices' final or making the method 'checkResultSet' static/final/abstract/empty, or adding allowed annotation for the method.",
+  "message": "Class 'BestPractices' looks like designed for extension (can be subclassed), but the method 
+'checkResultSet' does not have javadoc that explains how to do that safely. If class is not designed 
+for extension consider making the class 'BestPractices' final or making the method 'checkResultSet' 
+static/final/abstract/empty, or adding allowed annotation for the method.",
   "path": Any<String>,
   "start_column": 5,
   "start_line": 14,
