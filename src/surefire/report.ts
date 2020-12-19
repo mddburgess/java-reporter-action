@@ -1,4 +1,4 @@
-export interface SurefireReport {
+interface SurefireReport {
 
     tests: number;
     failures: number;
@@ -7,11 +7,23 @@ export interface SurefireReport {
     testCases: SurefireTestCase[];
 }
 
-export interface SurefireTestCase {
+interface SurefireTestCase {
 
     className: string;
     testName: string;
-    result?: 'failure' | 'error' | 'skipped';
+    result?: SurefireTestResult;
     message?: string;
     stackTrace?: string;
 }
+
+type SurefireTestResult =
+    | 'success'
+    | 'failure'
+    | 'error'
+    | 'skipped';
+
+export {
+    SurefireTestCase,
+    SurefireTestResult
+};
+export default SurefireReport;

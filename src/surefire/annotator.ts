@@ -47,8 +47,10 @@ function resolveAnnotationLevel(testCase: SurefireTestCase): AnnotationLevel {
         case 'error':
             return 'failure';
         case 'skipped':
-        case undefined:
             return 'notice';
+        case 'success':
+        case undefined:
+            throw Error('unexpected test case');
     }
 }
 

@@ -4,7 +4,7 @@ import {Context} from '@actions/github/lib/context';
 import * as fs from 'fs';
 import {findFiles} from '../common/files';
 import {SurefireParser} from './parser';
-import {SurefireReport} from './report';
+import SurefireReport from './report';
 import {toAnnotation} from './annotator';
 
 

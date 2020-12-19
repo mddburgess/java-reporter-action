@@ -1,6 +1,6 @@
 import {parseAttrs} from 'saxophone-ts';
 import {CDATANode, TagCloseNode, TagOpenNode, TextNode} from 'saxophone-ts/dist/types/src/static/nodes';
-import {SurefireReport, SurefireTestCase} from './report';
+import SurefireReport, {SurefireTestCase} from './report';
 import {XmlParser} from '../common/xml-parser';
 
 export class SurefireParser extends XmlParser<SurefireReport> {

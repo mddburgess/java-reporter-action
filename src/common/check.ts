@@ -3,17 +3,19 @@ import * as github from '@actions/github';
 import * as glob from '@actions/glob';
 import path from 'path';
 
-abstract class Check {
+abstract class Check<T> {
 
     private static readonly workspacePath = process.env.GITHUB_WORKSPACE || '';
 
     private readonly reportType: string;
     private readonly checkCondition: CheckCondition;
+    private readonly searchPaths: string[];
     private checkRunId?: number;
 
     protected constructor(reportType: string) {
         this.reportType = reportType;
         this.checkCondition = this.resolveCheckCondition();
+        this.searchPaths = this.resolveSearchPaths();
     }
 
     private resolveCheckCondition() {
@@ -31,6 +33,8 @@ abstract class Check {
         }
     }
 
+    protected abstract resolveSearchPaths(): string[];
+
     public async run() {
         if (this.checkCondition === CheckCondition.disabled) {
             core.warning(`${this.reportType} check is disabled.`);
@@ -43,6 +47,11 @@ abstract class Check {
             core.info(`No ${this.reportType} reports found. Skipping check.`);
             return;
         }
+
+        const aggregateReport = this.aggregateReports(reportPaths);
+        core.startGroup(`Aggregate ${this.reportType} report:`);
+        core.info(JSON.stringify(aggregateReport, undefined, 2));
+        core.endGroup();
 
         const token = core.getInput('github-token', {required: true});
         const octokit = github.getOctokit(token);
@@ -64,11 +73,10 @@ abstract class Check {
     private async findReports() {
         core.startGroup(`Searching for ${this.reportType} reports...`);
 
-        const searchPaths = this.reportSearchPaths();
-        searchPaths.forEach(searchPath => core.info(searchPath));
+        this.searchPaths.forEach(searchPath => core.info(searchPath));
         core.endGroup();
 
-        const globber = await glob.create(searchPaths.join('\n'));
+        const globber = await glob.create(this.searchPaths.join('\n'));
         const reportPaths = await globber.glob();
 
         core.startGroup(`Found ${reportPaths.length} ${this.reportType} reports.`);
@@ -78,7 +86,21 @@ abstract class Check {
         return reportPaths;
     }
 
-    protected abstract reportSearchPaths(): string[];
+    private aggregateReports(reportPaths: string[]): T | undefined {
+        let aggregate = undefined;
+        for (const reportPath of reportPaths) {
+            const report = this.readReport(reportPath);
+            if (aggregate === undefined) {
+                aggregate = report;
+            } else if (report !== undefined) {
+                this.aggregateReport(aggregate, report);
+            }
+        }
+        return aggregate;
+    }
+
+    protected abstract readReport(reportPath: string): T | undefined;
+    protected abstract aggregateReport(aggregate: T, report: T): void;
 }
 
 enum CheckCondition {
