@@ -59,10 +59,12 @@ abstract class Check<T> {
             return;
         }
 
-        const annotations = await this.createAnnotations(aggregateReport);
+        const annotations = (await this.createAnnotations(aggregateReport))
+            .sort((a, b) => a.path.localeCompare(b.path) || a.start_line - b.start_line || a.end_line - b.end_line);
         core.startGroup(`Annotations:`);
         core.info(JSON.stringify(annotations, undefined, 2));
         core.endGroup();
+
 
         const token = core.getInput('github-token', {required: true});
         const octokit = github.getOctokit(token);
@@ -115,7 +117,9 @@ abstract class Check<T> {
     }
 
     protected abstract readReport(reportPath: string): T | undefined;
+
     protected abstract aggregateReport(aggregate: T, report: T): void;
+
     protected abstract createAnnotations(aggregate: T): Promise<Annotation[]>;
 
     private resolveConclusion(annotations: Annotation[]) {
@@ -129,6 +133,7 @@ abstract class Check<T> {
     }
 
     protected abstract resolveTitle(aggregate: T): string;
+
     protected abstract resolveSummary(aggregate: T): string;
 }
 

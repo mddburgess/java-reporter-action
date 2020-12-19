@@ -119,7 +119,8 @@ class Check {
                 core.warning(`Failed to read ${this.reportType} reports. Skipping check.`);
                 return;
             }
-            const annotations = yield this.createAnnotations(aggregateReport);
+            const annotations = (yield this.createAnnotations(aggregateReport))
+                .sort((a, b) => a.path.localeCompare(b.path) || a.start_line - b.start_line || a.end_line - b.end_line);
             core.startGroup(`Annotations:`);
             core.info(JSON.stringify(annotations, undefined, 2));
             core.endGroup();
