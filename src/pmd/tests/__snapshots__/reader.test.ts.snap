@@ -733,7 +733,7 @@ Object {
       "endColumn": 43,
       "endLine": 14,
       "filePath": "/Users/mike/Projects/java-reporter-action/example/src/main/java/org/example/pmd/Design.java",
-      "message": "Ternary operators that can be simplified with || or &amp;&amp;.",
+      "message": "Ternary operators that can be simplified with || or &&.",
       "priority": "3",
       "rule": "SimplifiedTernary",
       "ruleset": "Design",

@@ -24,6 +24,7 @@
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
     "@actions/glob": "^0.1.1",
+    "html-entities": "^1.4.0",
     "saxophone-ts": "^0.6.4"
   },
   "devDependencies": {

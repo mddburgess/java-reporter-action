@@ -15,7 +15,7 @@ Object {
     },
     Object {
       "className": "org.example.SimpleTest",
-      "message": undefined,
+      "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException: error message
 	at org.example.SimpleTest.errorTestWithMessage(SimpleTest.java:29)",
@@ -23,7 +23,7 @@ Object {
     },
     Object {
       "className": "org.example.SimpleTest",
-      "message": undefined,
+      "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: 
 	at org.example.SimpleTest.failingTestWithoutMessage(SimpleTest.java:24)",
@@ -31,7 +31,7 @@ Object {
     },
     Object {
       "className": "org.example.SimpleTest",
-      "message": undefined,
+      "message": "",
       "result": "skipped",
       "stackTrace": "org.opentest4j.TestAbortedException: Assumption failed: assumption is not true
 	at org.example.SimpleTest.skippedTest(SimpleTest.java:45)",
@@ -39,7 +39,7 @@ Object {
     },
     Object {
       "className": "org.example.SimpleTest",
-      "message": undefined,
+      "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException
 	at org.example.SimpleTest.errorTestWithoutMessage(SimpleTest.java:34)",
@@ -47,7 +47,7 @@ Object {
     },
     Object {
       "className": "org.example.SimpleTest",
-      "message": undefined,
+      "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: expected: <5> but was: <4>
 	at org.example.SimpleTest.failingTestWithMessage(SimpleTest.java:19)",

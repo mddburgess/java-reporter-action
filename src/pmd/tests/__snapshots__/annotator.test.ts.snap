@@ -863,7 +863,7 @@ Object {
   "annotation_level": "warning",
   "end_column": 43,
   "end_line": 14,
-  "message": "Ternary operators that can be simplified with || or &amp;&amp;.",
+  "message": "Ternary operators that can be simplified with || or &&.",
   "path": Any<String>,
   "start_column": 16,
   "start_line": 14,

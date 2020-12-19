@@ -2,6 +2,7 @@ import ReportReader from '../common/reader';
 import CpdReport, {CpdDuplication} from './report';
 import {CDATANode, TagCloseNode, TagOpenNode, TextNode} from 'saxophone-ts/dist/types/src/static/nodes';
 import {parseAttrs} from 'saxophone-ts';
+import {XmlEntities} from 'html-entities';
 
 class CpdReportReader extends ReportReader<CpdReport> {
 
@@ -42,7 +43,7 @@ class CpdReportReader extends ReportReader<CpdReport> {
 
     private onFileOpen(attrs: FileAttrs) {
         this.duplication.files.push({
-            path: attrs.path,
+            path: XmlEntities.decode(attrs.path),
             startLine: Number(attrs.line),
             endLine: Number(attrs.endline),
             startColumn: Number(attrs.column),

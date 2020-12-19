@@ -2,6 +2,8 @@ import ReportReader from '../common/reader';
 import PmdReport, {PmdViolation} from './report';
 import {CDATANode, TagCloseNode, TagOpenNode, TextNode} from 'saxophone-ts/dist/types/src/static/nodes';
 import {parseAttrs} from 'saxophone-ts';
+import {XmlEntities} from 'html-entities';
+
 
 class PmdReportReader extends ReportReader<PmdReport> {
 
@@ -34,14 +36,14 @@ class PmdReportReader extends ReportReader<PmdReport> {
 
     private onViolationOpen(attrs: ViolationAttrs) {
         this.violation = {
-            filePath: this.filePath,
+            filePath: XmlEntities.decode(this.filePath),
             startLine: Number(attrs.beginline),
             endLine: Number(attrs.endline),
             startColumn: Number(attrs.begincolumn),
             endColumn: Number(attrs.endcolumn),
-            ruleset: attrs.ruleset,
-            rule: attrs.rule,
-            priority: attrs.priority,
+            ruleset: XmlEntities.decode(attrs.ruleset),
+            rule: XmlEntities.decode(attrs.rule),
+            priority: XmlEntities.decode(attrs.priority),
             message: '',
         }
     }
@@ -60,7 +62,7 @@ class PmdReportReader extends ReportReader<PmdReport> {
     }
 
     protected onText(tag: TextNode | CDATANode): void {
-        this.violation && (this.violation.message += tag.contents);
+        this.violation && (this.violation.message += XmlEntities.decode(tag.contents));
     }
 }
 

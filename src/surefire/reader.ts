@@ -2,6 +2,7 @@ import ReportReader from '../common/reader';
 import SurefireReport, {SurefireTestCase, SurefireTestResult} from './report';
 import {CDATANode, TagCloseNode, TagOpenNode, TextNode} from 'saxophone-ts/dist/types/src/static/nodes';
 import {parseAttrs} from 'saxophone-ts';
+import {XmlEntities} from 'html-entities';
 
 class SurefireReportReader extends ReportReader<SurefireReport> {
 
@@ -38,13 +39,13 @@ class SurefireReportReader extends ReportReader<SurefireReport> {
     }
 
     private onTestCaseOpen(attrs: TestCaseAttrs) {
-        this.testCase.className = attrs.classname;
-        this.testCase.testName = attrs.name;
+        this.testCase.className = XmlEntities.decode(attrs.classname);
+        this.testCase.testName = XmlEntities.decode(attrs.name);
     }
 
     private onTestResultOpen(result: SurefireTestResult, attrs: TestResultAttrs) {
         this.testCase.result = result;
-        this.testCase.message = attrs.message;
+        this.testCase.message = XmlEntities.decode(attrs.message);
     }
 
     protected onTagClose(tag: TagCloseNode): void {
@@ -64,7 +65,7 @@ class SurefireReportReader extends ReportReader<SurefireReport> {
     protected onText(tag: TextNode | CDATANode): void {
         const context = this.getContext();
         if (context === 'failure' || context === 'error' || context === 'skipped') {
-            this.testCase.stackTrace = (this.testCase.stackTrace || '').concat(tag.contents);
+            this.testCase.stackTrace = (this.testCase.stackTrace || '').concat(XmlEntities.decode(tag.contents));
         }
     }
 }
