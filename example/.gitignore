@@ -1,3 +1,5 @@
+target/checkstyle-cachefile
+target/checkstyle-checker.xml
 target/classes
 target/generated-test-sources
 target/maven-archiver
