@@ -1,8 +1,8 @@
 import * as core from '@actions/core';
-import * as github from '@actions/github';
 import * as glob from '@actions/glob';
 import path from 'path';
 import {Annotation} from './github';
+import CheckRun from './check-run';
 
 abstract class Check<T> {
 
@@ -11,12 +11,13 @@ abstract class Check<T> {
     private readonly reportType: string;
     private readonly checkCondition: CheckCondition;
     private readonly searchPaths: string[];
-    private checkRunId?: number;
+    private readonly checkRun: CheckRun;
 
     protected constructor(reportType: string) {
         this.reportType = reportType;
         this.checkCondition = this.resolveCheckCondition();
         this.searchPaths = this.resolveSearchPaths();
+        this.checkRun = new CheckRun(this.reportType);
     }
 
     private resolveCheckCondition() {
@@ -65,24 +66,14 @@ abstract class Check<T> {
         core.info(JSON.stringify(annotations, undefined, 2));
         core.endGroup();
 
-
-        const token = core.getInput('github-token', {required: true});
-        const octokit = github.getOctokit(token);
-        const response = await octokit.checks.create({
-            ...github.context.repo,
-            name: this.reportType,
-            head_sha: github.context.payload.pull_request
-                ? github.context.payload.pull_request.head.sha
-                : github.context.sha,
-            status: 'completed',
+        await this.checkRun.conclude({
             conclusion: this.resolveConclusion(annotations),
             output: {
                 title: this.resolveTitle(aggregateReport),
                 summary: this.resolveSummary(aggregateReport),
-                annotations: annotations.slice(0, 50)
+                annotations
             }
         });
-        this.checkRunId = response.data.id;
 
         core.info(`${this.reportType} check finished.`);
     }
