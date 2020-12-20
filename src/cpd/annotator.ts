@@ -7,7 +7,7 @@ class CpdAnnotator {
     public annotate(report: CpdReport): Annotation[] {
         return report.duplications
             .map(duplication => this.annotateDuplication(duplication))
-            .reduce((a, b) => a.concat(b));
+            .reduce((a, b) => a.concat(b), []);
     }
 
     private annotateDuplication(duplication: CpdDuplication): Annotation[] {

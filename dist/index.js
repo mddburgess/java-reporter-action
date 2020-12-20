@@ -569,7 +569,7 @@ class CpdAnnotator {
     annotate(report) {
         return report.duplications
             .map(duplication => this.annotateDuplication(duplication))
-            .reduce((a, b) => a.concat(b));
+            .reduce((a, b) => a.concat(b), []);
     }
     annotateDuplication(duplication) {
         duplication.files.forEach(file => file.path = this.resolvePath(file.path));

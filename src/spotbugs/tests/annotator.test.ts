@@ -12,4 +12,13 @@ describe('SpotBugs annotator', () => {
         const annotations = await new SpotbugsAnnotator().annotate(report);
         expect(annotations).toMatchSnapshot();
     });
+
+    it('can handle a clean SpotBugs report', async () => {
+        const report = {
+            categories: new Map<string, string>(),
+            bugs: []
+        };
+        const annotations = await new SpotbugsAnnotator().annotate(report);
+        expect(annotations).toEqual([])
+    })
 });
