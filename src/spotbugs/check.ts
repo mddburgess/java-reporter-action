@@ -1,7 +1,10 @@
 import Check from '../common/check';
 import {Annotation} from '../common/github';
+import SpotbugsAnnotator from './annotator';
+import SpotbugsReport from './report';
+import SpotbugsReportReader from './reader';
 
-class SpotbugsCheck extends Check<string> {
+class SpotbugsCheck extends Check<SpotbugsReport> {
 
     constructor() {
         super('spotbugs');
@@ -11,23 +14,26 @@ class SpotbugsCheck extends Check<string> {
         return ['**/target/spotbugsXml.xml'];
     }
 
-    protected readReport(reportPath: string): string | undefined {
-        return undefined;
+    protected readReport(reportPath: string): SpotbugsReport | undefined {
+        return new SpotbugsReportReader().readReport(reportPath);
     }
 
-    protected aggregateReport(aggregate: string, report: string): void {
+    protected aggregateReport(aggregate: SpotbugsReport, report: SpotbugsReport): void {
+        report.categories.forEach((value, key) => aggregate.categories.set(key, value));
     }
 
-    protected createAnnotations(aggregate: string): Promise<Annotation[]> {
-        return Promise.reject();
+    protected createAnnotations(aggregate: SpotbugsReport): Promise<Annotation[]> {
+        return new SpotbugsAnnotator().annotate(aggregate);
     }
 
-    protected resolveTitle(aggregate: string): string {
-        return '';
+    protected resolveTitle(aggregate: SpotbugsReport): string {
+        return aggregate.bugs.length
+            ? `${aggregate.bugs.length} bugs found`
+            : `No bugs found`;
     }
 
-    protected resolveSummary(aggregate: string): string {
-        return '';
+    protected resolveSummary(aggregate: SpotbugsReport): string {
+        return this.resolveTitle(aggregate);
     }
 }
 

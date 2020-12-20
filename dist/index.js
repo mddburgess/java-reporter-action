@@ -824,6 +824,75 @@ exports.default = PmdReportReader;
 
 /***/ }),
 
+/***/ 8433:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const files_1 = __webpack_require__(9337);
+class SpotbugsAnnotator {
+    constructor() {
+        this.filePaths = new Map();
+    }
+    annotate(report) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const annotations = [];
+            for (const bug of report.bugs) {
+                annotations.push(yield this.annotateViolation(bug, report.categories));
+            }
+            return annotations;
+        });
+    }
+    annotateViolation(bug, categories) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return {
+                path: this.filePaths.get(bug.filePath) || (yield this.resolvePath(bug.filePath)),
+                start_line: bug.startLine,
+                end_line: bug.endLine,
+                annotation_level: this.resolveAnnotationLevel(bug),
+                title: this.resolveTitle(bug, categories),
+                message: bug.longMessage
+            };
+        });
+    }
+    resolvePath(filePath) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const searchPath = `**/${filePath}`;
+            const foundFilePath = yield files_1.findRelativePath(searchPath);
+            this.filePaths.set(filePath, foundFilePath);
+            return foundFilePath;
+        });
+    }
+    resolveAnnotationLevel(bug) {
+        switch (bug.priority) {
+            case 1:
+                return 'failure';
+            case 2:
+                return 'warning';
+            default:
+                return 'notice';
+        }
+    }
+    resolveTitle(bug, categories) {
+        const category = categories.get(bug.category) || bug.category;
+        return `${category}: ${bug.shortMessage}`;
+    }
+}
+exports.default = SpotbugsAnnotator;
+
+
+/***/ }),
+
 /***/ 1905:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -834,6 +903,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const check_1 = __importDefault(__webpack_require__(3183));
+const annotator_1 = __importDefault(__webpack_require__(8433));
+const reader_1 = __importDefault(__webpack_require__(517));
 class SpotbugsCheck extends check_1.default {
     constructor() {
         super('spotbugs');
@@ -842,21 +913,119 @@ class SpotbugsCheck extends check_1.default {
         return ['**/target/spotbugsXml.xml'];
     }
     readReport(reportPath) {
-        return undefined;
+        return new reader_1.default().readReport(reportPath);
     }
     aggregateReport(aggregate, report) {
+        report.categories.forEach((value, key) => aggregate.categories.set(key, value));
     }
     createAnnotations(aggregate) {
-        return Promise.reject();
+        return new annotator_1.default().annotate(aggregate);
     }
     resolveTitle(aggregate) {
-        return '';
+        return aggregate.bugs.length
+            ? `${aggregate.bugs.length} bugs found`
+            : `No bugs found`;
     }
     resolveSummary(aggregate) {
-        return '';
+        return this.resolveTitle(aggregate);
     }
 }
 exports.default = SpotbugsCheck;
+
+
+/***/ }),
+
+/***/ 517:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const reader_1 = __importDefault(__webpack_require__(3900));
+const saxophone_ts_1 = __webpack_require__(3902);
+const html_entities_1 = __webpack_require__(2589);
+class SpotbugsReportReader extends reader_1.default {
+    constructor() {
+        super(...arguments);
+        this.category = '';
+        this.bug = {
+            filePath: '',
+            startLine: 0,
+            endLine: 0,
+            category: '',
+            priority: 0,
+            shortMessage: '',
+            longMessage: ''
+        };
+    }
+    onTagOpen(tag) {
+        switch (tag.name) {
+            case 'BugCollection':
+                this.onBugCollectionOpen();
+                break;
+            case 'BugInstance':
+                this.onBugInstanceOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case 'SourceLine':
+                this.onSourceLineOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case 'BugCategory':
+                this.onBugCategoryOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+        }
+    }
+    onBugCollectionOpen() {
+        this.report = {
+            categories: new Map(),
+            bugs: []
+        };
+    }
+    onBugInstanceOpen(attrs) {
+        this.bug = {
+            filePath: '',
+            startLine: 0,
+            endLine: 0,
+            category: html_entities_1.XmlEntities.decode(attrs.category),
+            priority: Number(attrs.priority),
+            shortMessage: '',
+            longMessage: ''
+        };
+        this.report && this.report.bugs.push(this.bug);
+    }
+    onSourceLineOpen(attrs) {
+        if (this.getContext() !== 'BugInstance') {
+            return;
+        }
+        this.bug.filePath = html_entities_1.XmlEntities.decode(attrs.sourcepath);
+        this.bug.startLine = Number(attrs.start);
+        this.bug.endLine = Number(attrs.end);
+    }
+    onBugCategoryOpen(attrs) {
+        this.category = attrs.category;
+    }
+    onTagClose(tag) {
+        if (tag.name === 'BugCategory') {
+            this.category = '';
+        }
+    }
+    onText(tag) {
+        switch (this.getContext()) {
+            case 'ShortMessage':
+                this.bug.shortMessage = html_entities_1.XmlEntities.decode(tag.contents);
+                break;
+            case 'LongMessage':
+                this.bug.longMessage = html_entities_1.XmlEntities.decode(tag.contents);
+                break;
+            case 'Description':
+                this.report && this.category && this.report.categories.set(this.category, tag.contents);
+                break;
+        }
+    }
+}
+exports.default = SpotbugsReportReader;
 
 
 /***/ }),

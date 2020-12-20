@@ -5,6 +5,8 @@ import SurefireAnnotator from '../annotator';
 
 describe('Surefire annotator', () => {
 
+    jest.setTimeout(10000);
+
     it('can annotate a Surefire report', async () => {
         const reportPath = await findFile('**/TEST-org.example.SimpleTest.xml');
         const report = new SurefireReportReader().readReport(reportPath) || fail();
