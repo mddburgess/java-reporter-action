@@ -1,18 +1,15 @@
 import * as core from '@actions/core';
-import * as github from '@actions/github';
 import {Annotation} from './github';
+import Github from "../github";
 
 class CheckRun {
 
-    private readonly token;
-    private readonly octokit;
-
+    private readonly github;
     private readonly name;
     private checkRunId?: number;
 
     constructor(name: string) {
-        this.token = core.getInput('github-token', {required: true});
-        this.octokit = github.getOctokit(this.token);
+        this.github = new Github();
         this.name = name;
     }
 
@@ -60,13 +57,10 @@ class CheckRun {
 
     private async createCheckRun(request: CheckRunRequest) {
         core.debug(`Creating ${this.name} check run...`);
-        const response = await this.octokit.checks.create({
-            ...github.context.repo,
+        this.checkRunId = await this.github.createCheck({
             name: this.name,
-            head_sha: this.resolveHeadSha(),
             ...request
         });
-        this.checkRunId = response.data.id;
     }
 
     private async updateCheckRun(request: CheckRunRequest) {
@@ -75,17 +69,10 @@ class CheckRun {
         }
 
         core.debug(`Updating ${this.name} check run...`);
-        await this.octokit.checks.update({
-            ...github.context.repo,
+        await this.github.updateCheck({
             check_run_id: this.checkRunId,
             ...request
         });
-    }
-
-    private resolveHeadSha() {
-        return github.context.payload.pull_request
-            ? github.context.payload.pull_request.head.sha
-            : github.context.sha;
     }
 }
 
