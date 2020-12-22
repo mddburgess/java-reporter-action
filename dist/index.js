@@ -202,7 +202,10 @@ class Check {
         this.reportType = reportType;
         this.checkCondition = this.resolveCheckCondition();
         this.searchPaths = this.resolveSearchPaths();
-        this.checkRun = new check_run_1.default(this.reportType);
+        this.checkRun = new check_run_1.default(this.reportType, {
+            title: (report) => this.resolveTitle(report),
+            summary: (report) => this.resolveSummary(report)
+        });
     }
     resolveCheckCondition() {
         const condition = core.getInput(this.reportType);
@@ -244,14 +247,6 @@ class Check {
             core.endGroup();
             yield this.checkRun.annotate(aggregateReport, annotations);
             yield this.checkRun.conclude(aggregateReport);
-            // await this.checkRun.conclude({
-            //     conclusion: this.resolveConclusion(annotations),
-            //     output: {
-            //         title: this.resolveTitle(aggregateReport),
-            //         summary: this.resolveSummary(aggregateReport),
-            //         annotations
-            //     }
-            // });
             core.info(`${this.reportType} check finished.`);
         });
     }
@@ -624,13 +619,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const index_1 = __importDefault(__webpack_require__(5433));
 class CheckRun {
-    constructor(name) {
+    constructor(name, resolvers) {
+        var _a, _b, _c;
         this.github = new index_1.default();
         this.name = name;
         this.conclusion = () => "neutral";
-        this.title = () => this.name;
-        this.summary = (report) => this.title(report);
-        this.text = () => undefined;
+        this.title = (_a = resolvers === null || resolvers === void 0 ? void 0 : resolvers.title) !== null && _a !== void 0 ? _a : (() => this.name);
+        this.summary = (_b = resolvers === null || resolvers === void 0 ? void 0 : resolvers.summary) !== null && _b !== void 0 ? _b : ((report) => this.title(report));
+        this.text = (_c = resolvers === null || resolvers === void 0 ? void 0 : resolvers.text) !== null && _c !== void 0 ? _c : (() => undefined);
     }
     queue() {
         return __awaiter(this, void 0, void 0, function* () {

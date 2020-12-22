@@ -12,13 +12,13 @@ class CheckRun<T> {
 
   private checkRunId?: number;
 
-  constructor(name: string) {
+  constructor(name: string, resolvers?: CheckResolvers<T>) {
     this.github = new Github();
     this.name = name;
     this.conclusion = () => "neutral";
-    this.title = () => this.name;
-    this.summary = (report) => this.title(report);
-    this.text = () => undefined;
+    this.title = resolvers?.title ?? (() => this.name);
+    this.summary = resolvers?.summary ?? ((report) => this.title(report));
+    this.text = resolvers?.text ?? (() => undefined);
   }
 
   async queue() {
@@ -67,6 +67,12 @@ class CheckRun<T> {
       });
     }
   }
+}
+
+interface CheckResolvers<T> {
+  title: (report: T) => string;
+  summary: (report: T) => string;
+  text?: (report: T) => string;
 }
 
 export default CheckRun;

@@ -17,7 +17,10 @@ abstract class Check<T> {
         this.reportType = reportType;
         this.checkCondition = this.resolveCheckCondition();
         this.searchPaths = this.resolveSearchPaths();
-        this.checkRun = new CheckRun(this.reportType);
+        this.checkRun = new CheckRun(this.reportType, {
+            title: (report) => this.resolveTitle(report),
+            summary: (report) => this.resolveSummary(report)
+        });
     }
 
     private resolveCheckCondition() {
@@ -68,14 +71,6 @@ abstract class Check<T> {
 
         await this.checkRun.annotate(aggregateReport, annotations);
         await this.checkRun.conclude(aggregateReport);
-        // await this.checkRun.conclude({
-        //     conclusion: this.resolveConclusion(annotations),
-        //     output: {
-        //         title: this.resolveTitle(aggregateReport),
-        //         summary: this.resolveSummary(aggregateReport),
-        //         annotations
-        //     }
-        // });
 
         core.info(`${this.reportType} check finished.`);
     }
