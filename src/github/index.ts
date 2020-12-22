@@ -1,5 +1,6 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
+import { CreateCheckRequest, UpdateCheckRequest } from "./types";
 
 class Github {
   private readonly token;
@@ -10,7 +11,7 @@ class Github {
     this.octokit = github.getOctokit(this.token);
   }
 
-  async createCheck(request: any) {
+  async createCheck(request: CreateCheckRequest) {
     core.debug("Creating check run");
     const response = await this.octokit.checks.create({
       ...github.context.repo,
@@ -20,7 +21,7 @@ class Github {
     return response.data.id;
   }
 
-  async updateCheck(request: any) {
+  async updateCheck(request: UpdateCheckRequest) {
     core.debug("Updating check run");
     await this.octokit.checks.update({
       ...github.context.repo,

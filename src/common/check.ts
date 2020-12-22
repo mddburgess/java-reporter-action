@@ -2,7 +2,7 @@ import * as core from '@actions/core';
 import * as glob from '@actions/glob';
 import path from 'path';
 import {Annotation} from './github';
-import CheckRun from './check-run';
+import CheckRun from "../github/check-run";
 
 abstract class Check<T> {
 
@@ -11,7 +11,7 @@ abstract class Check<T> {
     private readonly reportType: string;
     private readonly checkCondition: CheckCondition;
     private readonly searchPaths: string[];
-    private readonly checkRun: CheckRun;
+    private readonly checkRun: CheckRun<T>;
 
     protected constructor(reportType: string) {
         this.reportType = reportType;
@@ -66,14 +66,16 @@ abstract class Check<T> {
         core.info(JSON.stringify(annotations, undefined, 2));
         core.endGroup();
 
-        await this.checkRun.conclude({
-            conclusion: this.resolveConclusion(annotations),
-            output: {
-                title: this.resolveTitle(aggregateReport),
-                summary: this.resolveSummary(aggregateReport),
-                annotations
-            }
-        });
+        await this.checkRun.annotate(aggregateReport, annotations);
+        await this.checkRun.conclude(aggregateReport);
+        // await this.checkRun.conclude({
+        //     conclusion: this.resolveConclusion(annotations),
+        //     output: {
+        //         title: this.resolveTitle(aggregateReport),
+        //         summary: this.resolveSummary(aggregateReport),
+        //         annotations
+        //     }
+        // });
 
         core.info(`${this.reportType} check finished.`);
     }

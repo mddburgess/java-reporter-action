@@ -156,118 +156,6 @@ exports.default = CheckstyleReportReader;
 
 /***/ }),
 
-/***/ 4865:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const core = __importStar(__webpack_require__(2186));
-const github_1 = __importDefault(__webpack_require__(5433));
-class CheckRun {
-    constructor(name) {
-        this.github = new github_1.default();
-        this.name = name;
-    }
-    conclude(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (request.output) {
-                yield this.createOrUpdateCheckRun({
-                    status: 'completed',
-                    conclusion: request.conclusion,
-                    output: {
-                        title: request.output.title,
-                        summary: request.output.summary
-                    }
-                });
-                yield this.annotate(request.output);
-            }
-            else {
-                yield this.createOrUpdateCheckRun({
-                    status: 'completed',
-                    conclusion: request.conclusion
-                });
-            }
-        });
-    }
-    annotate(output) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (!output.annotations || output.annotations.length === 0) {
-                return;
-            }
-            for (let i = 0; i < output.annotations.length; i += 50) {
-                yield this.updateCheckRun({
-                    output: {
-                        title: output.title,
-                        summary: output.summary,
-                        annotations: output.annotations.slice(i, i + 50)
-                    }
-                });
-            }
-        });
-    }
-    createOrUpdateCheckRun(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.checkRunId === undefined) {
-                yield this.createCheckRun(request);
-            }
-            else {
-                yield this.updateCheckRun(request);
-            }
-        });
-    }
-    createCheckRun(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            core.debug(`Creating ${this.name} check run...`);
-            this.checkRunId = yield this.github.createCheck(Object.assign({ name: this.name }, request));
-        });
-    }
-    updateCheckRun(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (this.checkRunId === undefined) {
-                throw Error('Cannot update a check run before creating it');
-            }
-            core.debug(`Updating ${this.name} check run...`);
-            yield this.github.updateCheck(Object.assign({ check_run_id: this.checkRunId }, request));
-        });
-    }
-}
-exports.default = CheckRun;
-
-
-/***/ }),
-
 /***/ 3183:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -308,7 +196,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const glob = __importStar(__webpack_require__(8090));
 const path_1 = __importDefault(__webpack_require__(5622));
-const check_run_1 = __importDefault(__webpack_require__(4865));
+const check_run_1 = __importDefault(__webpack_require__(3244));
 class Check {
     constructor(reportType) {
         this.reportType = reportType;
@@ -354,14 +242,16 @@ class Check {
             core.startGroup(`Annotations:`);
             core.info(JSON.stringify(annotations, undefined, 2));
             core.endGroup();
-            yield this.checkRun.conclude({
-                conclusion: this.resolveConclusion(annotations),
-                output: {
-                    title: this.resolveTitle(aggregateReport),
-                    summary: this.resolveSummary(aggregateReport),
-                    annotations
-                }
-            });
+            yield this.checkRun.annotate(aggregateReport, annotations);
+            yield this.checkRun.conclude(aggregateReport);
+            // await this.checkRun.conclude({
+            //     conclusion: this.resolveConclusion(annotations),
+            //     output: {
+            //         title: this.resolveTitle(aggregateReport),
+            //         summary: this.resolveSummary(aggregateReport),
+            //         annotations
+            //     }
+            // });
             core.info(`${this.reportType} check finished.`);
         });
     }
@@ -710,6 +600,87 @@ class CpdReportReader extends reader_1.default {
     }
 }
 exports.default = CpdReportReader;
+
+
+/***/ }),
+
+/***/ 3244:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const index_1 = __importDefault(__webpack_require__(5433));
+class CheckRun {
+    constructor(name) {
+        this.github = new index_1.default();
+        this.name = name;
+        this.conclusion = () => "neutral";
+        this.title = () => this.name;
+        this.summary = (report) => this.title(report);
+        this.text = () => undefined;
+    }
+    queue() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.saveCheck({ status: "queued" });
+        });
+    }
+    begin() {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.saveCheck({ status: "in_progress" });
+        });
+    }
+    annotate(report, annotations) {
+        return __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < annotations.length; i += 50) {
+                yield this.saveCheck({
+                    output: {
+                        title: this.title(report),
+                        summary: this.summary(report),
+                        text: this.text(report),
+                        annotations: annotations.slice(i, i + 50)
+                    }
+                });
+            }
+        });
+    }
+    conclude(report) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield this.saveCheck({
+                status: "completed",
+                conclusion: this.conclusion(report),
+                output: {
+                    title: this.title(report),
+                    summary: this.summary(report),
+                    text: this.text(report)
+                },
+            });
+        });
+    }
+    saveCheck(request) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (this.checkRunId === undefined) {
+                this.checkRunId = yield this.github.createCheck(Object.assign({ name: this.name }, request));
+            }
+            else {
+                yield this.github.updateCheck(Object.assign({ check_run_id: this.checkRunId }, request));
+            }
+        });
+    }
+}
+exports.default = CheckRun;
 
 
 /***/ }),
