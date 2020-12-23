@@ -1,8 +1,9 @@
-import * as core from '@actions/core';
-import * as glob from '@actions/glob';
-import path from 'path';
-import {Annotation} from './github';
-import CheckRun, { AnnotationSummary } from "../github/check-run";
+import * as core from "@actions/core";
+import * as glob from "@actions/glob";
+import path from "path";
+import { Annotation } from "./github";
+import CheckRun from "../github/check-run";
+import { neutralOnWarnings } from "./conclusions";
 
 abstract class Check<T> {
 
@@ -18,7 +19,7 @@ abstract class Check<T> {
         this.checkCondition = this.resolveCheckCondition();
         this.searchPaths = this.resolveSearchPaths();
         this.checkRun = new CheckRun(this.reportType, {
-            conclusion: (annotations) => this.resolveConclusion(annotations),
+            conclusion: neutralOnWarnings,
             title: (report) => this.resolveTitle(report),
             summary: (report) => this.resolveSummary(report)
         });
@@ -110,16 +111,6 @@ abstract class Check<T> {
     protected abstract aggregateReport(aggregate: T, report: T): void;
 
     protected abstract createAnnotations(aggregate: T): Promise<Annotation[]>;
-
-    private resolveConclusion(annotations: AnnotationSummary) {
-        if (annotations.failures > 0) {
-            return 'failure';
-        }
-        if (annotations.warnings > 0) {
-            return 'neutral';
-        }
-        return 'success';
-    }
 
     protected abstract resolveTitle(aggregate: T): string;
 

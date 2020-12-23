@@ -197,13 +197,14 @@ const core = __importStar(__webpack_require__(2186));
 const glob = __importStar(__webpack_require__(8090));
 const path_1 = __importDefault(__webpack_require__(5622));
 const check_run_1 = __importDefault(__webpack_require__(3244));
+const conclusions_1 = __webpack_require__(3919);
 class Check {
     constructor(reportType) {
         this.reportType = reportType;
         this.checkCondition = this.resolveCheckCondition();
         this.searchPaths = this.resolveSearchPaths();
         this.checkRun = new check_run_1.default(this.reportType, {
-            conclusion: (annotations) => this.resolveConclusion(annotations),
+            conclusion: conclusions_1.neutralOnWarnings,
             title: (report) => this.resolveTitle(report),
             summary: (report) => this.resolveSummary(report)
         });
@@ -277,15 +278,6 @@ class Check {
         }
         return aggregate;
     }
-    resolveConclusion(annotations) {
-        if (annotations.failures > 0) {
-            return 'failure';
-        }
-        if (annotations.warnings > 0) {
-            return 'neutral';
-        }
-        return 'success';
-    }
 }
 Check.workspacePath = process.env.GITHUB_WORKSPACE || '';
 var CheckCondition;
@@ -296,6 +288,34 @@ var CheckCondition;
     CheckCondition[CheckCondition["required"] = 3] = "required";
 })(CheckCondition || (CheckCondition = {}));
 exports.default = Check;
+
+
+/***/ }),
+
+/***/ 3919:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.neutralOnWarnings = exports.failureOnWarnings = void 0;
+const failureOnWarnings = (result) => {
+    if (result.failures + result.warnings > 0) {
+        return "failure";
+    }
+    return "success";
+};
+exports.failureOnWarnings = failureOnWarnings;
+const neutralOnWarnings = (result) => {
+    if (result.failures > 0) {
+        return "failure";
+    }
+    if (result.warnings > 0) {
+        return "neutral";
+    }
+    return "success";
+};
+exports.neutralOnWarnings = neutralOnWarnings;
 
 
 /***/ }),
