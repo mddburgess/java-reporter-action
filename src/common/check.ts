@@ -2,7 +2,7 @@ import * as core from '@actions/core';
 import * as glob from '@actions/glob';
 import path from 'path';
 import {Annotation} from './github';
-import CheckRun from "../github/check-run";
+import CheckRun, { AnnotationSummary } from "../github/check-run";
 
 abstract class Check<T> {
 
@@ -18,6 +18,7 @@ abstract class Check<T> {
         this.checkCondition = this.resolveCheckCondition();
         this.searchPaths = this.resolveSearchPaths();
         this.checkRun = new CheckRun(this.reportType, {
+            conclusion: (annotations) => this.resolveConclusion(annotations),
             title: (report) => this.resolveTitle(report),
             summary: (report) => this.resolveSummary(report)
         });
@@ -110,11 +111,11 @@ abstract class Check<T> {
 
     protected abstract createAnnotations(aggregate: T): Promise<Annotation[]>;
 
-    private resolveConclusion(annotations: Annotation[]) {
-        if (annotations.filter(a => a.annotation_level === 'failure').length > 0) {
+    private resolveConclusion(annotations: AnnotationSummary) {
+        if (annotations.failures > 0) {
             return 'failure';
         }
-        if (annotations.filter(a => a.annotation_level === 'warning').length > 0) {
+        if (annotations.warnings > 0) {
             return 'neutral';
         }
         return 'success';

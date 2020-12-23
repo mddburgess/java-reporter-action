@@ -160,6 +160,7 @@ describe ("CheckRun", () => {
   describe("with custom resolvers", () => {
     it("calls custom resolvers", async () => {
       const checkRun = new CheckRun<string>("name", {
+        conclusion: () => "success",
         title: (report) => `${report} title`,
         summary: (report) => `${report} summary`,
         text: (report) => `${report} text`
@@ -173,7 +174,7 @@ describe ("CheckRun", () => {
       expect(githubInstance.createCheck).toBeCalledWith({
         name: "name",
         status: "completed",
-        conclusion: "neutral",
+        conclusion: "success",
         output: {
           title: "test report title",
           summary: "test report summary",
