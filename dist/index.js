@@ -72,7 +72,8 @@ class Check {
             if (this.runCondition >= RunCondition.expected) {
                 yield this.checkRun.queue();
             }
-            const reportPaths = yield this.resolveReportPaths();
+            const searchPaths = this.resolveSearchPaths();
+            const reportPaths = yield this.resolveReportPaths(searchPaths);
             if (reportPaths.length === 0) {
                 if (this.runCondition >= RunCondition.expected) {
                     const conclusion = this.runCondition === RunCondition.required ? "failure" : "skipped";
@@ -82,6 +83,7 @@ class Check {
                         output: {
                             title: "No reports found",
                             summary: `${this.friendlyName} reports are ${this.runCondition === RunCondition.required ? "required" : "expected"}, but no reports were found.`,
+                            text: ["#### Search paths", "```sh", ...searchPaths, "```"].join("\n"),
                         },
                     });
                 }
@@ -90,9 +92,11 @@ class Check {
             core.info(`${this.friendlyName} check finished.`);
         });
     }
-    resolveReportPaths() {
+    resolveSearchPaths() {
+        return core.getInput(`${this.type}-report-paths`, { required: true }).split(",");
+    }
+    resolveReportPaths(searchPaths) {
         return __awaiter(this, void 0, void 0, function* () {
-            const searchPaths = core.getInput(`${this.type}-report-paths`, { required: true }).split(",");
             core.startGroup(`Searching for ${this.friendlyName} reports`);
             searchPaths.forEach((searchPath) => core.info(searchPath));
             core.endGroup();

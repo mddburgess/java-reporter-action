@@ -38,7 +38,8 @@ export default class Check {
       await this.checkRun.queue();
     }
 
-    const reportPaths = await this.resolveReportPaths();
+    const searchPaths = this.resolveSearchPaths();
+    const reportPaths = await this.resolveReportPaths(searchPaths);
     if (reportPaths.length === 0) {
       if (this.runCondition >= RunCondition.expected) {
         const conclusion = this.runCondition === RunCondition.required ? "failure" : "skipped";
@@ -50,6 +51,7 @@ export default class Check {
             summary: `${this.friendlyName} reports are ${
               this.runCondition === RunCondition.required ? "required" : "expected"
             }, but no reports were found.`,
+            text: ["#### Search paths", "```sh", ...searchPaths, "```"].join("\n"),
           },
         });
       }
@@ -59,9 +61,11 @@ export default class Check {
     core.info(`${this.friendlyName} check finished.`);
   }
 
-  private async resolveReportPaths(): Promise<string[]> {
-    const searchPaths = core.getInput(`${this.type}-report-paths`, { required: true }).split(",");
+  private resolveSearchPaths() {
+    return core.getInput(`${this.type}-report-paths`, { required: true }).split(",");
+  }
 
+  private async resolveReportPaths(searchPaths: string[]): Promise<string[]> {
     core.startGroup(`Searching for ${this.friendlyName} reports`);
     searchPaths.forEach((searchPath) => core.info(searchPath));
     core.endGroup();

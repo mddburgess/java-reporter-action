@@ -60,6 +60,7 @@ describe("Check", () => {
         output: {
           title: "No reports found",
           summary: "Friendly Name reports are expected, but no reports were found.",
+          text: expect.any(String),
         },
       });
     });
@@ -85,6 +86,7 @@ describe("Check", () => {
         output: {
           title: "No reports found",
           summary: "Friendly Name reports are required, but no reports were found.",
+          text: expect.any(String),
         },
       });
     });
