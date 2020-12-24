@@ -41,7 +41,7 @@ export default class Check {
     const reportPaths = await this.resolveReportPaths();
     if (reportPaths.length === 0) {
       if (this.runCondition >= RunCondition.expected) {
-        const conclusion = this.runCondition === RunCondition.required ? "failure" : "neutral";
+        const conclusion = this.runCondition === RunCondition.required ? "failure" : "skipped";
         await this.checkRun.complete(conclusion);
       }
       return;

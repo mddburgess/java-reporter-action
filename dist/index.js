@@ -75,7 +75,7 @@ class Check {
             const reportPaths = yield this.resolveReportPaths();
             if (reportPaths.length === 0) {
                 if (this.runCondition >= RunCondition.expected) {
-                    const conclusion = this.runCondition === RunCondition.required ? "failure" : "neutral";
+                    const conclusion = this.runCondition === RunCondition.required ? "failure" : "skipped";
                     yield this.checkRun.complete(conclusion);
                 }
                 return;
