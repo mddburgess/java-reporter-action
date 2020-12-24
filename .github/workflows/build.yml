@@ -22,6 +22,14 @@ jobs:
           restore-keys: ${{ runner.os }}-node
       - name: Install
         run: npm install
+      - name: Lint
+        run: npm run lint-report
+        continue-on-error: true
+      - name: Annotate lint results
+        uses: ataylorme/eslint-annotate-action@1.1.2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          report-json: eslint-report.json
       - name: Build
         run: npm run build
       - name: Test

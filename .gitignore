@@ -4,3 +4,4 @@ coverage/
 node_modules/
 
 *.iml
+eslint-report.json
