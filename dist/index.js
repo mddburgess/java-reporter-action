@@ -76,7 +76,14 @@ class Check {
             if (reportPaths.length === 0) {
                 if (this.runCondition >= RunCondition.expected) {
                     const conclusion = this.runCondition === RunCondition.required ? "failure" : "skipped";
-                    yield this.checkRun.complete(conclusion);
+                    yield this.checkRun.saveCheck({
+                        status: "completed",
+                        conclusion,
+                        output: {
+                            title: "No reports found",
+                            summary: `${this.friendlyName} reports are ${this.runCondition === RunCondition.required ? "required" : "expected"}, but no reports were found.`,
+                        },
+                    });
                 }
                 return;
             }

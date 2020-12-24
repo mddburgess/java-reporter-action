@@ -54,7 +54,14 @@ describe("Check", () => {
 
       const checkRunMock = CheckRunMock.mock.instances[0];
       expect(checkRunMock.queue).toBeCalled();
-      expect(checkRunMock.complete).toBeCalledWith("skipped");
+      expect(checkRunMock.saveCheck).toBeCalledWith({
+        status: "completed",
+        conclusion: "skipped",
+        output: {
+          title: "No reports found",
+          summary: "Friendly Name reports are expected, but no reports were found.",
+        },
+      });
     });
   });
 
@@ -72,7 +79,14 @@ describe("Check", () => {
 
       const checkRunMock = CheckRunMock.mock.instances[0];
       expect(checkRunMock.queue).toBeCalled();
-      expect(checkRunMock.complete).toBeCalledWith("failure");
+      expect(checkRunMock.saveCheck).toBeCalledWith({
+        status: "completed",
+        conclusion: "failure",
+        output: {
+          title: "No reports found",
+          summary: "Friendly Name reports are required, but no reports were found.",
+        },
+      });
     });
   });
 

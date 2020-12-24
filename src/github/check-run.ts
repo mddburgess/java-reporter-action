@@ -19,7 +19,7 @@ export default class CheckRun {
     await this.saveCheck({ status: "completed", conclusion });
   }
 
-  private async saveCheck(request: CheckRequest) {
+  async saveCheck(request: CheckRequest) {
     if (this.checkRunId === undefined) {
       this.checkRunId = await this.github.createCheck({
         name: this.name,
