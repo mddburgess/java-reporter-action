@@ -1,13 +1,18 @@
 import * as core from "@actions/core";
 import Check from "./check";
+import SurefireParser from "./surefire/parser";
+import PmdParser from "./pmd/parser";
+import CpdParser from "./cpd/parser";
+import SpotbugsParser from "./spotbugs/parser";
+import CheckstyleParser from "./checkstyle/parser";
 
 const main = async () => {
-  const checks: Check[] = [
-    new Check("surefire", "Surefire"),
-    new Check("pmd", "PMD"),
-    new Check("cpd", "CPD"),
-    new Check("spotbugs", "SpotBugs"),
-    new Check("checkstyle", "Checkstyle"),
+  const checks: Check<any>[] = [
+    new Check("surefire", "Surefire", new SurefireParser()),
+    new Check("pmd", "PMD", new PmdParser()),
+    new Check("cpd", "CPD", new CpdParser()),
+    new Check("spotbugs", "SpotBugs", new SpotbugsParser()),
+    new Check("checkstyle", "Checkstyle", new CheckstyleParser()),
   ];
 
   for (const check of checks) {

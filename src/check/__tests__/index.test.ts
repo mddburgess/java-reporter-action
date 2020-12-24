@@ -2,6 +2,7 @@ import { mocked } from "ts-jest/utils";
 import * as core from "@actions/core";
 import Check, { RunCondition } from "../index";
 import CheckRun from "../../github/check-run";
+import SurefireParser from "../../surefire/parser";
 
 jest.mock("../../github/check-run");
 const CheckRunMock = mocked(CheckRun);
@@ -13,7 +14,7 @@ describe("Check", () => {
     it("logs a warning message and returns", async () => {
       process.env["INPUT_TYPE"] = "disabled";
 
-      const check = new Check("type", "Friendly Name");
+      const check = new Check("type", "Friendly Name", new SurefireParser());
       expect(check.runCondition).toBe(RunCondition.disabled);
       expect(CheckRunMock).toBeCalled();
 
@@ -27,7 +28,7 @@ describe("Check", () => {
       process.env["INPUT_TYPE"] = "autodetect";
       process.env["INPUT_TYPE-REPORT-PATHS"] = "reportPaths";
 
-      const check = new Check("type", "Friendly Name");
+      const check = new Check("type", "Friendly Name", new SurefireParser());
       expect(check.runCondition).toBe(RunCondition.autodetect);
       expect(CheckRunMock).toBeCalled();
 
@@ -45,7 +46,7 @@ describe("Check", () => {
       process.env["INPUT_TYPE"] = "expected";
       process.env["INPUT_TYPE-REPORT_PATHS"] = "reportPaths";
 
-      const check = new Check("type", "Friendly Name");
+      const check = new Check("type", "Friendly Name", new SurefireParser());
       expect(check.runCondition).toBe(RunCondition.expected);
       expect(CheckRunMock).toBeCalled();
 
@@ -71,7 +72,7 @@ describe("Check", () => {
       process.env["INPUT_TYPE"] = "required";
       process.env["INPUT_TYPE-REPORT_PATHS"] = "reportPaths";
 
-      const check = new Check("type", "Friendly Name");
+      const check = new Check("type", "Friendly Name", new SurefireParser());
       expect(check.runCondition).toBe(RunCondition.required);
       expect(CheckRunMock).toBeCalled();
 
@@ -96,7 +97,7 @@ describe("Check", () => {
     it("logs a warning and defaults to autodetect", () => {
       process.env["INPUT_TYPE"] = "invalid";
 
-      const check = new Check("type", "Friendly Name");
+      const check = new Check("type", "Friendly Name", new SurefireParser());
       expect(warning).toBeCalledWith("Invalid input: type -- defaulting to autodetect");
       expect(check.runCondition).toBe(RunCondition.autodetect);
     });

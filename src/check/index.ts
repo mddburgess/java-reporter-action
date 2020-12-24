@@ -1,18 +1,21 @@
 import * as core from "@actions/core";
 import * as glob from "@actions/glob";
 import CheckRun from "../github/check-run";
+import ReportParser from "../common/parser";
 
-export default class Check {
+export default class Check<T> {
   private readonly type: string;
   private readonly friendlyName: string;
   readonly runCondition: RunCondition;
   private readonly checkRun: CheckRun;
+  private readonly reportParser: ReportParser<T>;
 
-  constructor(type: string, friendlyName: string) {
+  constructor(type: string, friendlyName: string, reportParser: ReportParser<T>) {
     this.type = type;
     this.friendlyName = friendlyName;
     this.runCondition = this.resolveRunCondition();
     this.checkRun = new CheckRun(this.type);
+    this.reportParser = reportParser;
   }
 
   private resolveRunCondition() {
@@ -58,6 +61,8 @@ export default class Check {
       return;
     }
 
+    const reports = this.readReports(reportPaths);
+
     core.info(`${this.friendlyName} check finished.`);
   }
 
@@ -78,6 +83,10 @@ export default class Check {
     core.endGroup();
 
     return reportPaths;
+  }
+
+  private readReports(reportPaths: string[]) {
+    return reportPaths.map((reportPath) => this.reportParser.read(reportPath));
   }
 }
 
