@@ -41,7 +41,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     core.info("Hello world!");
 });
 main()
-    .catch(error => core.setFailed(error))
+    .catch((error) => core.setFailed(error))
     .finally(() => core.info("Java Reporter finished."));
 
 
