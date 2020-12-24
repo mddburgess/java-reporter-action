@@ -51,7 +51,7 @@ export default class Check {
             summary: `${this.friendlyName} reports are ${
               this.runCondition === RunCondition.required ? "required" : "expected"
             }, but no reports were found.`,
-            text: ["#### Search paths", "```sh", ...searchPaths, "```"].join("\n"),
+            text: ["### Search paths", "```sh", ...searchPaths, "```"].join("\n"),
           },
         });
       }
