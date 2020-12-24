@@ -1,9 +1,9 @@
 import * as core from "@actions/core";
 
-class Check {
+export default class Check {
   private readonly type: string;
   private readonly friendlyName: string;
-  private readonly runCondition: RunCondition;
+  readonly runCondition: RunCondition;
 
   constructor(type: string, friendlyName: string) {
     this.type = type;
@@ -35,11 +35,9 @@ class Check {
   }
 }
 
-enum RunCondition {
+export enum RunCondition {
   disabled,
   autodetect,
   expected,
   required,
 }
-
-export default Check;
