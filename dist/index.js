@@ -85,9 +85,16 @@ class Check {
     }
     resolveReportPaths() {
         return __awaiter(this, void 0, void 0, function* () {
-            const searchPaths = core.getInput(`${this.type}-report-paths`, { required: true });
-            const globber = yield glob.create(searchPaths.split(".").join("\n"));
-            return globber.glob();
+            const searchPaths = core.getInput(`${this.type}-report-paths`, { required: true }).split(".");
+            core.startGroup(`Searching for ${this.friendlyName} reports`);
+            searchPaths.forEach((searchPath) => core.info(searchPath));
+            core.endGroup();
+            const globber = yield glob.create(searchPaths.join("\n"));
+            const reportPaths = yield globber.glob();
+            core.startGroup(`Found ${reportPaths.length} ${this.friendlyName} reports`);
+            reportPaths.forEach((reportPath) => core.info(reportPath));
+            core.endGroup();
+            return reportPaths;
         });
     }
 }
