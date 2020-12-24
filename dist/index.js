@@ -85,7 +85,7 @@ class Check {
     }
     resolveReportPaths() {
         return __awaiter(this, void 0, void 0, function* () {
-            const searchPaths = core.getInput(`${this.type}-report-paths`, { required: true }).split(".");
+            const searchPaths = core.getInput(`${this.type}-report-paths`, { required: true }).split(",");
             core.startGroup(`Searching for ${this.friendlyName} reports`);
             searchPaths.forEach((searchPath) => core.info(searchPath));
             core.endGroup();
@@ -266,7 +266,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         new check_1.default("surefire", "Surefire"),
         new check_1.default("pmd", "PMD"),
         new check_1.default("cpd", "CPD"),
-        new check_1.default("spotbugs", "SpotBugs'"),
+        new check_1.default("spotbugs", "SpotBugs"),
         new check_1.default("checkstyle", "Checkstyle"),
     ];
     for (const check of checks) {

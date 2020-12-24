@@ -51,7 +51,7 @@ export default class Check {
   }
 
   private async resolveReportPaths(): Promise<string[]> {
-    const searchPaths = core.getInput(`${this.type}-report-paths`, { required: true }).split(".");
+    const searchPaths = core.getInput(`${this.type}-report-paths`, { required: true }).split(",");
 
     core.startGroup(`Searching for ${this.friendlyName} reports`);
     searchPaths.forEach((searchPath) => core.info(searchPath));

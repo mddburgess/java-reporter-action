@@ -6,7 +6,7 @@ const main = async () => {
     new Check("surefire", "Surefire"),
     new Check("pmd", "PMD"),
     new Check("cpd", "CPD"),
-    new Check("spotbugs", "SpotBugs'"),
+    new Check("spotbugs", "SpotBugs"),
     new Check("checkstyle", "Checkstyle"),
   ];
 
