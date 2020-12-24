@@ -1,7 +1,18 @@
 import * as core from "@actions/core";
+import Check from "./check";
 
 const main = async () => {
-  core.info("Hello world!");
+  const checks: Check[] = [
+    new Check("surefire", "Surefire"),
+    new Check("pmd", "PMD"),
+    new Check("cpd", "CPD"),
+    new Check("spotbugs", "SpotBugs'"),
+    new Check("checkstyle", "Checkstyle"),
+  ];
+
+  for (const check of checks) {
+    await check.run();
+  }
 };
 
 main()

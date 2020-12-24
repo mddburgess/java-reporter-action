@@ -1,10 +1,50 @@
-name: 'Java Reporter'
-description: ''
+name: "Java Reporter"
+description: ""
 inputs:
   github-token:
-    description: 'GitHub token'
+    description: "GitHub token"
     required: true
     default: ${{ github.token }}
+  surefire:
+    description: ""
+    required: true
+    default: "autodetect"
+  surefire-report-paths:
+    description: ""
+    required: true
+    default: "**/target/surefire-reports/TEST-*.xml"
+  pmd:
+    description: ""
+    required: true
+    default: "autodetect"
+  pmd-report-paths:
+    description: ""
+    required: true
+    default: "**/target/pmd.xml"
+  cpd:
+    description: ""
+    required: true
+    default: "autodetect"
+  cpd-report-paths:
+    description: ""
+    required: true
+    default: "**/target/cpd.xml"
+  spotbugs:
+    description: ""
+    required: true
+    default: "autodetect"
+  spotbugs-report-paths:
+    description: ""
+    required: true
+    default: "**/target/spotbugsXml.xml"
+  checkstyle:
+    description: ""
+    required: true
+    default: "autodetect"
+  checkstyle-report-paths:
+    description: ""
+    required: true
+    default: "**/target/checkstyle-result.xml"
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"
