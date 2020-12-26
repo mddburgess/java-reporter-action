@@ -711,7 +711,7 @@ class SurefireParser extends parser_1.default {
             return;
         }
         this.testCase.stackTrace = (_a = this.testCase.stackTrace) === null || _a === void 0 ? void 0 : _a.trim();
-        this.report && this.report.testCases.push(this.testCase);
+        this.report.testCases.push(this.testCase);
         this.testCase = {
             className: "",
             testName: "",

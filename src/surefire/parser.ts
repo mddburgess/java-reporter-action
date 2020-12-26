@@ -65,7 +65,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
     }
 
     this.testCase.stackTrace = this.testCase.stackTrace?.trim();
-    this.report && this.report.testCases.push(this.testCase);
+    this.report.testCases.push(this.testCase);
     this.testCase = {
       className: "",
       testName: "",
