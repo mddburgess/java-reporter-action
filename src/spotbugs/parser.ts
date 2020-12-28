@@ -23,7 +23,7 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
 
   constructor() {
     super({
-      categories: new Map(),
+      categories: new Map<string, string>(),
       bugs: [],
     });
   }

@@ -39,7 +39,7 @@ export default class CpdParser extends ReportParser<CpdReport> {
       tokens: Number(attrs.tokens),
       files: [],
     };
-    this.report && this.report.duplications.push(this.duplication);
+    this.report.duplications.push(this.duplication);
   }
 
   private onFileOpen(attrs: FileAttrs) {

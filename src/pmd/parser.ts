@@ -49,7 +49,7 @@ export default class PmdParser extends ReportParser<PmdReport> {
   }
 
   protected onTagClose(tag: TagCloseNode): void {
-    if (tag.name !== "violation" || !this.report || !this.violation) {
+    if (tag.name !== "violation" || !this.violation) {
       return;
     }
 

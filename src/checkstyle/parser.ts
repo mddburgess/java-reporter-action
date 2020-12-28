@@ -34,15 +34,14 @@ export default class CheckstyleParser extends ReportParser<CheckstyleReport> {
   }
 
   private onErrorOpen(attrs: ErrorAttrs) {
-    this.report &&
-      this.report.violations.push({
-        filePath: this.filePath,
-        line: Number(attrs.line),
-        column: Number(attrs.column) || 0,
-        rule: XmlEntities.decode(attrs.source),
-        severity: attrs.severity,
-        message: XmlEntities.decode(attrs.message),
-      });
+    this.report.violations.push({
+      filePath: this.filePath,
+      line: Number(attrs.line),
+      column: Number(attrs.column) || 0,
+      rule: XmlEntities.decode(attrs.source),
+      severity: attrs.severity,
+      message: XmlEntities.decode(attrs.message),
+    });
   }
 
   protected onTagClose(tag: TagCloseNode): void {

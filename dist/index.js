@@ -169,15 +169,14 @@ class CheckstyleParser extends parser_1.default {
         this.filePath = html_entities_1.XmlEntities.decode(attrs.name);
     }
     onErrorOpen(attrs) {
-        this.report &&
-            this.report.violations.push({
-                filePath: this.filePath,
-                line: Number(attrs.line),
-                column: Number(attrs.column) || 0,
-                rule: html_entities_1.XmlEntities.decode(attrs.source),
-                severity: attrs.severity,
-                message: html_entities_1.XmlEntities.decode(attrs.message),
-            });
+        this.report.violations.push({
+            filePath: this.filePath,
+            line: Number(attrs.line),
+            column: Number(attrs.column) || 0,
+            rule: html_entities_1.XmlEntities.decode(attrs.source),
+            severity: attrs.severity,
+            message: html_entities_1.XmlEntities.decode(attrs.message),
+        });
     }
     onTagClose(tag) {
         // do nothing
@@ -350,7 +349,7 @@ class CpdParser extends parser_1.default {
             tokens: Number(attrs.tokens),
             files: [],
         };
-        this.report && this.report.duplications.push(this.duplication);
+        this.report.duplications.push(this.duplication);
     }
     onFileOpen(attrs) {
         this.duplication.files.push({
@@ -603,7 +602,7 @@ class PmdParser extends parser_1.default {
         };
     }
     onTagClose(tag) {
-        if (tag.name !== "violation" || !this.report || !this.violation) {
+        if (tag.name !== "violation" || !this.violation) {
             return;
         }
         this.violation.message = this.violation.message.trim();

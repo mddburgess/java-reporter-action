@@ -27,7 +27,7 @@ export default class Github {
     });
   }
 
-  private static resolveHeadSha() {
+  private static resolveHeadSha(): string {
     return github.context.payload.pull_request?.head.sha ?? github.context.sha;
   }
 }
