@@ -18,6 +18,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
 
   constructor() {
     super({
+      name: "",
       tests: 0,
       failures: 0,
       errors: 0,
@@ -43,6 +44,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
   }
 
   private onTestSuiteOpen(attrs: TestSuiteAttrs) {
+    this.report.name = attrs.name;
     this.report.tests = Number(attrs.tests);
     this.report.failures = Number(attrs.failures);
     this.report.errors = Number(attrs.errors);
@@ -84,6 +86,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
 }
 
 interface TestSuiteAttrs {
+  name: string;
   tests: string;
   failures: string;
   errors: string;

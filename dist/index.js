@@ -75,7 +75,7 @@ class Check {
                 yield this.checkRun.queue();
             }
             const result = yield this.runCheck();
-            if (result !== undefined && result.shouldCompleteCheck()) {
+            if (result.shouldCompleteCheck()) {
                 yield this.checkRun.complete(result);
             }
             core.info(`${this.friendlyName} check finished.`);
@@ -89,6 +89,7 @@ class Check {
                 return new no_reports_1.default(this.friendlyName, this.runCondition, searchPaths);
             }
             const reports = this.readReports(reportPaths);
+            return this.getResult(reports);
         });
     }
     resolveSearchPaths() {
@@ -108,7 +109,9 @@ class Check {
         });
     }
     readReports(reportPaths) {
-        return reportPaths.map((reportPath) => this.reportParser.read(reportPath));
+        return reportPaths
+            .map((reportPath) => this.reportParser.read(reportPath))
+            .filter((report) => report !== undefined);
     }
 }
 exports.default = Check;
@@ -132,60 +135,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 class CheckResult {
 }
 exports.default = CheckResult;
-
-
-/***/ }),
-
-/***/ 4765:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const html_entities_1 = __webpack_require__(2589);
-const saxophone_ts_1 = __webpack_require__(3902);
-const parser_1 = __importDefault(__webpack_require__(3234));
-class CheckstyleParser extends parser_1.default {
-    constructor() {
-        super({
-            violations: [],
-        });
-        this.filePath = "";
-    }
-    onTagOpen(tag) {
-        switch (tag.name) {
-            case "file":
-                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
-                break;
-            case "error":
-                this.onErrorOpen(saxophone_ts_1.parseAttrs(tag.attrs));
-                break;
-        }
-    }
-    onFileOpen(attrs) {
-        this.filePath = html_entities_1.XmlEntities.decode(attrs.name);
-    }
-    onErrorOpen(attrs) {
-        this.report.violations.push({
-            filePath: this.filePath,
-            line: Number(attrs.line),
-            column: Number(attrs.column) || 0,
-            rule: html_entities_1.XmlEntities.decode(attrs.source),
-            severity: attrs.severity,
-            message: html_entities_1.XmlEntities.decode(attrs.message),
-        });
-    }
-    onTagClose(tag) {
-        // do nothing
-    }
-    onText(tag) {
-        // do nothing
-    }
-}
-exports.default = CheckstyleParser;
 
 
 /***/ }),
@@ -310,64 +259,17 @@ exports.default = ReportParser;
 
 /***/ }),
 
-/***/ 756:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 1855:
+/***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
 
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const html_entities_1 = __webpack_require__(2589);
-const saxophone_ts_1 = __webpack_require__(3902);
-const parser_1 = __importDefault(__webpack_require__(3234));
-class CpdParser extends parser_1.default {
-    constructor() {
-        super({
-            duplications: [],
-        });
-        this.duplication = {
-            lines: 0,
-            tokens: 0,
-            files: [],
-        };
-    }
-    onTagOpen(tag) {
-        switch (tag.name) {
-            case "duplication":
-                this.onDuplicationOpen(saxophone_ts_1.parseAttrs(tag.attrs));
-                break;
-            case "file":
-                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
-                break;
-        }
-    }
-    onDuplicationOpen(attrs) {
-        this.duplication = {
-            lines: Number(attrs.lines),
-            tokens: Number(attrs.tokens),
-            files: [],
-        };
-        this.report.duplications.push(this.duplication);
-    }
-    onFileOpen(attrs) {
-        this.duplication.files.push({
-            path: html_entities_1.XmlEntities.decode(attrs.path),
-            startLine: Number(attrs.line),
-            endLine: Number(attrs.endline),
-            startColumn: Number(attrs.column),
-            endColumn: Number(attrs.endcolumn),
-        });
-    }
-    onTagClose(tag) {
-        // do nothing
-    }
-    onText(tag) {
-        // do nothing
-    }
+exports.plural = void 0;
+function plural(quantity, noun) {
+    return quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
 }
-exports.default = CpdParser;
+exports.plural = plural;
 
 
 /***/ }),
@@ -531,19 +433,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
-const check_1 = __importDefault(__webpack_require__(2799));
-const parser_1 = __importDefault(__webpack_require__(6142));
-const parser_2 = __importDefault(__webpack_require__(3198));
-const parser_3 = __importDefault(__webpack_require__(756));
-const parser_4 = __importDefault(__webpack_require__(741));
-const parser_5 = __importDefault(__webpack_require__(4765));
+const check_1 = __importDefault(__webpack_require__(4624));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const checks = [
-        new check_1.default("surefire", "Surefire", new parser_1.default()),
-        new check_1.default("pmd", "PMD", new parser_2.default()),
-        new check_1.default("cpd", "CPD", new parser_3.default()),
-        new check_1.default("spotbugs", "SpotBugs", new parser_4.default()),
-        new check_1.default("checkstyle", "Checkstyle", new parser_5.default()),
+        new check_1.default(),
     ];
     for (const check of checks) {
         yield check.run();
@@ -556,7 +449,7 @@ main()
 
 /***/ }),
 
-/***/ 3198:
+/***/ 4624:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -565,147 +458,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const html_entities_1 = __webpack_require__(2589);
-const saxophone_ts_1 = __webpack_require__(3902);
-const parser_1 = __importDefault(__webpack_require__(3234));
-class PmdParser extends parser_1.default {
+const check_1 = __importDefault(__webpack_require__(2799));
+const parser_1 = __importDefault(__webpack_require__(6142));
+const result_1 = __importDefault(__webpack_require__(4917));
+class SurefireCheck extends check_1.default {
     constructor() {
-        super({
-            violations: [],
-        });
-        this.filePath = "";
+        super("surefire", "Surefire", new parser_1.default());
     }
-    onTagOpen(tag) {
-        switch (tag.name) {
-            case "file":
-                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
-                break;
-            case "violation":
-                this.onViolationOpen(saxophone_ts_1.parseAttrs(tag.attrs));
-                break;
-        }
-    }
-    onFileOpen(attrs) {
-        this.filePath = html_entities_1.XmlEntities.decode(attrs.name);
-    }
-    onViolationOpen(attrs) {
-        this.violation = {
-            filePath: this.filePath,
-            startLine: Number(attrs.beginline),
-            endLine: Number(attrs.endline),
-            startColumn: Number(attrs.begincolumn),
-            endColumn: Number(attrs.endcolumn),
-            ruleset: html_entities_1.XmlEntities.decode(attrs.ruleset),
-            rule: html_entities_1.XmlEntities.decode(attrs.rule),
-            priority: html_entities_1.XmlEntities.decode(attrs.priority),
-            message: "",
-        };
-    }
-    onTagClose(tag) {
-        if (tag.name !== "violation" || !this.violation) {
-            return;
-        }
-        this.violation.message = this.violation.message.trim();
-        if (!this.violation.message.endsWith(".")) {
-            this.violation.message += ".";
-        }
-        this.report.violations.push(this.violation);
-        this.violation = undefined;
-    }
-    onText(tag) {
-        this.violation && (this.violation.message += html_entities_1.XmlEntities.decode(tag.contents));
+    getResult(reports) {
+        return new result_1.default(this.runCondition, reports);
     }
 }
-exports.default = PmdParser;
-
-
-/***/ }),
-
-/***/ 741:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const html_entities_1 = __webpack_require__(2589);
-const saxophone_ts_1 = __webpack_require__(3902);
-const parser_1 = __importDefault(__webpack_require__(3234));
-class SpotbugsParser extends parser_1.default {
-    constructor() {
-        super({
-            categories: new Map(),
-            bugs: [],
-        });
-        this.category = "";
-        this.bug = {
-            filePath: "",
-            startLine: 0,
-            endLine: 0,
-            category: "",
-            priority: 0,
-            shortMessage: "",
-            longMessage: "",
-        };
-    }
-    onTagOpen(tag) {
-        switch (tag.name) {
-            case "BugInstance":
-                this.onBugInstanceOpen(saxophone_ts_1.parseAttrs(tag.attrs));
-                break;
-            case "SourceLine":
-                this.onSourceLineOpen(saxophone_ts_1.parseAttrs(tag.attrs));
-                break;
-            case "BugCategory":
-                this.onBugCategoryOpen(saxophone_ts_1.parseAttrs(tag.attrs));
-                break;
-        }
-    }
-    onBugInstanceOpen(attrs) {
-        this.bug = {
-            filePath: "",
-            startLine: 0,
-            endLine: 0,
-            category: html_entities_1.XmlEntities.decode(attrs.category),
-            priority: Number(attrs.priority),
-            shortMessage: "",
-            longMessage: "",
-        };
-        this.report.bugs.push(this.bug);
-    }
-    onSourceLineOpen(attrs) {
-        if (this.getContext() !== "BugInstance") {
-            return;
-        }
-        this.bug.filePath = html_entities_1.XmlEntities.decode(attrs.sourcepath);
-        this.bug.startLine = Number(attrs.start);
-        this.bug.endLine = Number(attrs.end);
-    }
-    onBugCategoryOpen(attrs) {
-        this.category = attrs.category;
-    }
-    onTagClose(tag) {
-        if (tag.name === "BugCategory") {
-            this.category = "";
-        }
-    }
-    onText(tag) {
-        switch (this.getContext()) {
-            case "ShortMessage":
-                this.bug.shortMessage = html_entities_1.XmlEntities.decode(tag.contents);
-                break;
-            case "LongMessage":
-                this.bug.longMessage = html_entities_1.XmlEntities.decode(tag.contents);
-                break;
-            case "Description":
-                this.category && this.report.categories.set(this.category, tag.contents);
-                break;
-        }
-    }
-}
-exports.default = SpotbugsParser;
+exports.default = SurefireCheck;
 
 
 /***/ }),
@@ -725,6 +489,7 @@ const parser_1 = __importDefault(__webpack_require__(3234));
 class SurefireParser extends parser_1.default {
     constructor() {
         super({
+            name: "",
             tests: 0,
             failures: 0,
             errors: 0,
@@ -753,6 +518,7 @@ class SurefireParser extends parser_1.default {
         }
     }
     onTestSuiteOpen(attrs) {
+        this.report.name = attrs.name;
         this.report.tests = Number(attrs.tests);
         this.report.failures = Number(attrs.failures);
         this.report.errors = Number(attrs.errors);
@@ -787,6 +553,91 @@ class SurefireParser extends parser_1.default {
     }
 }
 exports.default = SurefireParser;
+
+
+/***/ }),
+
+/***/ 4917:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const result_1 = __importDefault(__webpack_require__(1009));
+const check_1 = __webpack_require__(2799);
+const utils_1 = __webpack_require__(1855);
+class SurefireResult extends result_1.default {
+    constructor(runCondition, reports) {
+        super();
+        this.runCondition = runCondition;
+        this.reports = reports;
+        this.aggregate = SurefireResult.aggregate(reports);
+    }
+    static aggregate(reports) {
+        return reports.reduce((summary, report) => ({
+            name: "",
+            tests: summary.tests + report.tests,
+            failures: summary.failures + report.failures,
+            errors: summary.errors + report.errors,
+            skipped: summary.skipped + report.skipped,
+            testCases: [],
+        }));
+    }
+    shouldCompleteCheck() {
+        return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
+    }
+    get conclusion() {
+        if (this.aggregate.failures + this.aggregate.errors > 0) {
+            return "failure";
+        }
+        else if (this.aggregate.skipped > 0) {
+            return "neutral";
+        }
+        else {
+            return "success";
+        }
+    }
+    get title() {
+        const failuresAndErrors = this.aggregate.failures + this.aggregate.errors;
+        if (failuresAndErrors > 0) {
+            return `${utils_1.plural(failuresAndErrors, "test")} failed`;
+        }
+        const passed = this.aggregate.tests - this.aggregate.skipped;
+        return `${utils_1.plural(passed, "test")} passed`;
+    }
+    get summary() {
+        const passed = this.aggregate.tests -
+            this.aggregate.failures -
+            this.aggregate.errors -
+            this.aggregate.skipped;
+        return [
+            `|Tests run|${this.aggregate.tests}|`,
+            `|:--|--:|`,
+            `|:green_square: Passed|${passed}|`,
+            `|:orange_square: Failures|${this.aggregate.failures}|`,
+            `|:red_square: Errors|${this.aggregate.errors}|`,
+            `|:black_large_square: Skipped|${this.aggregate.skipped}|`,
+        ].join("\n");
+    }
+    get text() {
+        return [
+            `|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|`,
+            `|:--|--:|--:|--:|--:|--:|`,
+            ...this.reports.map((report) => this.reportText(report)),
+        ].join("\n");
+    }
+    reportText(report) {
+        const passed = report.tests - report.failures - report.errors - report.skipped;
+        return `|\`\`${report.name}\`\`|${report.tests}|${passed}|${report.failures}|${report.errors}|${report.skipped}|`;
+    }
+    get annotations() {
+        return undefined;
+    }
+}
+exports.default = SurefireResult;
 
 
 /***/ }),

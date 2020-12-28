@@ -3,15 +3,16 @@ import * as glob from "@actions/glob";
 import CheckRun from "../github/check-run";
 import ReportParser from "../common/parser";
 import NoReportsResult from "../common/no-reports";
+import CheckResult from "./result";
 
-export default class Check<T> {
+export default abstract class Check<T> {
   private readonly type: string;
   private readonly friendlyName: string;
   readonly runCondition: RunCondition;
   private readonly checkRun: CheckRun;
   private readonly reportParser: ReportParser<T>;
 
-  constructor(type: string, friendlyName: string, reportParser: ReportParser<T>) {
+  protected constructor(type: string, friendlyName: string, reportParser: ReportParser<T>) {
     this.type = type;
     this.friendlyName = friendlyName;
     this.runCondition = this.resolveRunCondition();
@@ -42,7 +43,7 @@ export default class Check<T> {
       await this.checkRun.queue();
     }
     const result = await this.runCheck();
-    if (result !== undefined && result.shouldCompleteCheck()) {
+    if (result.shouldCompleteCheck()) {
       await this.checkRun.complete(result);
     }
     core.info(`${this.friendlyName} check finished.`);
@@ -50,12 +51,14 @@ export default class Check<T> {
 
   async runCheck() {
     const searchPaths = this.resolveSearchPaths();
+
     const reportPaths = await this.resolveReportPaths(searchPaths);
     if (reportPaths.length === 0) {
       return new NoReportsResult(this.friendlyName, this.runCondition, searchPaths);
     }
 
     const reports = this.readReports(reportPaths);
+    return this.getResult(reports);
   }
 
   private resolveSearchPaths() {
@@ -78,8 +81,12 @@ export default class Check<T> {
   }
 
   private readReports(reportPaths: string[]) {
-    return reportPaths.map((reportPath) => this.reportParser.read(reportPath));
+    return reportPaths
+      .map((reportPath) => this.reportParser.read(reportPath))
+      .filter((report) => report !== undefined) as T[];
   }
+
+  protected abstract getResult(reports: T[]): CheckResult;
 }
 
 export enum RunCondition {
