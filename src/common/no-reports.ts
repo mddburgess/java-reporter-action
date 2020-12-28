@@ -24,7 +24,7 @@ export default class NoReportsResult extends CheckResult {
   }
 
   get summary(): string {
-    const runConditionName = RunCondition.required ? "required" : "expected";
+    const runConditionName = this.runCondition === RunCondition.required ? "required" : "expected";
     return `The ${this.friendlyName} check is ${runConditionName}, but no ${this.friendlyName} reports were found.`;
   }
 

@@ -219,7 +219,7 @@ class NoReportsResult extends result_1.default {
         return "No reports found";
     }
     get summary() {
-        const runConditionName = check_1.RunCondition.required ? "required" : "expected";
+        const runConditionName = this.runCondition === check_1.RunCondition.required ? "required" : "expected";
         return `The ${this.friendlyName} check is ${runConditionName}, but no ${this.friendlyName} reports were found.`;
     }
     get text() {
