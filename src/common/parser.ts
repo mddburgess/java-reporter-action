@@ -9,7 +9,6 @@ import {
 } from "saxophone-ts/dist/types/src/static/nodes";
 
 export default abstract class ReportParser<T> {
-  protected readonly report: T;
   private readonly context: string[] = ["root"];
   private readonly parser = new Saxophone()
     .on("tagOpen", (tag) => this.handleTagOpen(tag))
@@ -17,24 +16,17 @@ export default abstract class ReportParser<T> {
     .on("text", (tag) => this.handleText(tag))
     .on("cdata", (tag) => this.handleText(tag));
 
-  protected constructor(report: T) {
-    this.report = report;
-  }
+  protected constructor(protected readonly report: T, private readonly reportPath: string) {}
 
-  read(reportPath: string) {
+  read() {
     try {
-      const xml = fs.readFileSync(reportPath, { encoding: "utf-8" });
-      return this.parse(xml);
+      const xml = fs.readFileSync(this.reportPath, { encoding: "utf-8" });
+      this.parser.parse(xml);
+      return this.report;
     } catch (error) {
-      core.warning(`Failed to read report: ${reportPath}`);
-      core.debug(JSON.stringify(error, undefined, 2));
+      core.warning(`Failed to read report: ${this.reportPath}`);
       return undefined;
     }
-  }
-
-  parse(xml: string): T {
-    this.parser.parse(xml);
-    return this.report;
   }
 
   protected getContext() {

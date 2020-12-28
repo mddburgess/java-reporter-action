@@ -16,15 +16,18 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
     result: "success",
   };
 
-  constructor() {
-    super({
-      name: "",
-      tests: 0,
-      failures: 0,
-      errors: 0,
-      skipped: 0,
-      testCases: [],
-    });
+  constructor(reportPath: string) {
+    super(
+      {
+        name: "",
+        tests: 0,
+        failures: 0,
+        errors: 0,
+        skipped: 0,
+        testCases: [],
+      },
+      reportPath
+    );
   }
 
   protected onTagOpen(tag: TagOpenNode): void {

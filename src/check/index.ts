@@ -10,14 +10,12 @@ export default abstract class Check<T> {
   private readonly friendlyName: string;
   readonly runCondition: RunCondition;
   private readonly checkRun: CheckRun;
-  private readonly reportParser: ReportParser<T>;
 
-  protected constructor(type: string, friendlyName: string, reportParser: ReportParser<T>) {
+  protected constructor(type: string, friendlyName: string) {
     this.type = type;
     this.friendlyName = friendlyName;
     this.runCondition = this.resolveRunCondition();
     this.checkRun = new CheckRun(this.type);
-    this.reportParser = reportParser;
   }
 
   private resolveRunCondition() {
@@ -82,10 +80,11 @@ export default abstract class Check<T> {
 
   private readReports(reportPaths: string[]) {
     return reportPaths
-      .map((reportPath) => this.reportParser.read(reportPath))
+      .map((reportPath) => this.readReport(reportPath))
       .filter((report) => report !== undefined) as T[];
   }
 
+  protected abstract readReport(reportPath: string): T | undefined;
   protected abstract getResult(reports: T[]): CheckResult;
 }
 

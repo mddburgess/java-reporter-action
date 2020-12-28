@@ -16,10 +16,13 @@ export default class CpdParser extends ReportParser<CpdReport> {
     files: [],
   };
 
-  constructor() {
-    super({
-      duplications: [],
-    });
+  constructor(reportPath: string) {
+    super(
+      {
+        duplications: [],
+      },
+      reportPath
+    );
   }
 
   protected onTagOpen(tag: TagOpenNode): void {

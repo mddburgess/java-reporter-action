@@ -45,12 +45,11 @@ const glob = __importStar(__webpack_require__(8090));
 const check_run_1 = __importDefault(__webpack_require__(3244));
 const no_reports_1 = __importDefault(__webpack_require__(8909));
 class Check {
-    constructor(type, friendlyName, reportParser) {
+    constructor(type, friendlyName) {
         this.type = type;
         this.friendlyName = friendlyName;
         this.runCondition = this.resolveRunCondition();
         this.checkRun = new check_run_1.default(this.type);
-        this.reportParser = reportParser;
     }
     resolveRunCondition() {
         const condition = core.getInput(this.type);
@@ -110,7 +109,7 @@ class Check {
     }
     readReports(reportPaths) {
         return reportPaths
-            .map((reportPath) => this.reportParser.read(reportPath))
+            .map((reportPath) => this.readReport(reportPath))
             .filter((report) => report !== undefined);
     }
 }
@@ -211,29 +210,26 @@ const core = __importStar(__webpack_require__(2186));
 const fs = __importStar(__webpack_require__(5747));
 const saxophone_ts_1 = __webpack_require__(3902);
 class ReportParser {
-    constructor(report) {
+    constructor(report, reportPath) {
+        this.report = report;
+        this.reportPath = reportPath;
         this.context = ["root"];
         this.parser = new saxophone_ts_1.Saxophone()
             .on("tagOpen", (tag) => this.handleTagOpen(tag))
             .on("tagClose", (tag) => this.handleTagClose(tag))
             .on("text", (tag) => this.handleText(tag))
             .on("cdata", (tag) => this.handleText(tag));
-        this.report = report;
     }
-    read(reportPath) {
+    read() {
         try {
-            const xml = fs.readFileSync(reportPath, { encoding: "utf-8" });
-            return this.parse(xml);
+            const xml = fs.readFileSync(this.reportPath, { encoding: "utf-8" });
+            this.parser.parse(xml);
+            return this.report;
         }
         catch (error) {
-            core.warning(`Failed to read report: ${reportPath}`);
-            core.debug(JSON.stringify(error, undefined, 2));
+            core.warning(`Failed to read report: ${this.reportPath}`);
             return undefined;
         }
-    }
-    parse(xml) {
-        this.parser.parse(xml);
-        return this.report;
     }
     getContext() {
         return this.context[0];
@@ -464,7 +460,10 @@ const parser_1 = __importDefault(__webpack_require__(6142));
 const result_1 = __importDefault(__webpack_require__(4917));
 class SurefireCheck extends check_1.default {
     constructor() {
-        super("surefire", "Surefire", new parser_1.default());
+        super("surefire", "Surefire");
+    }
+    readReport(reportPath) {
+        return new parser_1.default(reportPath).read();
     }
     getResult(reports) {
         return new result_1.default(this.runCondition, reports);
@@ -488,7 +487,7 @@ const html_entities_1 = __webpack_require__(2589);
 const saxophone_ts_1 = __webpack_require__(3902);
 const parser_1 = __importDefault(__webpack_require__(3234));
 class SurefireParser extends parser_1.default {
-    constructor() {
+    constructor(reportPath) {
         super({
             name: "",
             tests: 0,
@@ -496,7 +495,7 @@ class SurefireParser extends parser_1.default {
             errors: 0,
             skipped: 0,
             testCases: [],
-        });
+        }, reportPath);
         this.testCase = {
             className: "",
             testName: "",

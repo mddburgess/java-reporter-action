@@ -23,10 +23,13 @@ export default class CheckstyleParser extends ReportParser<CheckstyleReport> {
     }
   }
 
-  constructor() {
-    super({
-      violations: [],
-    });
+  constructor(reportPath: string) {
+    super(
+      {
+        violations: [],
+      },
+      reportPath
+    );
   }
 
   private onFileOpen(attrs: FileAttrs) {

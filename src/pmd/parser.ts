@@ -13,10 +13,13 @@ export default class PmdParser extends ReportParser<PmdReport> {
   private filePath = "";
   private violation?: PmdViolation;
 
-  constructor() {
-    super({
-      violations: [],
-    });
+  constructor(reportPath: string) {
+    super(
+      {
+        violations: [],
+      },
+      reportPath
+    );
   }
 
   protected onTagOpen(tag: TagOpenNode): void {

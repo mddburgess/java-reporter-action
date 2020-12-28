@@ -21,11 +21,14 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
     longMessage: "",
   };
 
-  constructor() {
-    super({
-      categories: new Map<string, string>(),
-      bugs: [],
-    });
+  constructor(reportPath: string) {
+    super(
+      {
+        categories: new Map<string, string>(),
+        bugs: [],
+      },
+      reportPath
+    );
   }
 
   protected onTagOpen(tag: TagOpenNode): void {
