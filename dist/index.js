@@ -227,6 +227,7 @@ class ReportParser {
         }
         catch (error) {
             core.warning(`Failed to read report: ${reportPath}`);
+            core.debug(error);
             return undefined;
         }
     }

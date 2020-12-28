@@ -27,6 +27,7 @@ export default abstract class ReportParser<T> {
       return this.parse(xml);
     } catch (error) {
       core.warning(`Failed to read report: ${reportPath}`);
+      core.debug(error);
       return undefined;
     }
   }
