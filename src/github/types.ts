@@ -28,7 +28,7 @@ interface CheckOutput {
   annotations?: CheckAnnotation[];
 }
 
-interface CheckAnnotation {
+export interface CheckAnnotation {
   path: string;
   start_line: number;
   end_line: number;

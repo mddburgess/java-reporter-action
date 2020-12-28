@@ -1,5 +1,6 @@
 import Github from "./index";
-import { CheckConclusion, CheckRequest } from "./types";
+import { CheckRequest } from "./types";
+import CheckResult from "../check/result";
 
 export default class CheckRun {
   private readonly github: Github;
@@ -15,8 +16,17 @@ export default class CheckRun {
     await this.saveCheck({ status: "queued" });
   }
 
-  async complete(conclusion: CheckConclusion) {
-    await this.saveCheck({ status: "completed", conclusion });
+  async complete(result: CheckResult) {
+    await this.saveCheck({
+      status: "completed",
+      conclusion: result.conclusion,
+      output: {
+        title: result.title,
+        summary: result.summary,
+        text: result.text,
+        annotations: result.annotations,
+      },
+    });
   }
 
   async saveCheck(request: CheckRequest) {

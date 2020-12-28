@@ -2,6 +2,7 @@ import * as core from "@actions/core";
 import * as glob from "@actions/glob";
 import CheckRun from "../github/check-run";
 import ReportParser from "../common/parser";
+import NoReportsResult from "../common/no-reports";
 
 export default class Check<T> {
   private readonly type: string;
@@ -40,30 +41,21 @@ export default class Check<T> {
     if (this.runCondition >= RunCondition.expected) {
       await this.checkRun.queue();
     }
+    const result = await this.runCheck();
+    if (result !== undefined && result.shouldCompleteCheck()) {
+      await this.checkRun.complete(result);
+    }
+    core.info(`${this.friendlyName} check finished.`);
+  }
 
+  async runCheck() {
     const searchPaths = this.resolveSearchPaths();
     const reportPaths = await this.resolveReportPaths(searchPaths);
     if (reportPaths.length === 0) {
-      if (this.runCondition >= RunCondition.expected) {
-        const conclusion = this.runCondition === RunCondition.required ? "failure" : "skipped";
-        await this.checkRun.saveCheck({
-          status: "completed",
-          conclusion,
-          output: {
-            title: "No reports found",
-            summary: `${this.friendlyName} reports are ${
-              this.runCondition === RunCondition.required ? "required" : "expected"
-            }, but no reports were found.`,
-            text: ["### Search paths", "```sh", ...searchPaths, "```"].join("\n"),
-          },
-        });
-      }
-      return;
+      return new NoReportsResult(this.friendlyName, this.runCondition, searchPaths);
     }
 
     const reports = this.readReports(reportPaths);
-
-    core.info(`${this.friendlyName} check finished.`);
   }
 
   private resolveSearchPaths() {

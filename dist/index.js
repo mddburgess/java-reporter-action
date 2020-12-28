@@ -43,6 +43,7 @@ exports.RunCondition = void 0;
 const core = __importStar(__webpack_require__(2186));
 const glob = __importStar(__webpack_require__(8090));
 const check_run_1 = __importDefault(__webpack_require__(3244));
+const no_reports_1 = __importDefault(__webpack_require__(8909));
 class Check {
     constructor(type, friendlyName, reportParser) {
         this.type = type;
@@ -73,25 +74,21 @@ class Check {
             if (this.runCondition >= RunCondition.expected) {
                 yield this.checkRun.queue();
             }
+            const result = yield this.runCheck();
+            if (result !== undefined && result.shouldCompleteCheck()) {
+                yield this.checkRun.complete(result);
+            }
+            core.info(`${this.friendlyName} check finished.`);
+        });
+    }
+    runCheck() {
+        return __awaiter(this, void 0, void 0, function* () {
             const searchPaths = this.resolveSearchPaths();
             const reportPaths = yield this.resolveReportPaths(searchPaths);
             if (reportPaths.length === 0) {
-                if (this.runCondition >= RunCondition.expected) {
-                    const conclusion = this.runCondition === RunCondition.required ? "failure" : "skipped";
-                    yield this.checkRun.saveCheck({
-                        status: "completed",
-                        conclusion,
-                        output: {
-                            title: "No reports found",
-                            summary: `${this.friendlyName} reports are ${this.runCondition === RunCondition.required ? "required" : "expected"}, but no reports were found.`,
-                            text: ["### Search paths", "```sh", ...searchPaths, "```"].join("\n"),
-                        },
-                    });
-                }
-                return;
+                return new no_reports_1.default(this.friendlyName, this.runCondition, searchPaths);
             }
             const reports = this.readReports(reportPaths);
-            core.info(`${this.friendlyName} check finished.`);
         });
     }
     resolveSearchPaths() {
@@ -122,6 +119,19 @@ var RunCondition;
     RunCondition[RunCondition["expected"] = 2] = "expected";
     RunCondition[RunCondition["required"] = 3] = "required";
 })(RunCondition = exports.RunCondition || (exports.RunCondition = {}));
+
+
+/***/ }),
+
+/***/ 1009:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+class CheckResult {
+}
+exports.default = CheckResult;
 
 
 /***/ }),
@@ -177,6 +187,49 @@ class CheckstyleParser extends parser_1.default {
     }
 }
 exports.default = CheckstyleParser;
+
+
+/***/ }),
+
+/***/ 8909:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const result_1 = __importDefault(__webpack_require__(1009));
+const check_1 = __webpack_require__(2799);
+class NoReportsResult extends result_1.default {
+    constructor(friendlyName, runCondition, searchPaths) {
+        super();
+        this.friendlyName = friendlyName;
+        this.runCondition = runCondition;
+        this.searchPaths = searchPaths;
+    }
+    shouldCompleteCheck() {
+        return this.runCondition >= check_1.RunCondition.expected;
+    }
+    get conclusion() {
+        return this.runCondition === check_1.RunCondition.required ? "failure" : "skipped";
+    }
+    get title() {
+        return "No reports found";
+    }
+    get summary() {
+        const runConditionName = check_1.RunCondition.required ? "required" : "expected";
+        return `The ${this.friendlyName} check is ${runConditionName}, but no ${this.friendlyName} reports were found.`;
+    }
+    get text() {
+        return ["### Search paths", "```sh", ...this.searchPaths, "```"].join("\n");
+    }
+    get annotations() {
+        return undefined;
+    }
+}
+exports.default = NoReportsResult;
 
 
 /***/ }),
@@ -349,9 +402,18 @@ class CheckRun {
             yield this.saveCheck({ status: "queued" });
         });
     }
-    complete(conclusion) {
+    complete(result) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.saveCheck({ status: "completed", conclusion });
+            yield this.saveCheck({
+                status: "completed",
+                conclusion: result.conclusion,
+                output: {
+                    title: result.title,
+                    summary: result.summary,
+                    text: result.text,
+                    annotations: result.annotations,
+                },
+            });
         });
     }
     saveCheck(request) {
