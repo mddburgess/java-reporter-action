@@ -40,4 +40,4 @@ export interface CheckAnnotation {
   raw_details?: string;
 }
 
-type AnnotationLevel = "notice" | "warning" | "failure";
+export type AnnotationLevel = "notice" | "warning" | "failure";

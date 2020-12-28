@@ -262,7 +262,11 @@ exports.default = ReportParser;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.plural = void 0;
+exports.plural = exports.flatMap = void 0;
+function flatMap(array, fn) {
+    return array.map(fn).reduce((a, b) => a.concat(b));
+}
+exports.flatMap = flatMap;
 function plural(quantity, noun) {
     return quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
 }
@@ -634,7 +638,51 @@ class SurefireResult extends result_1.default {
         return `|\`\`${report.name}\`\`|${report.tests}|${passed}|${report.failures}|${report.errors}|${report.skipped}|`;
     }
     get annotations() {
-        return undefined;
+        return utils_1.flatMap(this.reports, (report) => this.annotateReport(report));
+    }
+    annotateReport(report) {
+        return report.testCases.map((testCase) => this.annotateTestCase(testCase));
+    }
+    annotateTestCase(testCase) {
+        const line = this.resolveLine(testCase);
+        return {
+            path: testCase.className,
+            start_line: line,
+            end_line: line,
+            annotation_level: this.resolveAnnotationLevel(testCase),
+            message: this.resolveMessage(testCase),
+            title: this.resolveTitle(testCase),
+            raw_details: testCase.stackTrace,
+        };
+    }
+    resolveLine(testCase) {
+        if (testCase.stackTrace) {
+            const stackFrames = RegExp(`${testCase.className}.*:\\d+`).exec(testCase.stackTrace);
+            if (stackFrames) {
+                const [stackFrame] = stackFrames.slice(-1);
+                const [, line] = stackFrame.split(":");
+                return Number(line);
+            }
+        }
+        return 1;
+    }
+    resolveAnnotationLevel(testCase) {
+        switch (testCase.result) {
+            case "failure":
+            case "error":
+                return "failure";
+            case "skipped":
+                return "notice";
+            default:
+                throw Error();
+        }
+    }
+    resolveMessage(testCase) {
+        return testCase.stackTrace || testCase.message || `Test ${testCase.result}`;
+    }
+    resolveTitle(testCase) {
+        const [simpleClassName] = testCase.className.split(".").slice(-1);
+        return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
     }
 }
 exports.default = SurefireResult;
