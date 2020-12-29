@@ -2,8 +2,7 @@ import CheckResult from "../check/result";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
 import { RunCondition } from "../check";
 import PmdReport, { PmdViolation } from "./types";
-import { flatMap, plural } from "../common/utils";
-import path from "path";
+import { flatMap, plural, relativePath } from "../common/utils";
 
 export default class PmdResult extends CheckResult {
   constructor(private readonly runCondition: RunCondition, private readonly reports: PmdReport[]) {
@@ -43,19 +42,13 @@ export default class PmdResult extends CheckResult {
 
   private annotateViolation(violation: PmdViolation): CheckAnnotation {
     return {
-      path: this.resolvePath(violation),
+      path: relativePath(violation.filePath),
       start_line: violation.startLine,
       end_line: violation.startLine,
       annotation_level: this.resolveAnnotationLevel(violation),
       message: violation.message,
       title: this.resolveTitle(violation),
     };
-  }
-
-  private resolvePath(violation: PmdViolation) {
-    return process.env.GITHUB_WORKSPACE
-      ? path.relative(process.env.GITHUB_WORKSPACE, violation.filePath)
-      : violation.filePath;
   }
 
   private resolveAnnotationLevel(violation: PmdViolation) {

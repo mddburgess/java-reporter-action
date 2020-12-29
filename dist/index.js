@@ -257,12 +257,16 @@ exports.default = ReportParser;
 /***/ }),
 
 /***/ 1855:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.plural = exports.flatMap = exports.chunk = void 0;
+exports.relativePath = exports.plural = exports.flatMap = exports.chunk = void 0;
+const path_1 = __importDefault(__webpack_require__(5622));
 function chunk(array, size) {
     if (array === undefined || array.length === 0) {
         return [[]];
@@ -282,6 +286,176 @@ function plural(quantity, noun) {
     return quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
 }
 exports.plural = plural;
+function relativePath(absolutePath) {
+    return process.env.GITHUB_WORKSPACE
+        ? path_1.default.relative(process.env.GITHUB_WORKSPACE, absolutePath)
+        : absolutePath;
+}
+exports.relativePath = relativePath;
+
+
+/***/ }),
+
+/***/ 3265:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const check_1 = __importDefault(__webpack_require__(2799));
+const result_1 = __importDefault(__webpack_require__(2583));
+const parser_1 = __importDefault(__webpack_require__(756));
+class CpdCheck extends check_1.default {
+    constructor() {
+        super("cpd", "CPD");
+    }
+    readReport(reportPath) {
+        return new parser_1.default(reportPath).read();
+    }
+    getResult(reports) {
+        return new result_1.default(this.runCondition, reports);
+    }
+}
+exports.default = CpdCheck;
+
+
+/***/ }),
+
+/***/ 756:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const html_entities_1 = __webpack_require__(2589);
+const saxophone_ts_1 = __webpack_require__(3902);
+const parser_1 = __importDefault(__webpack_require__(3234));
+class CpdParser extends parser_1.default {
+    constructor(reportPath) {
+        super({
+            duplications: [],
+        }, reportPath);
+        this.duplication = {
+            lines: 0,
+            tokens: 0,
+            files: [],
+        };
+    }
+    onTagOpen(tag) {
+        switch (tag.name) {
+            case "duplication":
+                this.onDuplicationOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case "file":
+                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+        }
+    }
+    onDuplicationOpen(attrs) {
+        this.duplication = {
+            lines: Number(attrs.lines),
+            tokens: Number(attrs.tokens),
+            files: [],
+        };
+        this.report.duplications.push(this.duplication);
+    }
+    onFileOpen(attrs) {
+        this.duplication.files.push({
+            path: html_entities_1.XmlEntities.decode(attrs.path),
+            startLine: Number(attrs.line),
+            endLine: Number(attrs.endline),
+            startColumn: Number(attrs.column),
+            endColumn: Number(attrs.endcolumn),
+        });
+    }
+    onTagClose(tag) {
+        // do nothing
+    }
+    onText(tag) {
+        // do nothing
+    }
+}
+exports.default = CpdParser;
+
+
+/***/ }),
+
+/***/ 2583:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const result_1 = __importDefault(__webpack_require__(1009));
+const check_1 = __webpack_require__(2799);
+const utils_1 = __webpack_require__(1855);
+class CpdResult extends result_1.default {
+    constructor(runCondition, reports) {
+        super();
+        this.runCondition = runCondition;
+        this.reports = reports;
+    }
+    shouldCompleteCheck() {
+        return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
+    }
+    get conclusion() {
+        const duplications = this.reports
+            .map((report) => report.duplications.length)
+            .reduce((a, b) => a + b);
+        return duplications > 0 ? "neutral" : "success";
+    }
+    get title() {
+        const duplications = this.reports
+            .map((report) => report.duplications.length)
+            .reduce((a, b) => a + b);
+        return `${utils_1.plural(duplications, "duplication")} found`;
+    }
+    get summary() {
+        return this.title;
+    }
+    get text() {
+        return undefined;
+    }
+    get annotations() {
+        return utils_1.flatMap(this.reports, (report) => this.annotateReport(report));
+    }
+    annotateReport(report) {
+        return utils_1.flatMap(report.duplications, (duplication) => this.annotateDuplication(duplication));
+    }
+    annotateDuplication(duplication) {
+        duplication.files.forEach((file) => (file.path = utils_1.relativePath(file.path)));
+        return duplication.files.map((file) => this.annotateFile(duplication, file));
+    }
+    annotateFile(duplication, file) {
+        return {
+            path: file.path,
+            start_line: file.startLine,
+            end_line: file.startLine,
+            annotation_level: "warning",
+            message: this.resolveMessage(duplication),
+            title: this.resolveTitle(duplication),
+        };
+    }
+    resolveMessage(duplication) {
+        return [
+            `Found ${duplication.lines} duplicated at:`,
+            ...duplication.files.map((file) => `\t${file.path} lines ${file.startLine}-${file.endLine}`),
+        ].join("\n");
+    }
+    resolveTitle(duplication) {
+        return utils_1.plural(duplication.lines, "duplicated line");
+    }
+}
+exports.default = CpdResult;
 
 
 /***/ }),
@@ -451,8 +625,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const check_1 = __importDefault(__webpack_require__(4624));
 const check_2 = __importDefault(__webpack_require__(7309));
+const check_3 = __importDefault(__webpack_require__(3265));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const checks = [new check_1.default(), new check_2.default()];
+    const checks = [new check_1.default(), new check_2.default(), new check_3.default()];
     for (const check of checks) {
         yield check.run();
     }
@@ -569,7 +744,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const result_1 = __importDefault(__webpack_require__(1009));
 const check_1 = __webpack_require__(2799);
 const utils_1 = __webpack_require__(1855);
-const path_1 = __importDefault(__webpack_require__(5622));
 class PmdResult extends result_1.default {
     constructor(runCondition, reports) {
         super();
@@ -602,18 +776,13 @@ class PmdResult extends result_1.default {
     }
     annotateViolation(violation) {
         return {
-            path: this.resolvePath(violation),
+            path: utils_1.relativePath(violation.filePath),
             start_line: violation.startLine,
             end_line: violation.startLine,
             annotation_level: this.resolveAnnotationLevel(violation),
             message: violation.message,
             title: this.resolveTitle(violation),
         };
-    }
-    resolvePath(violation) {
-        return process.env.GITHUB_WORKSPACE
-            ? path_1.default.relative(process.env.GITHUB_WORKSPACE, violation.filePath)
-            : violation.filePath;
     }
     resolveAnnotationLevel(violation) {
         return Number(violation.priority) <= 2 ? "failure" : "warning";

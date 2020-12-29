@@ -1,10 +1,10 @@
 import * as core from "@actions/core";
-import Check from "./check";
 import SurefireCheck from "./surefire/check";
 import PmdCheck from "./pmd/check";
+import CpdCheck from "./cpd/check";
 
 const main = async () => {
-  const checks: Check<any>[] = [new SurefireCheck(), new PmdCheck()];
+  const checks = [new SurefireCheck(), new PmdCheck(), new CpdCheck()];
 
   for (const check of checks) {
     await check.run();

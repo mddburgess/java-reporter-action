@@ -1,3 +1,5 @@
+import path from "path";
+
 export function chunk<T>(array: T[] | undefined, size: number): T[][] {
   if (array === undefined || array.length === 0) {
     return [[]];
@@ -15,4 +17,10 @@ export function flatMap<T, R>(array: T[], fn: (object: T) => R[]): R[] {
 
 export function plural(quantity: number, noun: string): string {
   return quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
+}
+
+export function relativePath(absolutePath: string): string {
+  return process.env.GITHUB_WORKSPACE
+    ? path.relative(process.env.GITHUB_WORKSPACE, absolutePath)
+    : absolutePath;
 }
