@@ -447,7 +447,7 @@ class CpdResult extends result_1.default {
     }
     resolveMessage(duplication) {
         return [
-            `Found ${duplication.lines} duplicated at:`,
+            `Found ${utils_1.plural(duplication.lines, "line")} duplicated at:`,
             ...duplication.files.map((file) => `\t${file.path} lines ${file.startLine}-${file.endLine}`),
         ].join("\n");
     }

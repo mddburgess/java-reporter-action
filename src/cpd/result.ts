@@ -61,7 +61,7 @@ export default class CpdResult extends CheckResult {
 
   private resolveMessage(duplication: CpdDuplication) {
     return [
-      `Found ${duplication.lines} duplicated at:`,
+      `Found ${plural(duplication.lines, "line")} duplicated at:`,
       ...duplication.files.map((file) => `\t${file.path} lines ${file.startLine}-${file.endLine}`),
     ].join("\n");
   }
