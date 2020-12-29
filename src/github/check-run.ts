@@ -1,6 +1,7 @@
 import Github from "./index";
 import { CheckRequest } from "./types";
 import CheckResult from "../check/result";
+import { chunk } from "../common/utils";
 
 export default class CheckRun {
   private readonly github: Github;
@@ -17,16 +18,19 @@ export default class CheckRun {
   }
 
   async complete(result: CheckResult) {
-    await this.saveCheck({
-      status: "completed",
-      conclusion: result.conclusion,
-      output: {
-        title: result.title,
-        summary: result.summary,
-        text: result.text,
-        annotations: result.annotations,
-      },
-    });
+    const chunks = chunk(result.annotations, 50);
+    for (const annotations of chunks) {
+      await this.saveCheck({
+        status: "completed",
+        conclusion: result.conclusion,
+        output: {
+          title: result.title,
+          summary: result.summary,
+          text: result.text,
+          annotations: annotations,
+        },
+      });
+    }
   }
 
   async saveCheck(request: CheckRequest) {

@@ -262,7 +262,18 @@ exports.default = ReportParser;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.plural = exports.flatMap = void 0;
+exports.plural = exports.flatMap = exports.chunk = void 0;
+function chunk(array, size) {
+    if (array === undefined || array.length === 0) {
+        return [[]];
+    }
+    const chunks = [];
+    for (let i = 0; i < array.length; i += size) {
+        chunks.push(array.slice(i, i + size));
+    }
+    return chunks;
+}
+exports.chunk = chunk;
 function flatMap(array, fn) {
     return array.map(fn).reduce((a, b) => a.concat(b));
 }
@@ -294,6 +305,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const index_1 = __importDefault(__webpack_require__(5433));
+const utils_1 = __webpack_require__(1855);
 class CheckRun {
     constructor(name) {
         this.github = new index_1.default();
@@ -306,16 +318,19 @@ class CheckRun {
     }
     complete(result) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.saveCheck({
-                status: "completed",
-                conclusion: result.conclusion,
-                output: {
-                    title: result.title,
-                    summary: result.summary,
-                    text: result.text,
-                    annotations: result.annotations,
-                },
-            });
+            const chunks = utils_1.chunk(result.annotations, 50);
+            for (const annotations of chunks) {
+                yield this.saveCheck({
+                    status: "completed",
+                    conclusion: result.conclusion,
+                    output: {
+                        title: result.title,
+                        summary: result.summary,
+                        text: result.text,
+                        annotations: annotations,
+                    },
+                });
+            }
         });
     }
     saveCheck(request) {
@@ -435,10 +450,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const check_1 = __importDefault(__webpack_require__(4624));
+const check_2 = __importDefault(__webpack_require__(7309));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const checks = [
-        new check_1.default(),
-    ];
+    const checks = [new check_1.default(), new check_2.default()];
     for (const check of checks) {
         yield check.run();
     }
@@ -446,6 +460,169 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
 main()
     .catch((error) => core.setFailed(error))
     .finally(() => core.info("Java Reporter finished."));
+
+
+/***/ }),
+
+/***/ 7309:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const check_1 = __importDefault(__webpack_require__(2799));
+const parser_1 = __importDefault(__webpack_require__(3198));
+const result_1 = __importDefault(__webpack_require__(6059));
+class PmdCheck extends check_1.default {
+    constructor() {
+        super("pmd", "PMD");
+    }
+    readReport(reportPath) {
+        return new parser_1.default(reportPath).read();
+    }
+    getResult(reports) {
+        return new result_1.default(this.runCondition, reports);
+    }
+}
+exports.default = PmdCheck;
+
+
+/***/ }),
+
+/***/ 3198:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const html_entities_1 = __webpack_require__(2589);
+const saxophone_ts_1 = __webpack_require__(3902);
+const parser_1 = __importDefault(__webpack_require__(3234));
+class PmdParser extends parser_1.default {
+    constructor(reportPath) {
+        super({
+            violations: [],
+        }, reportPath);
+        this.filePath = "";
+    }
+    onTagOpen(tag) {
+        switch (tag.name) {
+            case "file":
+                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case "violation":
+                this.onViolationOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+        }
+    }
+    onFileOpen(attrs) {
+        this.filePath = html_entities_1.XmlEntities.decode(attrs.name);
+    }
+    onViolationOpen(attrs) {
+        this.violation = {
+            filePath: this.filePath,
+            startLine: Number(attrs.beginline),
+            endLine: Number(attrs.endline),
+            startColumn: Number(attrs.begincolumn),
+            endColumn: Number(attrs.endcolumn),
+            ruleset: html_entities_1.XmlEntities.decode(attrs.ruleset),
+            rule: html_entities_1.XmlEntities.decode(attrs.rule),
+            priority: html_entities_1.XmlEntities.decode(attrs.priority),
+            message: "",
+        };
+    }
+    onTagClose(tag) {
+        if (tag.name !== "violation" || !this.violation) {
+            return;
+        }
+        this.violation.message = this.violation.message.trim();
+        if (!this.violation.message.endsWith(".")) {
+            this.violation.message += ".";
+        }
+        this.report.violations.push(this.violation);
+        this.violation = undefined;
+    }
+    onText(tag) {
+        this.violation && (this.violation.message += html_entities_1.XmlEntities.decode(tag.contents));
+    }
+}
+exports.default = PmdParser;
+
+
+/***/ }),
+
+/***/ 6059:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const result_1 = __importDefault(__webpack_require__(1009));
+const check_1 = __webpack_require__(2799);
+const utils_1 = __webpack_require__(1855);
+const path_1 = __importDefault(__webpack_require__(5622));
+class PmdResult extends result_1.default {
+    constructor(runCondition, reports) {
+        super();
+        this.runCondition = runCondition;
+        this.reports = reports;
+    }
+    shouldCompleteCheck() {
+        return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
+    }
+    get conclusion() {
+        return "neutral";
+    }
+    get title() {
+        const violations = this.reports
+            .map((report) => report.violations.length)
+            .reduce((a, b) => a + b);
+        return `${utils_1.plural(violations, "violation")} found`;
+    }
+    get summary() {
+        return this.title;
+    }
+    get text() {
+        return undefined;
+    }
+    get annotations() {
+        return utils_1.flatMap(this.reports, (report) => this.annotateReport(report));
+    }
+    annotateReport(report) {
+        return report.violations.map((violation) => this.annotateViolation(violation));
+    }
+    annotateViolation(violation) {
+        return {
+            path: this.resolvePath(violation),
+            start_line: violation.startLine,
+            end_line: violation.startLine,
+            annotation_level: this.resolveAnnotationLevel(violation),
+            message: violation.message,
+            title: this.resolveTitle(violation),
+        };
+    }
+    resolvePath(violation) {
+        return process.env.GITHUB_WORKSPACE
+            ? path_1.default.relative(process.env.GITHUB_WORKSPACE, violation.filePath)
+            : violation.filePath;
+    }
+    resolveAnnotationLevel(violation) {
+        return Number(violation.priority) >= 2 ? "failure" : "warning";
+    }
+    resolveTitle(violation) {
+        return `${violation.ruleset}: ${violation.rule}`;
+    }
+}
+exports.default = PmdResult;
 
 
 /***/ }),
