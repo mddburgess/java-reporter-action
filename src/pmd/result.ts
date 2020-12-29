@@ -59,7 +59,7 @@ export default class PmdResult extends CheckResult {
   }
 
   private resolveAnnotationLevel(violation: PmdViolation) {
-    return Number(violation.priority) >= 2 ? "failure" : "warning";
+    return Number(violation.priority) <= 2 ? "failure" : "warning";
   }
 
   private resolveTitle(violation: PmdViolation) {

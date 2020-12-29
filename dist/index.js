@@ -616,7 +616,7 @@ class PmdResult extends result_1.default {
             : violation.filePath;
     }
     resolveAnnotationLevel(violation) {
-        return Number(violation.priority) >= 2 ? "failure" : "warning";
+        return Number(violation.priority) <= 2 ? "failure" : "warning";
     }
     resolveTitle(violation) {
         return `${violation.ruleset}: ${violation.rule}`;
