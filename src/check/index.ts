@@ -1,7 +1,6 @@
 import * as core from "@actions/core";
 import * as glob from "@actions/glob";
 import CheckRun from "../github/check-run";
-import ReportParser from "../common/parser";
 import NoReportsResult from "../common/no-reports";
 import CheckResult from "./result";
 

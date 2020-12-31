@@ -265,7 +265,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.relativePath = exports.plural = exports.flatMap = exports.chunk = void 0;
+exports.sum = exports.relativePath = exports.plural = exports.flatMap = exports.chunk = void 0;
 const path_1 = __importDefault(__webpack_require__(5622));
 function chunk(array, size) {
     if (array === undefined || array.length === 0) {
@@ -292,6 +292,10 @@ function relativePath(absolutePath) {
         : absolutePath;
 }
 exports.relativePath = relativePath;
+function sum(array, fn) {
+    return array.map(fn).reduce((a, b) => a + b);
+}
+exports.sum = sum;
 
 
 /***/ }),
@@ -408,15 +412,11 @@ class CpdResult extends result_1.default {
         return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
     }
     get conclusion() {
-        const duplications = this.reports
-            .map((report) => report.duplications.length)
-            .reduce((a, b) => a + b);
+        const duplications = utils_1.sum(this.reports, (report) => report.duplications.length);
         return duplications > 0 ? "neutral" : "success";
     }
     get title() {
-        const duplications = this.reports
-            .map((report) => report.duplications.length)
-            .reduce((a, b) => a + b);
+        const duplications = utils_1.sum(this.reports, (report) => report.duplications.length);
         return `${utils_1.plural(duplications, "duplication")} found`;
     }
     get summary() {
@@ -626,8 +626,9 @@ const core = __importStar(__webpack_require__(2186));
 const check_1 = __importDefault(__webpack_require__(4624));
 const check_2 = __importDefault(__webpack_require__(7309));
 const check_3 = __importDefault(__webpack_require__(3265));
+const check_4 = __importDefault(__webpack_require__(1905));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const checks = [new check_1.default(), new check_2.default(), new check_3.default()];
+    const checks = [new check_1.default(), new check_2.default(), new check_3.default(), new check_4.default()];
     for (const check of checks) {
         yield check.run();
     }
@@ -757,9 +758,7 @@ class PmdResult extends result_1.default {
         return "neutral";
     }
     get title() {
-        const violations = this.reports
-            .map((report) => report.violations.length)
-            .reduce((a, b) => a + b);
+        const violations = utils_1.sum(this.reports, (report) => report.violations.length);
         return `${utils_1.plural(violations, "violation")} found`;
     }
     get summary() {
@@ -792,6 +791,193 @@ class PmdResult extends result_1.default {
     }
 }
 exports.default = PmdResult;
+
+
+/***/ }),
+
+/***/ 1905:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const check_1 = __importDefault(__webpack_require__(2799));
+const parser_1 = __importDefault(__webpack_require__(741));
+const result_1 = __importDefault(__webpack_require__(9680));
+class SpotbugsCheck extends check_1.default {
+    constructor() {
+        super("spotbugs", "SpotBugs");
+    }
+    readReport(reportPath) {
+        return new parser_1.default(reportPath).read();
+    }
+    getResult(reports) {
+        return new result_1.default(this.runCondition, reports);
+    }
+}
+exports.default = SpotbugsCheck;
+
+
+/***/ }),
+
+/***/ 741:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const html_entities_1 = __webpack_require__(2589);
+const saxophone_ts_1 = __webpack_require__(3902);
+const parser_1 = __importDefault(__webpack_require__(3234));
+class SpotbugsParser extends parser_1.default {
+    constructor(reportPath) {
+        super({
+            categories: new Map(),
+            bugs: [],
+        }, reportPath);
+        this.category = "";
+        this.bug = {
+            filePath: "",
+            startLine: 0,
+            endLine: 0,
+            category: "",
+            priority: 0,
+            shortMessage: "",
+            longMessage: "",
+        };
+    }
+    onTagOpen(tag) {
+        switch (tag.name) {
+            case "BugInstance":
+                this.onBugInstanceOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case "SourceLine":
+                this.onSourceLineOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case "BugCategory":
+                this.onBugCategoryOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+        }
+    }
+    onBugInstanceOpen(attrs) {
+        this.bug = {
+            filePath: "",
+            startLine: 0,
+            endLine: 0,
+            category: html_entities_1.XmlEntities.decode(attrs.category),
+            priority: Number(attrs.priority),
+            shortMessage: "",
+            longMessage: "",
+        };
+        this.report.bugs.push(this.bug);
+    }
+    onSourceLineOpen(attrs) {
+        if (this.getContext() !== "BugInstance") {
+            return;
+        }
+        this.bug.filePath = html_entities_1.XmlEntities.decode(attrs.sourcepath);
+        this.bug.startLine = Number(attrs.start);
+        this.bug.endLine = Number(attrs.end);
+    }
+    onBugCategoryOpen(attrs) {
+        this.category = attrs.category;
+    }
+    onTagClose(tag) {
+        if (tag.name === "BugCategory") {
+            this.category = "";
+        }
+    }
+    onText(tag) {
+        switch (this.getContext()) {
+            case "ShortMessage":
+                this.bug.shortMessage = html_entities_1.XmlEntities.decode(tag.contents);
+                break;
+            case "LongMessage":
+                this.bug.longMessage = html_entities_1.XmlEntities.decode(tag.contents);
+                break;
+            case "Description":
+                this.category && this.report.categories.set(this.category, tag.contents);
+                break;
+        }
+    }
+}
+exports.default = SpotbugsParser;
+
+
+/***/ }),
+
+/***/ 9680:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const result_1 = __importDefault(__webpack_require__(1009));
+const check_1 = __webpack_require__(2799);
+const utils_1 = __webpack_require__(1855);
+class SpotbugsResult extends result_1.default {
+    constructor(runCondition, reports) {
+        super();
+        this.runCondition = runCondition;
+        this.reports = reports;
+    }
+    shouldCompleteCheck() {
+        return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
+    }
+    get conclusion() {
+        return "neutral";
+    }
+    get title() {
+        const bugs = utils_1.sum(this.reports, (report) => report.bugs.length);
+        return `${utils_1.plural(bugs, "bug")} found`;
+    }
+    get summary() {
+        return this.title;
+    }
+    get text() {
+        return undefined;
+    }
+    get annotations() {
+        return utils_1.flatMap(this.reports, (report) => this.annotateReport(report));
+    }
+    annotateReport(report) {
+        return report.bugs.map((bug) => this.annotateBug(bug, report.categories));
+    }
+    annotateBug(bug, categories) {
+        return {
+            path: bug.filePath,
+            start_line: bug.startLine,
+            end_line: bug.startLine,
+            annotation_level: this.resolveAnnotationLevel(bug),
+            message: bug.longMessage,
+            title: this.resolveTitle(bug, categories),
+        };
+    }
+    resolveAnnotationLevel(bug) {
+        switch (bug.priority) {
+            case 1:
+                return "failure";
+            case 2:
+                return "warning";
+            default:
+                return "notice";
+        }
+    }
+    resolveTitle(bug, categories) {
+        const category = categories.get(bug.category) || bug.category;
+        return `${category}: ${bug.shortMessage}`;
+    }
+}
+exports.default = SpotbugsResult;
 
 
 /***/ }),

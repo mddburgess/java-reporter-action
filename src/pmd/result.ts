@@ -2,7 +2,7 @@ import CheckResult from "../check/result";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
 import { RunCondition } from "../check";
 import PmdReport, { PmdViolation } from "./types";
-import { flatMap, plural, relativePath } from "../common/utils";
+import { flatMap, plural, relativePath, sum } from "../common/utils";
 
 export default class PmdResult extends CheckResult {
   constructor(private readonly runCondition: RunCondition, private readonly reports: PmdReport[]) {
@@ -18,9 +18,7 @@ export default class PmdResult extends CheckResult {
   }
 
   get title(): string {
-    const violations = this.reports
-      .map((report) => report.violations.length)
-      .reduce((a, b) => a + b);
+    const violations = sum(this.reports, (report) => report.violations.length);
     return `${plural(violations, "violation")} found`;
   }
 

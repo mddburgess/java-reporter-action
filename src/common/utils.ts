@@ -24,3 +24,7 @@ export function relativePath(absolutePath: string): string {
     ? path.relative(process.env.GITHUB_WORKSPACE, absolutePath)
     : absolutePath;
 }
+
+export function sum<T>(array: T[], fn: (item: T) => number): number {
+  return array.map(fn).reduce((a, b) => a + b);
+}

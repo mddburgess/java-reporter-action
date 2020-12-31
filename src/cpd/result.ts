@@ -2,7 +2,7 @@ import CheckResult from "../check/result";
 import { RunCondition } from "../check";
 import CpdReport, { CpdDuplication, CpdFile } from "./types";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
-import { flatMap, plural, relativePath } from "../common/utils";
+import { flatMap, plural, relativePath, sum } from "../common/utils";
 
 export default class CpdResult extends CheckResult {
   constructor(private readonly runCondition: RunCondition, private readonly reports: CpdReport[]) {
@@ -14,16 +14,12 @@ export default class CpdResult extends CheckResult {
   }
 
   get conclusion(): CheckConclusion {
-    const duplications = this.reports
-      .map((report) => report.duplications.length)
-      .reduce((a, b) => a + b);
+    const duplications = sum(this.reports, (report) => report.duplications.length);
     return duplications > 0 ? "neutral" : "success";
   }
 
   get title(): string {
-    const duplications = this.reports
-      .map((report) => report.duplications.length)
-      .reduce((a, b) => a + b);
+    const duplications = sum(this.reports, (report) => report.duplications.length);
     return `${plural(duplications, "duplication")} found`;
   }
 
