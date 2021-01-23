@@ -138,6 +138,158 @@ exports.default = CheckResult;
 
 /***/ }),
 
+/***/ 1594:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const check_1 = __importDefault(__webpack_require__(2799));
+const parser_1 = __importDefault(__webpack_require__(4765));
+const result_1 = __importDefault(__webpack_require__(2205));
+class CheckstyleCheck extends check_1.default {
+    constructor() {
+        super("checkstyle", "Checkstyle");
+    }
+    readReport(reportPath) {
+        return new parser_1.default(reportPath).read();
+    }
+    getResult(reports) {
+        return new result_1.default(this.runCondition, reports);
+    }
+}
+exports.default = CheckstyleCheck;
+
+
+/***/ }),
+
+/***/ 4765:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const html_entities_1 = __webpack_require__(2589);
+const saxophone_ts_1 = __webpack_require__(3902);
+const parser_1 = __importDefault(__webpack_require__(3234));
+class CheckstyleParser extends parser_1.default {
+    constructor(reportPath) {
+        super({
+            violations: [],
+        }, reportPath);
+        this.filePath = "";
+    }
+    onTagOpen(tag) {
+        switch (tag.name) {
+            case "file":
+                this.onFileOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+            case "error":
+                this.onErrorOpen(saxophone_ts_1.parseAttrs(tag.attrs));
+                break;
+        }
+    }
+    onFileOpen(attrs) {
+        this.filePath = html_entities_1.XmlEntities.decode(attrs.name);
+    }
+    onErrorOpen(attrs) {
+        this.report.violations.push({
+            filePath: this.filePath,
+            line: Number(attrs.line),
+            column: Number(attrs.column) || 0,
+            rule: html_entities_1.XmlEntities.decode(attrs.source),
+            severity: attrs.severity,
+            message: html_entities_1.XmlEntities.decode(attrs.message),
+        });
+    }
+    onTagClose(tag) {
+        // do nothing
+    }
+    onText(tag) {
+        // do nothing
+    }
+}
+exports.default = CheckstyleParser;
+
+
+/***/ }),
+
+/***/ 2205:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const result_1 = __importDefault(__webpack_require__(1009));
+const check_1 = __webpack_require__(2799);
+const utils_1 = __webpack_require__(1855);
+const word_wrap_1 = __importDefault(__webpack_require__(3578));
+class CheckstyleResult extends result_1.default {
+    constructor(runCondition, reports) {
+        super();
+        this.runCondition = runCondition;
+        this.reports = reports;
+    }
+    shouldCompleteCheck() {
+        return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
+    }
+    get conclusion() {
+        return "neutral";
+    }
+    get title() {
+        const violations = utils_1.sum(this.reports, (report) => report.violations.length);
+        return `${utils_1.plural(violations, "violation")} found`;
+    }
+    get summary() {
+        return this.title;
+    }
+    get text() {
+        return undefined;
+    }
+    get annotations() {
+        return utils_1.flatMap(this.reports, (report) => this.annotateReport(report));
+    }
+    annotateReport(report) {
+        return report.violations.map((violation) => this.annotateViolation(violation));
+    }
+    annotateViolation(violation) {
+        return {
+            path: utils_1.relativePath(violation.filePath),
+            start_line: violation.line,
+            end_line: violation.line,
+            annotation_level: this.resolveAnnotationLevel(violation),
+            title: this.resolveTitle(violation),
+            message: word_wrap_1.default(violation.message, { width: 100, indent: "" }),
+        };
+    }
+    resolveAnnotationLevel(violation) {
+        switch (violation.severity) {
+            case "error":
+                return "failure";
+            case "warning":
+                return "warning";
+            case "info":
+                return "notice";
+        }
+    }
+    resolveTitle(violation) {
+        return violation.rule.split(".").slice(-1)[0];
+    }
+}
+exports.default = CheckstyleResult;
+
+
+/***/ }),
+
 /***/ 8909:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -627,8 +779,15 @@ const check_1 = __importDefault(__webpack_require__(4624));
 const check_2 = __importDefault(__webpack_require__(7309));
 const check_3 = __importDefault(__webpack_require__(3265));
 const check_4 = __importDefault(__webpack_require__(1905));
+const check_5 = __importDefault(__webpack_require__(1594));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    const checks = [new check_1.default(), new check_2.default(), new check_3.default(), new check_4.default()];
+    const checks = [
+        new check_1.default(),
+        new check_2.default(),
+        new check_3.default(),
+        new check_4.default(),
+        new check_5.default(),
+    ];
     for (const check of checks) {
         yield check.run();
     }
@@ -13842,6 +14001,59 @@ exports.getUserAgent = getUserAgent;
  */
 
 module.exports = __webpack_require__(1669).deprecate;
+
+
+/***/ }),
+
+/***/ 3578:
+/***/ ((module) => {
+
+/*!
+ * word-wrap <https://github.com/jonschlinkert/word-wrap>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+module.exports = function(str, options) {
+  options = options || {};
+  if (str == null) {
+    return str;
+  }
+
+  var width = options.width || 50;
+  var indent = (typeof options.indent === 'string')
+    ? options.indent
+    : '  ';
+
+  var newline = options.newline || '\n' + indent;
+  var escape = typeof options.escape === 'function'
+    ? options.escape
+    : identity;
+
+  var regexString = '.{1,' + width + '}';
+  if (options.cut !== true) {
+    regexString += '([\\s\u200B]+|$)|[^\\s\u200B]+?([\\s\u200B]+|$)';
+  }
+
+  var re = new RegExp(regexString, 'g');
+  var lines = str.match(re) || [];
+  var result = indent + lines.map(function(line) {
+    if (line.slice(-1) === '\n') {
+      line = line.slice(0, line.length - 1);
+    }
+    return escape(line);
+  }).join(newline);
+
+  if (options.trim === true) {
+    result = result.replace(/[ \t]*$/gm, '');
+  }
+  return result;
+};
+
+function identity(str) {
+  return str;
+}
 
 
 /***/ }),
