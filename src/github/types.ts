@@ -1,4 +1,8 @@
-interface CheckRequest {
+export type CreateCheckRequest = CheckRequest & { name: string };
+
+export type UpdateCheckRequest = CheckRequest & { check_run_id: number };
+
+export interface CheckRequest {
   status?: CheckStatus;
   started_at?: string;
   conclusion?: CheckConclusion;
@@ -6,13 +10,9 @@ interface CheckRequest {
   output?: CheckOutput;
 }
 
-type CreateCheckRequest = CheckRequest & { name: string };
-
-type UpdateCheckRequest = CheckRequest & { check_run_id: number };
-
 type CheckStatus = "queued" | "in_progress" | "completed";
 
-type CheckConclusion =
+export type CheckConclusion =
   | "success"
   | "failure"
   | "neutral"
@@ -28,7 +28,7 @@ interface CheckOutput {
   annotations?: CheckAnnotation[];
 }
 
-interface CheckAnnotation {
+export interface CheckAnnotation {
   path: string;
   start_line: number;
   end_line: number;
@@ -40,12 +40,4 @@ interface CheckAnnotation {
   raw_details?: string;
 }
 
-type AnnotationLevel = "notice" | "warning" | "failure";
-
-export {
-  CheckRequest,
-  CheckConclusion,
-  CheckAnnotation,
-  CreateCheckRequest,
-  UpdateCheckRequest,
-};
+export type AnnotationLevel = "notice" | "warning" | "failure";

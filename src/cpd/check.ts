@@ -1,41 +1,19 @@
-import Check from '../common/check';
-import {Annotation} from '../common/github';
-import CpdReport from './report';
-import CpdReportReader from './reader';
-import CpdAnnotator from './annotator';
+import Check from "../check";
+import CpdReport from "./types";
+import CheckResult from "../check/result";
+import CpdResult from "./result";
+import CpdParser from "./parser";
 
-class CpdCheck extends Check<CpdReport> {
+export default class CpdCheck extends Check<CpdReport> {
+  constructor() {
+    super("cpd", "CPD");
+  }
 
-    constructor() {
-        super('cpd');
-    }
+  protected readReport(reportPath: string): CpdReport | undefined {
+    return new CpdParser(reportPath).read();
+  }
 
-    protected resolveSearchPaths(): string[] {
-        return ['**/target/cpd.xml'];
-    }
-
-    protected readReport(reportPath: string): CpdReport | undefined {
-        return new CpdReportReader().readReport(reportPath);
-    }
-
-    protected aggregateReport(aggregate: CpdReport, report: CpdReport): void {
-        aggregate.duplications.push(...report.duplications);
-    }
-
-    protected createAnnotations(aggregate: CpdReport): Promise<Annotation[]> {
-        const annotations = new CpdAnnotator().annotate(aggregate);
-        return Promise.resolve(annotations);
-    }
-
-    protected resolveTitle(aggregate: CpdReport): string {
-        return aggregate.duplications.length
-            ? `${aggregate.duplications.length} duplications`
-            : `No duplications`;
-    }
-
-    protected resolveSummary(aggregate: CpdReport): string {
-        return this.resolveTitle(aggregate);
-    }
+  protected getResult(reports: CpdReport[]): CheckResult {
+    return new CpdResult(this.runCondition, reports);
+  }
 }
-
-export default CpdCheck;

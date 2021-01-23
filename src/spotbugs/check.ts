@@ -1,40 +1,19 @@
-import Check from '../common/check';
-import {Annotation} from '../common/github';
-import SpotbugsAnnotator from './annotator';
-import SpotbugsReport from './report';
-import SpotbugsReportReader from './reader';
+import Check from "../check";
+import SpotbugsReport from "./types";
+import CheckResult from "../check/result";
+import SpotbugsParser from "./parser";
+import SpotbugsResult from "./result";
 
-class SpotbugsCheck extends Check<SpotbugsReport> {
+export default class SpotbugsCheck extends Check<SpotbugsReport> {
+  constructor() {
+    super("spotbugs", "SpotBugs");
+  }
 
-    constructor() {
-        super('spotbugs');
-    }
+  protected readReport(reportPath: string): SpotbugsReport | undefined {
+    return new SpotbugsParser(reportPath).read();
+  }
 
-    protected resolveSearchPaths(): string[] {
-        return ['**/target/spotbugsXml.xml'];
-    }
-
-    protected readReport(reportPath: string): SpotbugsReport | undefined {
-        return new SpotbugsReportReader().readReport(reportPath);
-    }
-
-    protected aggregateReport(aggregate: SpotbugsReport, report: SpotbugsReport): void {
-        report.categories.forEach((value, key) => aggregate.categories.set(key, value));
-    }
-
-    protected createAnnotations(aggregate: SpotbugsReport): Promise<Annotation[]> {
-        return new SpotbugsAnnotator().annotate(aggregate);
-    }
-
-    protected resolveTitle(aggregate: SpotbugsReport): string {
-        return aggregate.bugs.length
-            ? `${aggregate.bugs.length} bugs found`
-            : `No bugs found`;
-    }
-
-    protected resolveSummary(aggregate: SpotbugsReport): string {
-        return this.resolveTitle(aggregate);
-    }
+  protected getResult(reports: SpotbugsReport[]): CheckResult {
+    return new SpotbugsResult(this.runCondition, reports);
+  }
 }
-
-export default SpotbugsCheck;
