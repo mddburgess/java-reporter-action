@@ -431,7 +431,7 @@ function chunk(array, size) {
 }
 exports.chunk = chunk;
 function flatMap(array, fn) {
-    return array.map(fn).reduce((a, b) => a.concat(b));
+    return array.map(fn).reduce((a, b) => a.concat(b), []);
 }
 exports.flatMap = flatMap;
 function plural(quantity, noun) {

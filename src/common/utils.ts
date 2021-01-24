@@ -12,7 +12,7 @@ export function chunk<T>(array: T[] | undefined, size: number): T[][] {
 }
 
 export function flatMap<T, R>(array: T[], fn: (object: T) => R[]): R[] {
-  return array.map(fn).reduce((a, b) => a.concat(b));
+  return array.map(fn).reduce((a, b) => a.concat(b), []);
 }
 
 export function plural(quantity: number, noun: string): string {
