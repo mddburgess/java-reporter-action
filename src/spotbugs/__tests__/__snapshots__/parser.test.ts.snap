@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SpotbugsParser can parse an empty SpotBugs report 1`] = `
+Object {
+  "bugs": Array [],
+  "categories": Map {},
+}
+`;

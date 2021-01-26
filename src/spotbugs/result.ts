@@ -17,7 +17,8 @@ export default class SpotbugsResult extends CheckResult {
   }
 
   get conclusion(): CheckConclusion {
-    return "neutral";
+    const bugs = sum(this.reports, (report) => report.bugs.length);
+    return bugs > 0 ? "neutral" : "success";
   }
 
   get title(): string {
