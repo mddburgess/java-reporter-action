@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PmdParser can parse an empty PMD report 1`] = `
+Object {
+  "violations": Array [],
+}
+`;

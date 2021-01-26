@@ -914,7 +914,8 @@ class PmdResult extends result_1.default {
         return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
     }
     get conclusion() {
-        return "neutral";
+        const violations = utils_1.sum(this.reports, (report) => report.violations.length);
+        return violations > 0 ? "neutral" : "success";
     }
     get title() {
         const violations = utils_1.sum(this.reports, (report) => report.violations.length);

@@ -14,7 +14,8 @@ export default class PmdResult extends CheckResult {
   }
 
   get conclusion(): CheckConclusion {
-    return "neutral";
+    const violations = sum(this.reports, (report) => report.violations.length);
+    return violations > 0 ? "neutral" : "success";
   }
 
   get title(): string {
