@@ -268,8 +268,8 @@ class CheckstyleResult extends result_1.default {
             start_line: violation.line,
             end_line: violation.line,
             annotation_level: this.resolveAnnotationLevel(violation),
-            title: this.resolveTitle(violation),
             message: word_wrap_1.default(violation.message, { width: 100, indent: "" }),
+            title: this.resolveTitle(violation),
         };
     }
     resolveAnnotationLevel(violation) {
@@ -1137,6 +1137,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const result_1 = __importDefault(__webpack_require__(1009));
 const check_1 = __webpack_require__(2799);
 const utils_1 = __webpack_require__(1855);
+const word_wrap_1 = __importDefault(__webpack_require__(3578));
 class SpotbugsResult extends result_1.default {
     constructor(runCondition, reports, classpath) {
         super();
@@ -1173,7 +1174,7 @@ class SpotbugsResult extends result_1.default {
             start_line: bug.startLine,
             end_line: bug.startLine,
             annotation_level: this.resolveAnnotationLevel(bug),
-            message: bug.longMessage,
+            message: word_wrap_1.default(bug.longMessage, { width: 100, indent: "" }),
             title: this.resolveTitle(bug, categories),
         };
     }

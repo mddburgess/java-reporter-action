@@ -49,8 +49,8 @@ export default class CheckstyleResult extends CheckResult {
       start_line: violation.line,
       end_line: violation.line,
       annotation_level: this.resolveAnnotationLevel(violation),
-      title: this.resolveTitle(violation),
       message: wrap(violation.message, { width: 100, indent: "" }),
+      title: this.resolveTitle(violation),
     };
   }
 

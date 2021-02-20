@@ -3,6 +3,7 @@ import { AnnotationLevel, CheckAnnotation, CheckConclusion } from "../github/typ
 import { RunCondition } from "../check";
 import SpotbugsReport, { SpotbugsBug } from "./types";
 import { flatMap, plural, sum } from "../common/utils";
+import wrap from "word-wrap";
 
 export default class SpotbugsResult extends CheckResult {
   constructor(
@@ -49,7 +50,7 @@ export default class SpotbugsResult extends CheckResult {
       start_line: bug.startLine,
       end_line: bug.startLine,
       annotation_level: this.resolveAnnotationLevel(bug),
-      message: bug.longMessage,
+      message: wrap(bug.longMessage, { width: 100, indent: "" }),
       title: this.resolveTitle(bug, categories),
     };
   }
