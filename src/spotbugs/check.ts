@@ -5,7 +5,7 @@ import SpotbugsParser from "./parser";
 import SpotbugsResult from "./result";
 
 export default class SpotbugsCheck extends Check<SpotbugsReport> {
-  constructor() {
+  constructor(private readonly classpath: string[]) {
     super("spotbugs", "SpotBugs");
   }
 
@@ -14,6 +14,6 @@ export default class SpotbugsCheck extends Check<SpotbugsReport> {
   }
 
   protected getResult(reports: SpotbugsReport[]): CheckResult {
-    return new SpotbugsResult(this.runCondition, reports);
+    return new SpotbugsResult(this.runCondition, reports, this.classpath);
   }
 }

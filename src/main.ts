@@ -4,13 +4,16 @@ import PmdCheck from "./pmd/check";
 import CpdCheck from "./cpd/check";
 import SpotbugsCheck from "./spotbugs/check";
 import CheckstyleCheck from "./checkstyle/check";
+import { loadClasspath } from "./common/files";
 
 const main = async () => {
+  const classpath = await loadClasspath();
+
   const checks = [
     new SurefireCheck(),
     new PmdCheck(),
     new CpdCheck(),
-    new SpotbugsCheck(),
+    new SpotbugsCheck(classpath),
     new CheckstyleCheck(),
   ];
 

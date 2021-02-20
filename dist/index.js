@@ -291,6 +291,55 @@ exports.default = CheckstyleResult;
 
 /***/ }),
 
+/***/ 9337:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.loadClasspath = void 0;
+const glob = __importStar(__webpack_require__(8090));
+function loadClasspath() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const globber = yield glob.create("**/*.java");
+        const searchPath = globber.getSearchPaths()[0];
+        const javaPaths = yield globber.glob();
+        return javaPaths.map((path) => path.slice(searchPath.length + 1));
+    });
+}
+exports.loadClasspath = loadClasspath;
+
+
+/***/ }),
+
 /***/ 8909:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -781,12 +830,14 @@ const check_2 = __importDefault(__webpack_require__(7309));
 const check_3 = __importDefault(__webpack_require__(3265));
 const check_4 = __importDefault(__webpack_require__(1905));
 const check_5 = __importDefault(__webpack_require__(1594));
+const files_1 = __webpack_require__(9337);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    const classpath = yield files_1.loadClasspath();
     const checks = [
         new check_1.default(),
         new check_2.default(),
         new check_3.default(),
-        new check_4.default(),
+        new check_4.default(classpath),
         new check_5.default(),
     ];
     for (const check of checks) {
@@ -969,14 +1020,15 @@ const check_1 = __importDefault(__webpack_require__(2799));
 const parser_1 = __importDefault(__webpack_require__(741));
 const result_1 = __importDefault(__webpack_require__(9680));
 class SpotbugsCheck extends check_1.default {
-    constructor() {
+    constructor(classpath) {
         super("spotbugs", "SpotBugs");
+        this.classpath = classpath;
     }
     readReport(reportPath) {
         return new parser_1.default(reportPath).read();
     }
     getResult(reports) {
-        return new result_1.default(this.runCondition, reports);
+        return new result_1.default(this.runCondition, reports, this.classpath);
     }
 }
 exports.default = SpotbugsCheck;
@@ -1086,10 +1138,11 @@ const result_1 = __importDefault(__webpack_require__(1009));
 const check_1 = __webpack_require__(2799);
 const utils_1 = __webpack_require__(1855);
 class SpotbugsResult extends result_1.default {
-    constructor(runCondition, reports) {
+    constructor(runCondition, reports, classpath) {
         super();
         this.runCondition = runCondition;
         this.reports = reports;
+        this.classpath = classpath;
     }
     shouldCompleteCheck() {
         return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
@@ -1116,13 +1169,16 @@ class SpotbugsResult extends result_1.default {
     }
     annotateBug(bug, categories) {
         return {
-            path: bug.filePath,
+            path: this.resolvePath(bug.filePath),
             start_line: bug.startLine,
             end_line: bug.startLine,
             annotation_level: this.resolveAnnotationLevel(bug),
             message: bug.longMessage,
             title: this.resolveTitle(bug, categories),
         };
+    }
+    resolvePath(path) {
+        return this.classpath.filter((cp) => cp.endsWith(path))[0];
     }
     resolveAnnotationLevel(bug) {
         switch (bug.priority) {

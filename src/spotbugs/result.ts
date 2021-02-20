@@ -7,7 +7,8 @@ import { flatMap, plural, sum } from "../common/utils";
 export default class SpotbugsResult extends CheckResult {
   constructor(
     private readonly runCondition: RunCondition,
-    private readonly reports: SpotbugsReport[]
+    private readonly reports: SpotbugsReport[],
+    private readonly classpath: string[]
   ) {
     super();
   }
@@ -44,13 +45,17 @@ export default class SpotbugsResult extends CheckResult {
 
   private annotateBug(bug: SpotbugsBug, categories: Map<string, string>): CheckAnnotation {
     return {
-      path: bug.filePath,
+      path: this.resolvePath(bug.filePath),
       start_line: bug.startLine,
       end_line: bug.startLine,
       annotation_level: this.resolveAnnotationLevel(bug),
       message: bug.longMessage,
       title: this.resolveTitle(bug, categories),
     };
+  }
+
+  private resolvePath(path: string): string {
+    return this.classpath.filter((cp) => cp.endsWith(path))[0];
   }
 
   private resolveAnnotationLevel(bug: SpotbugsBug): AnnotationLevel {
