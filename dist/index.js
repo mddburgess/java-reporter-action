@@ -1091,12 +1091,9 @@ class SpotbugsParser extends parser_1.default {
         this.report.bugs.push(this.bug);
     }
     onSourceLineOpen(attrs) {
-        if (this.getContext() !== "BugInstance") {
-            return;
-        }
         this.bug.filePath = html_entities_1.XmlEntities.decode(attrs.sourcepath);
-        this.bug.startLine = Number(attrs.start);
-        this.bug.endLine = Number(attrs.end);
+        this.bug.startLine = Number(attrs.start) || this.bug.startLine;
+        this.bug.endLine = Number(attrs.end) || this.bug.startLine;
     }
     onBugCategoryOpen(attrs) {
         this.category = attrs.category;

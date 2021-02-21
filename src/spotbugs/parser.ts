@@ -59,13 +59,9 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
   }
 
   private onSourceLineOpen(attrs: SourceLineAttrs) {
-    if (this.getContext() !== "BugInstance") {
-      return;
-    }
-
     this.bug.filePath = XmlEntities.decode(attrs.sourcepath);
-    this.bug.startLine = Number(attrs.start);
-    this.bug.endLine = Number(attrs.end);
+    this.bug.startLine = Number(attrs.start) || this.bug.startLine;
+    this.bug.endLine = Number(attrs.end) || this.bug.startLine;
   }
 
   private onBugCategoryOpen(attrs: BugCategoryAttrs) {
