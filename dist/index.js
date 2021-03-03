@@ -375,7 +375,7 @@ class NoReportsResult extends result_1.default {
         return ["### Search paths", "```sh", ...this.searchPaths, "```"].join("\n");
     }
     get annotations() {
-        return undefined;
+        return [];
     }
 }
 exports.default = NoReportsResult;
@@ -682,6 +682,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const index_1 = __importDefault(__webpack_require__(5433));
 const utils_1 = __webpack_require__(1855);
+const utils_2 = __webpack_require__(1824);
 class CheckRun {
     constructor(name) {
         this.github = new index_1.default();
@@ -694,7 +695,7 @@ class CheckRun {
     }
     complete(result) {
         return __awaiter(this, void 0, void 0, function* () {
-            const chunks = utils_1.chunk(result.annotations, 50);
+            const chunks = utils_1.chunk(result.annotations.sort(utils_2.compareAnnotations), 50);
             for (const annotations of chunks) {
                 yield this.saveCheck({
                     status: "completed",
@@ -783,6 +784,40 @@ class Github {
     }
 }
 exports.default = Github;
+
+
+/***/ }),
+
+/***/ 1824:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.compareAnnotations = void 0;
+function compareAnnotations(a, b) {
+    if (a.annotation_level !== b.annotation_level) {
+        return levelValue(a.annotation_level) - levelValue(b.annotation_level);
+    }
+    if (a.path !== b.path) {
+        return a.path.localeCompare(b.path);
+    }
+    if (a.start_line !== b.start_line) {
+        return a.start_line - b.start_line;
+    }
+    return 0;
+}
+exports.compareAnnotations = compareAnnotations;
+function levelValue(level) {
+    switch (level) {
+        case "failure":
+            return 1;
+        case "warning":
+            return 2;
+        case "notice":
+            return 3;
+    }
+}
 
 
 /***/ }),

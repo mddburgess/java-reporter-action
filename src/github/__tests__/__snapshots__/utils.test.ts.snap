@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`compareAnnotations() handles an array of length 1 1`] = `
+Array [
+  Object {
+    "annotation_level": "notice",
+    "end_line": 0,
+    "message": "",
+    "path": "",
+    "start_line": 0,
+  },
+]
+`;
+
+exports[`compareAnnotations() handles an empty array 1`] = `Array []`;
+
+exports[`compareAnnotations() handles identical annotations 1`] = `
+Array [
+  Object {
+    "annotation_level": "warning",
+    "end_line": 2,
+    "message": "",
+    "path": "path/to/Different.java",
+    "start_line": 2,
+  },
+  Object {
+    "annotation_level": "warning",
+    "end_line": 1,
+    "message": "",
+    "path": "path/to/Same.java",
+    "start_line": 1,
+  },
+  Object {
+    "annotation_level": "warning",
+    "end_line": 1,
+    "message": "",
+    "path": "path/to/Same.java",
+    "start_line": 1,
+  },
+]
+`;
+
+exports[`compareAnnotations() sorts annotations by level 1`] = `
+Array [
+  Object {
+    "annotation_level": "failure",
+    "end_line": 0,
+    "message": "",
+    "path": "",
+    "start_line": 0,
+  },
+  Object {
+    "annotation_level": "warning",
+    "end_line": 0,
+    "message": "",
+    "path": "",
+    "start_line": 0,
+  },
+  Object {
+    "annotation_level": "notice",
+    "end_line": 0,
+    "message": "",
+    "path": "",
+    "start_line": 0,
+  },
+]
+`;
+
+exports[`compareAnnotations() sorts annotations with same level by path 1`] = `
+Array [
+  Object {
+    "annotation_level": "warning",
+    "end_line": 0,
+    "message": "",
+    "path": "path/to/package/First.java",
+    "start_line": 0,
+  },
+  Object {
+    "annotation_level": "warning",
+    "end_line": 0,
+    "message": "",
+    "path": "path/to/package/nested/Third.java",
+    "start_line": 0,
+  },
+  Object {
+    "annotation_level": "warning",
+    "end_line": 0,
+    "message": "",
+    "path": "path/to/package/Second.java",
+    "start_line": 0,
+  },
+]
+`;
+
+exports[`compareAnnotations() sorts annotations with same path by start line 1`] = `
+Array [
+  Object {
+    "annotation_level": "warning",
+    "end_line": 1,
+    "message": "",
+    "path": "path/to/Class.java",
+    "start_line": 1,
+  },
+  Object {
+    "annotation_level": "warning",
+    "end_line": 2,
+    "message": "",
+    "path": "path/to/Class.java",
+    "start_line": 2,
+  },
+  Object {
+    "annotation_level": "warning",
+    "end_line": 3,
+    "message": "",
+    "path": "path/to/Class.java",
+    "start_line": 3,
+  },
+]
+`;
