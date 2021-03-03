@@ -6,5 +6,5 @@ export default abstract class CheckResult {
   abstract get title(): string;
   abstract get summary(): string;
   abstract get text(): string | undefined;
-  abstract get annotations(): CheckAnnotation[] | undefined;
+  abstract get annotations(): CheckAnnotation[];
 }

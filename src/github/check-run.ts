@@ -2,6 +2,7 @@ import Github from "./index";
 import { CheckRequest } from "./types";
 import CheckResult from "../check/result";
 import { chunk } from "../common/utils";
+import { compareAnnotations } from "./utils";
 
 export default class CheckRun {
   private readonly github: Github;
@@ -18,7 +19,7 @@ export default class CheckRun {
   }
 
   async complete(result: CheckResult) {
-    const chunks = chunk(result.annotations, 50);
+    const chunks = chunk(result.annotations.sort(compareAnnotations), 50);
     for (const annotations of chunks) {
       await this.saveCheck({
         status: "completed",
