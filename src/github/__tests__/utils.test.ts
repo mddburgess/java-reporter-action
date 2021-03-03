@@ -1,30 +1,12 @@
-import { CheckAnnotation } from "../types";
+import { AnnotationLevel, CheckAnnotation } from "../types";
 import { compareAnnotations } from "../utils";
 
 describe("compareAnnotations()", () => {
   it("sorts annotations by level", () => {
     const annotations: CheckAnnotation[] = [
-      {
-        path: "",
-        start_line: 0,
-        end_line: 0,
-        annotation_level: "notice",
-        message: "",
-      },
-      {
-        path: "",
-        start_line: 0,
-        end_line: 0,
-        annotation_level: "warning",
-        message: "",
-      },
-      {
-        path: "",
-        start_line: 0,
-        end_line: 0,
-        annotation_level: "failure",
-        message: "",
-      },
+      annotation("notice"),
+      annotation("warning"),
+      annotation("failure"),
     ];
 
     annotations.sort(compareAnnotations);
@@ -33,27 +15,9 @@ describe("compareAnnotations()", () => {
 
   it("sorts annotations with same level by path", () => {
     const annotations: CheckAnnotation[] = [
-      {
-        path: "path/to/package/Second.java",
-        start_line: 0,
-        end_line: 0,
-        annotation_level: "warning",
-        message: "",
-      },
-      {
-        path: "path/to/package/nested/Third.java",
-        start_line: 0,
-        end_line: 0,
-        annotation_level: "warning",
-        message: "",
-      },
-      {
-        path: "path/to/package/First.java",
-        start_line: 0,
-        end_line: 0,
-        annotation_level: "warning",
-        message: "",
-      },
+      annotation("warning", "path/to/package/Second.java"),
+      annotation("warning", "path/to/package/nested/Third.java"),
+      annotation("warning", "path/to/package/First.java"),
     ];
 
     annotations.sort(compareAnnotations);
@@ -62,27 +26,9 @@ describe("compareAnnotations()", () => {
 
   it("sorts annotations with same path by start line", () => {
     const annotations: CheckAnnotation[] = [
-      {
-        path: "path/to/Class.java",
-        start_line: 2,
-        end_line: 2,
-        annotation_level: "warning",
-        message: "",
-      },
-      {
-        path: "path/to/Class.java",
-        start_line: 3,
-        end_line: 3,
-        annotation_level: "warning",
-        message: "",
-      },
-      {
-        path: "path/to/Class.java",
-        start_line: 1,
-        end_line: 1,
-        annotation_level: "warning",
-        message: "",
-      },
+      annotation("warning", "path/to/Class.java", 2),
+      annotation("warning", "path/to/Class.java", 3),
+      annotation("warning", "path/to/Class.java", 1),
     ];
 
     annotations.sort(compareAnnotations);
@@ -91,27 +37,9 @@ describe("compareAnnotations()", () => {
 
   it("handles identical annotations", () => {
     const annotations: CheckAnnotation[] = [
-      {
-        path: "path/to/Same.java",
-        start_line: 1,
-        end_line: 1,
-        annotation_level: "warning",
-        message: "",
-      },
-      {
-        path: "path/to/Different.java",
-        start_line: 2,
-        end_line: 2,
-        annotation_level: "warning",
-        message: "",
-      },
-      {
-        path: "path/to/Same.java",
-        start_line: 1,
-        end_line: 1,
-        annotation_level: "warning",
-        message: "",
-      },
+      annotation("warning", "path/to/Same.java", 1),
+      annotation("warning", "path/to/Different.java", 2),
+      annotation("warning", "path/to/Same.java", 1),
     ];
 
     annotations.sort(compareAnnotations);
@@ -119,16 +47,7 @@ describe("compareAnnotations()", () => {
   });
 
   it("handles an array of length 1", () => {
-    const annotations: CheckAnnotation[] = [
-      {
-        path: "",
-        start_line: 0,
-        end_line: 0,
-        annotation_level: "notice",
-        message: "",
-      },
-    ];
-
+    const annotations: CheckAnnotation[] = [annotation("notice")];
     annotations.sort(compareAnnotations);
     expect(annotations).toMatchSnapshot();
   });
@@ -139,3 +58,13 @@ describe("compareAnnotations()", () => {
     expect(annotations).toMatchSnapshot();
   });
 });
+
+function annotation(level: AnnotationLevel, path = "", line = 0): CheckAnnotation {
+  return {
+    path: path,
+    start_line: line,
+    end_line: line,
+    annotation_level: level,
+    message: "",
+  };
+}
