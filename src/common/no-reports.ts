@@ -32,7 +32,7 @@ export default class NoReportsResult extends CheckResult {
     return ["### Search paths", "```sh", ...this.searchPaths, "```"].join("\n");
   }
 
-  get annotations(): CheckAnnotation[] | undefined {
-    return undefined;
+  get annotations(): CheckAnnotation[] {
+    return [];
   }
 }

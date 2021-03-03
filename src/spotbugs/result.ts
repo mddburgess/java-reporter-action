@@ -36,7 +36,7 @@ export default class SpotbugsResult extends CheckResult {
     return undefined;
   }
 
-  get annotations(): CheckAnnotation[] | undefined {
+  get annotations(): CheckAnnotation[] {
     return flatMap(this.reports, (report) => this.annotateReport(report));
   }
 

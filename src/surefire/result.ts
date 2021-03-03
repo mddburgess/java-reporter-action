@@ -80,7 +80,7 @@ export default class SurefireResult extends CheckResult {
     return `|\`\`${report.name}\`\`|${report.tests}|${passed}|${report.failures}|${report.errors}|${report.skipped}|`;
   }
 
-  get annotations(): CheckAnnotation[] | undefined {
+  get annotations(): CheckAnnotation[] {
     return flatMap(this.reports, (report) => this.annotateReport(report));
   }
 
