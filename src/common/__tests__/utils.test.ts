@@ -1,4 +1,4 @@
-import { chunk, flatMap, plural } from "../utils";
+import { chunk, flatMap, plural, sum } from "../utils";
 
 describe("chunk()", () => {
   it("returns one empty chunk for undefined", () => {
@@ -63,5 +63,22 @@ describe("plural()", () => {
   it("uses plural form for quantity greater than 1", () => {
     const result = plural(2, "noun");
     expect(result).toBe("2 nouns");
+  });
+});
+
+describe("sum()", () => {
+  it("handles an empty array", () => {
+    const result = sum([], (x) => x);
+    expect(result).toBe(0);
+  });
+
+  it("handles an array of size 1", () => {
+    const result = sum([1], (x) => x);
+    expect(result).toBe(1);
+  });
+
+  it("handles an array of size greater than 1", () => {
+    const result = sum([1, 2, 3], (x) => x);
+    expect(result).toBe(6);
   });
 });
