@@ -58,6 +58,12 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <includes>pmd/**/*.java</includes>
+                    <rulesets>
+                        <ruleset>pmd.xml</ruleset>
+                    </rulesets>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -72,6 +78,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                    <includeTests>true</includeTests>
+                </configuration>
             </plugin>
 
             <plugin>
@@ -86,6 +97,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <includes>checkstyle/**/*.java</includes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
