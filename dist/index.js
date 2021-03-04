@@ -495,7 +495,7 @@ function relativePath(absolutePath) {
 }
 exports.relativePath = relativePath;
 function sum(array, fn) {
-    return array.map(fn).reduce((a, b) => a + b);
+    return array.map(fn).reduce((a, b) => a + b, 0);
 }
 exports.sum = sum;
 

@@ -26,5 +26,5 @@ export function relativePath(absolutePath: string): string {
 }
 
 export function sum<T>(array: T[], fn: (item: T) => number): number {
-  return array.map(fn).reduce((a, b) => a + b);
+  return array.map(fn).reduce((a, b) => a + b, 0);
 }
