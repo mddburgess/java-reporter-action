@@ -36,25 +36,25 @@ export default class PmdResult extends CheckResult {
   }
 
   private annotateReport(report: PmdReport): CheckAnnotation[] {
-    return report.violations.map((violation) => this.annotateViolation(violation));
+    return report.violations.map(annotateViolation);
   }
+}
 
-  private annotateViolation(violation: PmdViolation): CheckAnnotation {
-    return {
-      path: relativePath(violation.filePath),
-      start_line: violation.startLine,
-      end_line: violation.startLine,
-      annotation_level: this.resolveAnnotationLevel(violation),
-      message: violation.message,
-      title: this.resolveTitle(violation),
-    };
-  }
+export function annotateViolation(violation: PmdViolation): CheckAnnotation {
+  return {
+    path: relativePath(violation.filePath),
+    start_line: violation.startLine,
+    end_line: violation.startLine,
+    annotation_level: resolveAnnotationLevel(violation),
+    message: violation.message,
+    title: resolveTitle(violation),
+  };
+}
 
-  private resolveAnnotationLevel(violation: PmdViolation) {
-    return Number(violation.priority) <= 2 ? "failure" : "warning";
-  }
+function resolveAnnotationLevel(violation: PmdViolation) {
+  return Number(violation.priority) <= 2 ? "failure" : "warning";
+}
 
-  private resolveTitle(violation: PmdViolation) {
-    return `${violation.ruleset}: ${violation.rule}`;
-  }
+function resolveTitle(violation: PmdViolation) {
+  return `${violation.ruleset}: ${violation.rule}`;
 }
