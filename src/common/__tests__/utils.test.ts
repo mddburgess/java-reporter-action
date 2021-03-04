@@ -1,4 +1,4 @@
-import { chunk, plural } from "../utils";
+import { chunk, flatMap, plural } from "../utils";
 
 describe("chunk()", () => {
   it("returns one empty chunk for undefined", () => {
@@ -24,6 +24,28 @@ describe("chunk()", () => {
   it("returns multiple chunks for an array greater than the chunk size", () => {
     const result = chunk([1, 2, 3], 2);
     expect(result).toStrictEqual([[1, 2], [3]]);
+  });
+});
+
+describe("flatMap()", () => {
+  it("handles an empty array", () => {
+    const result = flatMap([], (x) => [x]);
+    expect(result).toStrictEqual([]);
+  });
+
+  it("handles an array of size 1", () => {
+    const result = flatMap([1], (n) => [n, n + 1]);
+    expect(result).toStrictEqual([1, 2]);
+  });
+
+  it("handles an array of size greater than 1", () => {
+    const result = flatMap([1, 2, 3], (n) => [n, n * 2, n * 3]);
+    expect(result).toStrictEqual([1, 2, 3, 2, 4, 6, 3, 6, 9]);
+  });
+
+  it("handles an empty mapping function", () => {
+    const result = flatMap([1, 2, 3], () => []);
+    expect(result).toStrictEqual([]);
   });
 });
 
