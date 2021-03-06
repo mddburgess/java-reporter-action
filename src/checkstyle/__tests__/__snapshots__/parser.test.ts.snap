@@ -1,5 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CheckstyleParser can parse a real Checkstyle report 1`] = `
+Object {
+  "violations": Array [
+    Object {
+      "column": 0,
+      "filePath": "/Users/mike/Projects/java-reporter-action/example/src/main/java/checkstyle/design/FinalClass.java",
+      "line": 1,
+      "message": "Missing package-info.java file.",
+      "rule": "com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocPackageCheck",
+      "severity": "error",
+    },
+    Object {
+      "column": 0,
+      "filePath": "/Users/mike/Projects/java-reporter-action/example/src/main/java/checkstyle/design/FinalClass.java",
+      "line": 3,
+      "message": "Class FinalClass should be declared as final.",
+      "rule": "com.puppycrawl.tools.checkstyle.checks.design.FinalClassCheck",
+      "severity": "error",
+    },
+  ],
+}
+`;
+
 exports[`CheckstyleParser can parse an empty Checkstyle report 1`] = `
 Object {
   "violations": Array [],

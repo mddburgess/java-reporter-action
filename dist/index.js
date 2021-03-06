@@ -495,7 +495,7 @@ function relativePath(absolutePath) {
 }
 exports.relativePath = relativePath;
 function sum(array, fn) {
-    return array.map(fn).reduce((a, b) => a + b);
+    return array.map(fn).reduce((a, b) => a + b, 0);
 }
 exports.sum = sum;
 
@@ -988,6 +988,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.annotateViolation = void 0;
 const result_1 = __importDefault(__webpack_require__(1009));
 const check_1 = __webpack_require__(2799);
 const utils_1 = __webpack_require__(1855);
@@ -1018,26 +1019,27 @@ class PmdResult extends result_1.default {
         return utils_1.flatMap(this.reports, (report) => this.annotateReport(report));
     }
     annotateReport(report) {
-        return report.violations.map((violation) => this.annotateViolation(violation));
-    }
-    annotateViolation(violation) {
-        return {
-            path: utils_1.relativePath(violation.filePath),
-            start_line: violation.startLine,
-            end_line: violation.startLine,
-            annotation_level: this.resolveAnnotationLevel(violation),
-            message: violation.message,
-            title: this.resolveTitle(violation),
-        };
-    }
-    resolveAnnotationLevel(violation) {
-        return Number(violation.priority) <= 2 ? "failure" : "warning";
-    }
-    resolveTitle(violation) {
-        return `${violation.ruleset}: ${violation.rule}`;
+        return report.violations.map(annotateViolation);
     }
 }
 exports.default = PmdResult;
+function annotateViolation(violation) {
+    return {
+        path: utils_1.relativePath(violation.filePath),
+        start_line: violation.startLine,
+        end_line: violation.startLine,
+        annotation_level: resolveAnnotationLevel(violation),
+        message: violation.message,
+        title: resolveTitle(violation),
+    };
+}
+exports.annotateViolation = annotateViolation;
+function resolveAnnotationLevel(violation) {
+    return Number(violation.priority) <= 2 ? "failure" : "warning";
+}
+function resolveTitle(violation) {
+    return `${violation.ruleset}: ${violation.rule}`;
+}
 
 
 /***/ }),

@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`SpotbugsParser can parse a real SpotBugs report 1`] = `
+Object {
+  "bugs": Array [
+    Object {
+      "category": "MALICIOUS_CODE",
+      "endLine": 11,
+      "filePath": "spotbugs/maliciouscode/EiExposeRep.java",
+      "longMessage": "spotbugs.maliciouscode.EiExposeRep.getArrayVar() may expose internal representation by returning EiExposeRep.arrayVar",
+      "priority": 2,
+      "shortMessage": "May expose internal representation by returning reference to mutable object",
+      "startLine": 11,
+    },
+    Object {
+      "category": "MALICIOUS_CODE",
+      "endLine": 15,
+      "filePath": "spotbugs/maliciouscode/EiExposeRep.java",
+      "longMessage": "spotbugs.maliciouscode.EiExposeRep.setArrayVar(String[]) may expose internal representation by storing an externally mutable object into EiExposeRep.arrayVar",
+      "priority": 2,
+      "shortMessage": "May expose internal representation by incorporating reference to mutable object",
+      "startLine": 15,
+    },
+  ],
+  "categories": Map {
+    "MALICIOUS_CODE" => "Malicious code vulnerability",
+  },
+}
+`;
+
 exports[`SpotbugsParser can parse an empty SpotBugs report 1`] = `
 Object {
   "bugs": Array [],

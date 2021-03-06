@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd" version="6.29.0" timestamp="2021-03-04T14:52:10.192">
+<file name="/Users/mike/Projects/java-reporter-action/example/src/main/java/pmd/bestpractices/AbstractClassWithoutAbstractMethod.java">
+<violation beginline="3" endline="5" begincolumn="17" endcolumn="1" rule="AtLeastOneConstructor" ruleset="Code Style" package="pmd.bestpractices" class="AbstractClassWithoutAbstractMethod" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_codestyle.html#atleastoneconstructor" priority="3">
+Each class should declare at least one constructor
+</violation>
+<violation beginline="3" endline="5" begincolumn="17" endcolumn="1" rule="AbstractClassWithoutAnyMethod" ruleset="Design" package="pmd.bestpractices" class="AbstractClassWithoutAbstractMethod" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_design.html#abstractclasswithoutanymethod" priority="1">
+No abstract method which means that the keyword is most likely used to prevent instantiation. Use a private or protected constructor instead.
+</violation>
+<violation beginline="3" endline="5" begincolumn="17" endcolumn="1" rule="AbstractClassWithoutAbstractMethod" ruleset="Best Practices" package="pmd.bestpractices" class="AbstractClassWithoutAbstractMethod" externalInfoUrl="https://pmd.github.io/pmd-6.29.0/pmd_rules_java_bestpractices.html#abstractclasswithoutabstractmethod" priority="3">
+This abstract class does not have any abstract methods
+</violation>
+</file>
+</pmd>

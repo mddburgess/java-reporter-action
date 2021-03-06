@@ -1,5 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PmdParser can parse a real PMD report 1`] = `
+Object {
+  "violations": Array [
+    Object {
+      "endColumn": 1,
+      "endLine": 5,
+      "filePath": "/Users/mike/Projects/java-reporter-action/example/src/main/java/pmd/bestpractices/AbstractClassWithoutAbstractMethod.java",
+      "message": "Each class should declare at least one constructor.",
+      "priority": "3",
+      "rule": "AtLeastOneConstructor",
+      "ruleset": "Code Style",
+      "startColumn": 17,
+      "startLine": 3,
+    },
+    Object {
+      "endColumn": 1,
+      "endLine": 5,
+      "filePath": "/Users/mike/Projects/java-reporter-action/example/src/main/java/pmd/bestpractices/AbstractClassWithoutAbstractMethod.java",
+      "message": "No abstract method which means that the keyword is most likely used to prevent instantiation. Use a private or protected constructor instead.",
+      "priority": "1",
+      "rule": "AbstractClassWithoutAnyMethod",
+      "ruleset": "Design",
+      "startColumn": 17,
+      "startLine": 3,
+    },
+    Object {
+      "endColumn": 1,
+      "endLine": 5,
+      "filePath": "/Users/mike/Projects/java-reporter-action/example/src/main/java/pmd/bestpractices/AbstractClassWithoutAbstractMethod.java",
+      "message": "This abstract class does not have any abstract methods.",
+      "priority": "3",
+      "rule": "AbstractClassWithoutAbstractMethod",
+      "ruleset": "Best Practices",
+      "startColumn": 17,
+      "startLine": 3,
+    },
+  ],
+}
+`;
+
 exports[`PmdParser can parse an empty PMD report 1`] = `
 Object {
   "violations": Array [],
