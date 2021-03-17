@@ -2,8 +2,9 @@ import CheckResult from "../check/result";
 import { AnnotationLevel, CheckAnnotation, CheckConclusion } from "../github/types";
 import { RunCondition } from "../check";
 import SpotbugsReport, { SpotbugsBug } from "./types";
-import { flatMap, plural, sum } from "../common/utils";
+import { plural, sum } from "../common/utils";
 import wrap from "word-wrap";
+import { flatMap } from "lodash";
 
 export default class SpotbugsResult extends CheckResult {
   constructor(

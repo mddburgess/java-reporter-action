@@ -2,7 +2,8 @@ import CheckResult from "../check/result";
 import { RunCondition } from "../check";
 import CpdReport, { CpdDuplication, CpdFile } from "./types";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
-import { flatMap, plural, relativePath, sum } from "../common/utils";
+import { plural, relativePath, sum } from "../common/utils";
+import { flatMap } from "lodash";
 
 export default class CpdResult extends CheckResult {
   constructor(private readonly runCondition: RunCondition, private readonly reports: CpdReport[]) {

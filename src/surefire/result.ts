@@ -2,7 +2,8 @@ import CheckResult from "../check/result";
 import { AnnotationLevel, CheckAnnotation, CheckConclusion } from "../github/types";
 import { RunCondition } from "../check";
 import SurefireReport, { SurefireTestCase } from "./types";
-import { flatMap, plural } from "../common/utils";
+import { plural } from "../common/utils";
+import { flatMap } from "lodash";
 
 export default class SurefireResult extends CheckResult {
   private readonly aggregate: SurefireReport;

@@ -2,7 +2,8 @@ import CheckResult from "../check/result";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
 import { RunCondition } from "../check";
 import PmdReport, { PmdViolation } from "./types";
-import { flatMap, plural, relativePath, sum } from "../common/utils";
+import { plural, relativePath, sum } from "../common/utils";
+import { flatMap } from "lodash";
 
 export default class PmdResult extends CheckResult {
   constructor(private readonly runCondition: RunCondition, private readonly reports: PmdReport[]) {

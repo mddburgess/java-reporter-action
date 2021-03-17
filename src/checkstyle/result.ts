@@ -2,8 +2,9 @@ import CheckResult from "../check/result";
 import { AnnotationLevel, CheckAnnotation, CheckConclusion } from "../github/types";
 import { RunCondition } from "../check";
 import CheckstyleReport, { CheckstyleViolation } from "./types";
-import { flatMap, plural, relativePath, sum } from "../common/utils";
+import { plural, relativePath, sum } from "../common/utils";
 import wrap from "word-wrap";
+import { flatMap } from "lodash";
 
 export default class CheckstyleResult extends CheckResult {
   constructor(
