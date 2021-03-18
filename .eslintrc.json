@@ -29,7 +29,6 @@
     "jest/no-large-snapshots": "warn",
     "jest/no-test-return-statement": "error",
     "jest/prefer-called-with": "warn",
-    "jest/prefer-expect-assertions": ["error", { "onlyFunctionsWithAsyncKeyword": true }],
     "jest/prefer-hooks-on-top": "error",
     "jest/prefer-strict-equal": "error",
     "jest/prefer-todo": "error",
