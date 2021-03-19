@@ -1,5 +1,4 @@
-import { countBy, Dictionary } from "lodash";
-import { RunCondition } from "../check";
+import { countBy, Dictionary, groupBy, toPairs } from "lodash";
 import CheckResult from "../check/result";
 import { plural } from "../common/utils";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
@@ -8,16 +7,13 @@ import LintAnnotation, { toCheckAnnotation } from "./LintAnnotation";
 export default class LintResult extends CheckResult {
   private readonly countByLevel: Dictionary<number>;
 
-  constructor(
-    private readonly runCondition: RunCondition,
-    private readonly lintAnnotations: LintAnnotation[]
-  ) {
+  constructor(private readonly lintAnnotations: LintAnnotation[]) {
     super();
     this.countByLevel = countBy(this.lintAnnotations, (annotation) => annotation.level);
   }
 
   shouldCompleteCheck(): boolean {
-    return this.runCondition >= RunCondition.expected || this.lintAnnotations.length > 0;
+    return true;
   }
 
   get conclusion(): CheckConclusion {
@@ -44,11 +40,45 @@ export default class LintResult extends CheckResult {
   }
 
   get summary(): string {
-    return this.title;
+    if (this.lintAnnotations.length === 0) {
+      return "Passed";
+    }
+
+    const categories = toPairs(groupBy(this.lintAnnotations, (annotation) => annotation.category))
+      .map(([category, annotations]) => ({
+        category: category,
+        failures: annotations.filter((a) => a.level === "failure").length,
+        warnings: annotations.filter((a) => a.level === "warning").length,
+        notices: annotations.filter((a) => a.level === "notice").length,
+      }))
+      .sort((a, b) => a.category.localeCompare(b.category))
+      .map((o) => `| ${o.category} | ${o.failures} | ${o.warnings} | ${o.notices} |`);
+
+    return [
+      "| Category | Failures | Warnings | Notices |",
+      "| :-- | --: | --: | --: |",
+      ...categories,
+    ].join("\n");
   }
 
   get text(): string | undefined {
-    return undefined;
+    if (this.lintAnnotations.length === 0) {
+      return undefined;
+    }
+
+    const paths = toPairs(groupBy(this.lintAnnotations, (annotation) => annotation.path))
+      .map(([path, annotations]) => ({
+        path: path,
+        failures: annotations.filter((a) => a.level === "failure").length,
+        warnings: annotations.filter((a) => a.level === "warning").length,
+        notices: annotations.filter((a) => a.level === "notice").length,
+      }))
+      .sort((a, b) => a.path.localeCompare(b.path))
+      .map((o) => `| \`${o.path}\` | ${o.failures} | ${o.warnings} | ${o.notices} |`);
+
+    return ["| Path | Failures | Warnings | Notices |", "| :-- | --: | --: | --: |", ...paths].join(
+      "\n"
+    );
   }
 
   get annotations(): CheckAnnotation[] {

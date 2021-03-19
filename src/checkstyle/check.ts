@@ -16,6 +16,6 @@ export default class CheckstyleCheck extends Check<CheckstyleReport> {
 
   protected getResult(reports: CheckstyleReport[]): CheckResult {
     const lintAnnotations = flatMap(reports, (report) => report.violations).map(toLintAnnotation);
-    return new LintResult(this.runCondition, lintAnnotations);
+    return new LintResult(lintAnnotations);
   }
 }

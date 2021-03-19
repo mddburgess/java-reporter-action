@@ -161,7 +161,7 @@ class CheckstyleCheck extends check_1.default {
     }
     getResult(reports) {
         const lintAnnotations = lodash_1.flatMap(reports, (report) => report.violations).map(types_1.toLintAnnotation);
-        return new LintResult_1.default(this.runCondition, lintAnnotations);
+        return new LintResult_1.default(lintAnnotations);
     }
 }
 exports.default = CheckstyleCheck;
@@ -1041,19 +1041,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const lodash_1 = __webpack_require__(250);
-const check_1 = __webpack_require__(2799);
 const result_1 = __importDefault(__webpack_require__(1009));
 const utils_1 = __webpack_require__(1855);
 const LintAnnotation_1 = __webpack_require__(6625);
 class LintResult extends result_1.default {
-    constructor(runCondition, lintAnnotations) {
+    constructor(lintAnnotations) {
         super();
-        this.runCondition = runCondition;
         this.lintAnnotations = lintAnnotations;
         this.countByLevel = lodash_1.countBy(this.lintAnnotations, (annotation) => annotation.level);
     }
     shouldCompleteCheck() {
-        return this.runCondition >= check_1.RunCondition.expected || this.lintAnnotations.length > 0;
+        return true;
     }
     get conclusion() {
         if (this.countByLevel["failure"] > 0) {
@@ -1077,10 +1075,42 @@ class LintResult extends result_1.default {
         return "Passed";
     }
     get summary() {
-        return this.title;
+        if (this.lintAnnotations.length === 0) {
+            return "Passed";
+        }
+        const categories = lodash_1.toPairs(lodash_1.groupBy(this.lintAnnotations, (annotation) => annotation.category))
+            .map(([category, annotations]) => ({
+            category: category,
+            failures: annotations.filter((a) => a.level === "failure").length,
+            warnings: annotations.filter((a) => a.level === "warning").length,
+            notices: annotations.filter((a) => a.level === "notice").length,
+        }))
+            .sort((a, b) => a.category.localeCompare(b.category))
+            .map((o) => `| ${o.category} | ${o.failures} | ${o.warnings} | ${o.notices} |`);
+        return [
+            "| Category | Failures | Warnings | Notices |",
+            "| :-- | --: | --: | --: |",
+            ...categories,
+        ].join("\n");
     }
     get text() {
-        return undefined;
+        if (this.lintAnnotations.length === 0) {
+            return undefined;
+        }
+        const paths = lodash_1.toPairs(lodash_1.groupBy(this.lintAnnotations, (annotation) => annotation.path))
+            .map(([path, annotations]) => ({
+            path: path,
+            failures: annotations.filter((a) => a.level === "failure").length,
+            warnings: annotations.filter((a) => a.level === "warning").length,
+            notices: annotations.filter((a) => a.level === "notice").length,
+        }))
+            .sort((a, b) => a.path.localeCompare(b.path))
+            .map((o) => `| \`${o.path}\` | ${o.failures} | ${o.warnings} | ${o.notices} |`);
+        return [
+            "| Path | Failures | Warnings | Notices |",
+            "| :-- | --: | --: | --: |",
+            ...paths,
+        ].join("\n");
     }
     get annotations() {
         return this.lintAnnotations.map(LintAnnotation_1.toCheckAnnotation);
