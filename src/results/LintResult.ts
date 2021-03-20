@@ -82,6 +82,6 @@ export default class LintResult extends CheckResult {
   }
 
   get annotations(): CheckAnnotation[] {
-    return this.lintAnnotations.map(toCheckAnnotation).slice(0, 10);
+    return this.lintAnnotations.map(toCheckAnnotation).slice(0, 30);
   }
 }
