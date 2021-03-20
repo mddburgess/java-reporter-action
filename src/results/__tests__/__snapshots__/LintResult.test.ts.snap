@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LintResult reports failure for an annotation list containing failures 1`] = `
+"| Category | Failures | Warnings | Notices |
+| :-- | --: | --: | --: |
+| category 1 | 0 | 0 | 1 |
+| category 2 | 0 | 1 | 0 |
+| category 3 | 1 | 0 | 0 |"
+`;
+
+exports[`LintResult reports failure for an annotation list containing failures 2`] = `
+"| Path | Failures | Warnings | Notices |
+| :-- | --: | --: | --: |
+| \`path/to/Failure.java\` | 1 | 0 | 0 |
+| \`path/to/Notice.java\` | 0 | 0 | 1 |
+| \`path/to/Warning.java\` | 0 | 1 | 0 |"
+`;
+
+exports[`LintResult reports failure for an annotation list containing failures 3`] = `
+Array [
+  Object {
+    "annotation_level": "notice",
+    "end_line": 1,
+    "message": "message",
+    "path": "path/to/Notice.java",
+    "raw_details": "details",
+    "start_line": 1,
+    "title": "category 1: type",
+  },
+  Object {
+    "annotation_level": "warning",
+    "end_line": 1,
+    "message": "message",
+    "path": "path/to/Warning.java",
+    "raw_details": "details",
+    "start_line": 1,
+    "title": "category 2: type",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 1,
+    "message": "message",
+    "path": "path/to/Failure.java",
+    "raw_details": "details",
+    "start_line": 1,
+    "title": "category 3: type",
+  },
+]
+`;
+
+exports[`LintResult reports neutral for an annotation list containing warnings 1`] = `
+"| Category | Failures | Warnings | Notices |
+| :-- | --: | --: | --: |
+| category 1 | 0 | 0 | 1 |
+| category 2 | 0 | 1 | 0 |"
+`;
+
+exports[`LintResult reports neutral for an annotation list containing warnings 2`] = `
+"| Path | Failures | Warnings | Notices |
+| :-- | --: | --: | --: |
+| \`path/to/Notice.java\` | 0 | 0 | 1 |
+| \`path/to/Warning.java\` | 0 | 1 | 0 |"
+`;
+
+exports[`LintResult reports neutral for an annotation list containing warnings 3`] = `
+Array [
+  Object {
+    "annotation_level": "notice",
+    "end_line": 1,
+    "message": "message",
+    "path": "path/to/Notice.java",
+    "raw_details": "details",
+    "start_line": 1,
+    "title": "category 1: type",
+  },
+  Object {
+    "annotation_level": "warning",
+    "end_line": 1,
+    "message": "message",
+    "path": "path/to/Warning.java",
+    "raw_details": "details",
+    "start_line": 1,
+    "title": "category 2: type",
+  },
+]
+`;
+
+exports[`LintResult reports success for an annotation list containing notices 1`] = `
+"| Category | Failures | Warnings | Notices |
+| :-- | --: | --: | --: |
+| category 1 | 0 | 0 | 1 |"
+`;
+
+exports[`LintResult reports success for an annotation list containing notices 2`] = `
+"| Path | Failures | Warnings | Notices |
+| :-- | --: | --: | --: |
+| \`path/to/Notice.java\` | 0 | 0 | 1 |"
+`;
+
+exports[`LintResult reports success for an annotation list containing notices 3`] = `
+Array [
+  Object {
+    "annotation_level": "notice",
+    "end_line": 1,
+    "message": "message",
+    "path": "path/to/Notice.java",
+    "raw_details": "details",
+    "start_line": 1,
+    "title": "category 1: type",
+  },
+]
+`;

@@ -1,8 +1,9 @@
+import { flatMap } from "lodash";
 import Check from "../check";
-import CheckstyleReport from "./types";
-import CheckstyleParser from "./parser";
 import CheckResult from "../check/result";
-import CheckstyleResult from "./result";
+import LintResult from "../results/LintResult";
+import CheckstyleParser from "./parser";
+import CheckstyleReport, { toLintAnnotation } from "./types";
 
 export default class CheckstyleCheck extends Check<CheckstyleReport> {
   constructor() {
@@ -14,6 +15,7 @@ export default class CheckstyleCheck extends Check<CheckstyleReport> {
   }
 
   protected getResult(reports: CheckstyleReport[]): CheckResult {
-    return new CheckstyleResult(this.runCondition, reports);
+    const lintAnnotations = flatMap(reports, (report) => report.violations).map(toLintAnnotation);
+    return new LintResult(lintAnnotations);
   }
 }
