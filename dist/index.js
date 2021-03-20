@@ -1112,19 +1112,24 @@ class LintResult extends result_1.default {
         ].join("\n");
     }
     get text() {
-        if (this.lintAnnotations.length === 0) {
-            return undefined;
-        }
-        const paths = lodash_1.toPairs(lodash_1.groupBy(this.lintAnnotations, (annotation) => annotation.path))
-            .map(([path, annotations]) => ({
-            path: path,
-            failures: annotations.filter((a) => a.level === "failure").length,
-            warnings: annotations.filter((a) => a.level === "warning").length,
-            notices: annotations.filter((a) => a.level === "notice").length,
-        }))
-            .sort((a, b) => a.path.localeCompare(b.path))
-            .map((o) => `| \`${o.path}\` | ${o.failures} | ${o.warnings} | ${o.notices} |`);
-        return ["| Path | Failures | Warnings | Notices |", "| :-- | --: | --: | --: |", ...paths].join("\n");
+        return "Text output disabled";
+        // if (this.lintAnnotations.length === 0) {
+        //   return undefined;
+        // }
+        //
+        // const paths = toPairs(groupBy(this.lintAnnotations, (annotation) => annotation.path))
+        //   .map(([path, annotations]) => ({
+        //     path: path,
+        //     failures: annotations.filter((a) => a.level === "failure").length,
+        //     warnings: annotations.filter((a) => a.level === "warning").length,
+        //     notices: annotations.filter((a) => a.level === "notice").length,
+        //   }))
+        //   .sort((a, b) => a.path.localeCompare(b.path))
+        //   .map((o) => `| \`${o.path}\` | ${o.failures} | ${o.warnings} | ${o.notices} |`);
+        //
+        // return ["| Path | Failures | Warnings | Notices |", "| :-- | --: | --: | --: |", ...paths].join(
+        //   "\n"
+        // );
     }
     get annotations() {
         return this.lintAnnotations.map(LintAnnotation_1.toCheckAnnotation);
