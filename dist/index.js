@@ -1127,7 +1127,7 @@ class LintResult extends result_1.default {
         return ["| Path | Failures | Warnings | Notices |", "| :-- | --: | --: | --: |", ...paths].join("\n");
     }
     get annotations() {
-        return this.lintAnnotations.map(LintAnnotation_1.toCheckAnnotation).slice(0, 1);
+        return this.lintAnnotations.map(LintAnnotation_1.toCheckAnnotation).slice(0, 10);
     }
 }
 exports.default = LintResult;
