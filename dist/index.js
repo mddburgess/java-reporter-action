@@ -738,13 +738,27 @@ class Github {
     }
     createCheck(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.octokit.checks.create(Object.assign(Object.assign(Object.assign({}, github.context.repo), { head_sha: Github.resolveHeadSha() }), request));
-            return response.data.id;
+            const githubRequest = Object.assign(Object.assign(Object.assign({}, github.context.repo), { head_sha: Github.resolveHeadSha() }), request);
+            if (core.isDebug()) {
+                core.debug("Create check request: " + JSON.stringify(githubRequest, undefined, 2));
+            }
+            const githubResponse = yield this.octokit.checks.create(githubRequest);
+            if (core.isDebug()) {
+                core.debug("Create check response: " + JSON.stringify(githubResponse, undefined, 2));
+            }
+            return githubResponse.data.id;
         });
     }
     updateCheck(request) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.octokit.checks.update(Object.assign(Object.assign({}, github.context.repo), request));
+            const githubRequest = Object.assign(Object.assign({}, github.context.repo), request);
+            if (core.isDebug()) {
+                core.debug("Update check request: " + JSON.stringify(githubRequest, undefined, 2));
+            }
+            const githubResponse = yield this.octokit.checks.update(githubRequest);
+            if (core.isDebug()) {
+                core.debug("Update check response: " + JSON.stringify(githubResponse, undefined, 2));
+            }
         });
     }
     static resolveHeadSha() {

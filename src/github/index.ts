@@ -11,20 +11,34 @@ export default class Github {
     this.octokit = github.getOctokit(this.token);
   }
 
-  async createCheck(request: CreateCheckRequest) {
-    const response = await this.octokit.checks.create({
+  async createCheck(request: CreateCheckRequest): Promise<number> {
+    const githubRequest = {
       ...github.context.repo,
       head_sha: Github.resolveHeadSha(),
       ...request,
-    });
-    return response.data.id;
+    };
+    if (core.isDebug()) {
+      core.debug("Create check request: " + JSON.stringify(githubRequest, undefined, 2));
+    }
+    const githubResponse = await this.octokit.checks.create(githubRequest);
+    if (core.isDebug()) {
+      core.debug("Create check response: " + JSON.stringify(githubResponse, undefined, 2));
+    }
+    return githubResponse.data.id;
   }
 
-  async updateCheck(request: UpdateCheckRequest) {
-    await this.octokit.checks.update({
+  async updateCheck(request: UpdateCheckRequest): Promise<void> {
+    const githubRequest = {
       ...github.context.repo,
       ...request,
-    });
+    };
+    if (core.isDebug()) {
+      core.debug("Update check request: " + JSON.stringify(githubRequest, undefined, 2));
+    }
+    const githubResponse = await this.octokit.checks.update(githubRequest);
+    if (core.isDebug()) {
+      core.debug("Update check response: " + JSON.stringify(githubResponse, undefined, 2));
+    }
   }
 
   private static resolveHeadSha(): string {
