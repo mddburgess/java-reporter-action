@@ -1028,27 +1028,6 @@ function resolveTitle(violation) {
 
 /***/ }),
 
-/***/ 6625:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.toCheckAnnotation = void 0;
-const toCheckAnnotation = (lint) => ({
-    path: lint.path,
-    start_line: lint.line,
-    end_line: lint.line,
-    annotation_level: lint.level,
-    title: `${lint.category}: ${lint.type}`,
-    message: lint.message,
-    raw_details: lint.details,
-});
-exports.toCheckAnnotation = toCheckAnnotation;
-
-
-/***/ }),
-
 /***/ 8438:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -1061,7 +1040,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const lodash_1 = __webpack_require__(250);
 const result_1 = __importDefault(__webpack_require__(1009));
 const utils_1 = __webpack_require__(1855);
-const LintAnnotation_1 = __webpack_require__(6625);
 class LintResult extends result_1.default {
     constructor(lintAnnotations) {
         super();
@@ -1135,7 +1113,8 @@ class LintResult extends result_1.default {
         // );
     }
     get annotations() {
-        return this.lintAnnotations.map(LintAnnotation_1.toCheckAnnotation);
+        return [];
+        // return this.lintAnnotations.map(toCheckAnnotation);
     }
 }
 exports.default = LintResult;
