@@ -247,10 +247,13 @@ const getLevel = (severity) => {
             return "warning";
         case "info":
             return "notice";
+        default:
+            throw Error("Unexpected severity");
     }
 };
 const getCategory = (rule) => {
-    return "";
+    const idx = rule.lastIndexOf(".");
+    return idx === -1 ? "" : rule.slice(0, idx);
 };
 const getType = (rule) => {
     return rule.split(".").slice(-1)[0];
@@ -1106,11 +1109,7 @@ class LintResult extends result_1.default {
         }))
             .sort((a, b) => a.path.localeCompare(b.path))
             .map((o) => `| \`${o.path}\` | ${o.failures} | ${o.warnings} | ${o.notices} |`);
-        return [
-            "| Path | Failures | Warnings | Notices |",
-            "| :-- | --: | --: | --: |",
-            ...paths,
-        ].join("\n");
+        return ["| Path | Failures | Warnings | Notices |", "| :-- | --: | --: | --: |", ...paths].join("\n");
     }
     get annotations() {
         return this.lintAnnotations.map(LintAnnotation_1.toCheckAnnotation);

@@ -33,11 +33,14 @@ const getLevel = (severity: CheckstyleSeverity): AnnotationLevel => {
       return "warning";
     case "info":
       return "notice";
+    default:
+      throw Error("Unexpected severity");
   }
 };
 
 const getCategory = (rule: string): string => {
-  return "";
+  const idx = rule.lastIndexOf(".");
+  return idx === -1 ? "" : rule.slice(0, idx);
 };
 
 const getType = (rule: string): string => {

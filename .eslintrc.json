@@ -17,11 +17,16 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
+    "default-case": "warn",
+    "default-case-last": "error",
     "eqeqeq": "error",
+    "no-template-curly-in-string": "error",
+
     "@typescript-eslint/no-unnecessary-condition": "error",
     "@typescript-eslint/no-unsafe-member-access": "warn",
     "@typescript-eslint/no-unsafe-return": "warn",
     "@typescript-eslint/restrict-template-expressions": ["error", { "allowNullish": true }],
+
     "jest/consistent-test-it": "warn",
     "jest/lowercase-name": ["warn", { "ignoreTopLevelDescribe": true }],
     "jest/no-duplicate-hooks": "error",
