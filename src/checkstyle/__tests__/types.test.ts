@@ -1,5 +1,15 @@
 import { CheckstyleViolation, toLintAnnotation } from "../types";
 
+const mockViolation = (values = {}): CheckstyleViolation => ({
+  filePath: "path/to/Class.java",
+  line: 1,
+  column: 1,
+  rule: "",
+  severity: "info",
+  message: "",
+  ...values,
+});
+
 describe("toLintAnnotation()", () => {
   it("maps error severity to failure annotation", () => {
     const violation = mockViolation({ severity: "error" });
@@ -39,14 +49,4 @@ describe("toLintAnnotation()", () => {
     const annotation = toLintAnnotation(violation);
     expect(annotation.type).toBe("MissingJavadocTypeCheck");
   });
-});
-
-const mockViolation = (values = {}): CheckstyleViolation => ({
-  filePath: "path/to/Class.java",
-  line: 1,
-  column: 1,
-  rule: "",
-  severity: "info",
-  message: "",
-  ...values,
 });

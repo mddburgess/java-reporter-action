@@ -1,9 +1,36 @@
+import LintAnnotation from "../LintAnnotation";
 import LintResult from "../LintResult";
 
+const mockAnnotation = (values = {}): LintAnnotation => ({
+  path: "",
+  line: 1,
+  level: "failure",
+  category: "",
+  type: "type",
+  message: "message",
+  details: "details",
+  ...values,
+});
+
 describe("LintResult", () => {
+  const notice = mockAnnotation({
+    path: "path/to/Notice.java",
+    level: "notice",
+    category: "category 1",
+  });
+  const warning = mockAnnotation({
+    path: "path/to/Warning.java",
+    level: "warning",
+    category: "category 2",
+  });
+  const failure = mockAnnotation({
+    path: "path/to/Failure.java",
+    level: "failure",
+    category: "category 3",
+  });
+
   it("reports success for an empty annotation list", () => {
     const result = new LintResult([]);
-
     expect(result.shouldCompleteCheck()).toBe(true);
     expect(result.conclusion).toBe("success");
     expect(result.title).toBe("Passed");
@@ -13,18 +40,7 @@ describe("LintResult", () => {
   });
 
   it("reports success for an annotation list containing notices", () => {
-    const result = new LintResult([
-      {
-        path: "path/to/Notice.java",
-        line: 1,
-        level: "notice",
-        category: "category 1",
-        type: "type",
-        message: "message",
-        details: "details",
-      },
-    ]);
-
+    const result = new LintResult([notice]);
     expect(result.shouldCompleteCheck()).toBe(true);
     expect(result.conclusion).toBe("success");
     expect(result.title).toBe("1 notice");
@@ -34,27 +50,7 @@ describe("LintResult", () => {
   });
 
   it("reports neutral for an annotation list containing warnings", () => {
-    const result = new LintResult([
-      {
-        path: "path/to/Notice.java",
-        line: 1,
-        level: "notice",
-        category: "category 1",
-        type: "type",
-        message: "message",
-        details: "details",
-      },
-      {
-        path: "path/to/Warning.java",
-        line: 1,
-        level: "warning",
-        category: "category 2",
-        type: "type",
-        message: "message",
-        details: "details",
-      },
-    ]);
-
+    const result = new LintResult([notice, warning]);
     expect(result.shouldCompleteCheck()).toBe(true);
     expect(result.conclusion).toBe("neutral");
     expect(result.title).toBe("1 warning");
@@ -64,36 +60,7 @@ describe("LintResult", () => {
   });
 
   it("reports failure for an annotation list containing failures", () => {
-    const result = new LintResult([
-      {
-        path: "path/to/Notice.java",
-        line: 1,
-        level: "notice",
-        category: "category 1",
-        type: "type",
-        message: "message",
-        details: "details",
-      },
-      {
-        path: "path/to/Warning.java",
-        line: 1,
-        level: "warning",
-        category: "category 2",
-        type: "type",
-        message: "message",
-        details: "details",
-      },
-      {
-        path: "path/to/Failure.java",
-        line: 1,
-        level: "failure",
-        category: "category 3",
-        type: "type",
-        message: "message",
-        details: "details",
-      },
-    ]);
-
+    const result = new LintResult([notice, warning, failure]);
     expect(result.shouldCompleteCheck()).toBe(true);
     expect(result.conclusion).toBe("failure");
     expect(result.title).toBe("1 failure");
