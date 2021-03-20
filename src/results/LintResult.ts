@@ -40,25 +40,26 @@ export default class LintResult extends CheckResult {
   }
 
   get summary(): string {
-    if (this.lintAnnotations.length === 0) {
-      return "Passed";
-    }
-
-    const categories = toPairs(groupBy(this.lintAnnotations, (annotation) => annotation.category))
-      .map(([category, annotations]) => ({
-        category: category,
-        failures: annotations.filter((a) => a.level === "failure").length,
-        warnings: annotations.filter((a) => a.level === "warning").length,
-        notices: annotations.filter((a) => a.level === "notice").length,
-      }))
-      .sort((a, b) => a.category.localeCompare(b.category))
-      .map((o) => `| ${o.category} | ${o.failures} | ${o.warnings} | ${o.notices} |`);
-
-    return [
-      "| Category | Failures | Warnings | Notices |",
-      "| :-- | --: | --: | --: |",
-      ...categories,
-    ].join("\n");
+    return "Summary output disabled";
+    // if (this.lintAnnotations.length === 0) {
+    //   return "Passed";
+    // }
+    //
+    // const categories = toPairs(groupBy(this.lintAnnotations, (annotation) => annotation.category))
+    //   .map(([category, annotations]) => ({
+    //     category: category,
+    //     failures: annotations.filter((a) => a.level === "failure").length,
+    //     warnings: annotations.filter((a) => a.level === "warning").length,
+    //     notices: annotations.filter((a) => a.level === "notice").length,
+    //   }))
+    //   .sort((a, b) => a.category.localeCompare(b.category))
+    //   .map((o) => `| ${o.category} | ${o.failures} | ${o.warnings} | ${o.notices} |`);
+    //
+    // return [
+    //   "| Category | Failures | Warnings | Notices |",
+    //   "| :-- | --: | --: | --: |",
+    //   ...categories,
+    // ].join("\n");
   }
 
   get text(): string | undefined {
