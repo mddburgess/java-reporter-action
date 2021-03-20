@@ -1,3 +1,4 @@
+import { relativePath } from "../common/utils";
 import { AnnotationLevel } from "../github/types";
 import LintAnnotation from "../results/LintAnnotation";
 
@@ -17,7 +18,7 @@ export interface CheckstyleViolation {
 export type CheckstyleSeverity = "error" | "warning" | "info";
 
 export const toLintAnnotation = (violation: CheckstyleViolation): LintAnnotation => ({
-  path: violation.filePath,
+  path: relativePath(violation.filePath),
   line: violation.line,
   level: getLevel(violation.severity),
   category: getCategory(violation.rule),

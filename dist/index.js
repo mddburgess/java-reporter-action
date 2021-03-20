@@ -224,14 +224,15 @@ exports.default = CheckstyleParser;
 /***/ }),
 
 /***/ 7846:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.toLintAnnotation = void 0;
+const utils_1 = __webpack_require__(1855);
 const toLintAnnotation = (violation) => ({
-    path: violation.filePath,
+    path: utils_1.relativePath(violation.filePath),
     line: violation.line,
     level: getLevel(violation.severity),
     category: getCategory(violation.rule),
