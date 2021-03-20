@@ -40,7 +40,6 @@ export default class LintResult extends CheckResult {
   }
 
   get summary(): string {
-    // return "Summary output disabled";
     if (this.lintAnnotations.length === 0) {
       return "Passed";
     }
@@ -63,7 +62,6 @@ export default class LintResult extends CheckResult {
   }
 
   get text(): string | undefined {
-    // return "Text output disabled";
     if (this.lintAnnotations.length === 0) {
       return undefined;
     }
@@ -84,7 +82,6 @@ export default class LintResult extends CheckResult {
   }
 
   get annotations(): CheckAnnotation[] {
-    return [];
-    // return this.lintAnnotations.map(toCheckAnnotation);
+    return this.lintAnnotations.map(toCheckAnnotation).slice(0, 1);
   }
 }
