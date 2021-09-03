@@ -1,4 +1,4 @@
-import { XmlEntities } from "html-entities";
+import { decode } from "html-entities";
 import { parseAttrs } from "saxophone-ts";
 import {
   CDATANode,
@@ -34,7 +34,7 @@ export default class PmdParser extends ReportParser<PmdReport> {
   }
 
   private onFileOpen(attrs: FileAttrs) {
-    this.filePath = XmlEntities.decode(attrs.name);
+    this.filePath = decode(attrs.name, { level: "xml" });
   }
 
   private onViolationOpen(attrs: ViolationAttrs) {
@@ -44,9 +44,9 @@ export default class PmdParser extends ReportParser<PmdReport> {
       endLine: Number(attrs.endline),
       startColumn: Number(attrs.begincolumn),
       endColumn: Number(attrs.endcolumn),
-      ruleset: XmlEntities.decode(attrs.ruleset),
-      rule: XmlEntities.decode(attrs.rule),
-      priority: XmlEntities.decode(attrs.priority),
+      ruleset: decode(attrs.ruleset, { level: "xml" }),
+      rule: decode(attrs.rule, { level: "xml" }),
+      priority: decode(attrs.priority, { level: "xml" }),
       message: "",
     };
   }
@@ -65,7 +65,7 @@ export default class PmdParser extends ReportParser<PmdReport> {
   }
 
   protected onText(tag: TextNode | CDATANode): void {
-    this.violation && (this.violation.message += XmlEntities.decode(tag.contents));
+    this.violation && (this.violation.message += decode(tag.contents, { level: "xml" }));
   }
 }
 

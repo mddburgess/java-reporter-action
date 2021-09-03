@@ -1,4 +1,4 @@
-import { XmlEntities } from "html-entities";
+import { decode } from "html-entities";
 import { parseAttrs } from "saxophone-ts";
 import {
   CDATANode,
@@ -50,7 +50,7 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
       filePath: "",
       startLine: 0,
       endLine: 0,
-      category: XmlEntities.decode(attrs.category),
+      category: decode(attrs.category, { level: "xml" }),
       priority: Number(attrs.priority),
       shortMessage: "",
       longMessage: "",
@@ -59,7 +59,7 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
   }
 
   private onSourceLineOpen(attrs: SourceLineAttrs) {
-    this.bug.filePath = XmlEntities.decode(attrs.sourcepath);
+    this.bug.filePath = decode(attrs.sourcepath, { level: "xml" });
     this.bug.startLine = Number(attrs.start) || this.bug.startLine;
     this.bug.endLine = Number(attrs.end) || this.bug.startLine;
   }
@@ -77,10 +77,10 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
   protected onText(tag: TextNode | CDATANode): void {
     switch (this.getContext()) {
       case "ShortMessage":
-        this.bug.shortMessage = XmlEntities.decode(tag.contents);
+        this.bug.shortMessage = decode(tag.contents, { level: "xml" });
         break;
       case "LongMessage":
-        this.bug.longMessage = XmlEntities.decode(tag.contents);
+        this.bug.longMessage = decode(tag.contents, { level: "xml" });
         break;
       case "Description":
         this.category && this.report.categories.set(this.category, tag.contents);

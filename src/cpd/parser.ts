@@ -1,4 +1,4 @@
-import { XmlEntities } from "html-entities";
+import { decode } from "html-entities";
 import { parseAttrs } from "saxophone-ts";
 import {
   CDATANode,
@@ -47,7 +47,7 @@ export default class CpdParser extends ReportParser<CpdReport> {
 
   private onFileOpen(attrs: FileAttrs) {
     this.duplication.files.push({
-      path: XmlEntities.decode(attrs.path),
+      path: decode(attrs.path, { level: "xml" }),
       startLine: Number(attrs.line),
       endLine: Number(attrs.endline),
       startColumn: Number(attrs.column),

@@ -20,7 +20,7 @@ export default class Github {
     if (core.isDebug()) {
       core.debug("Create check request: " + JSON.stringify(githubRequest, undefined, 2));
     }
-    const githubResponse = await this.octokit.checks.create(githubRequest);
+    const githubResponse = await this.octokit.rest.checks.create(githubRequest);
     if (core.isDebug()) {
       core.debug("Create check response: " + JSON.stringify(githubResponse, undefined, 2));
     }
@@ -35,7 +35,7 @@ export default class Github {
     if (core.isDebug()) {
       core.debug("Update check request: " + JSON.stringify(githubRequest, undefined, 2));
     }
-    const githubResponse = await this.octokit.checks.update(githubRequest);
+    const githubResponse = await this.octokit.rest.checks.update(githubRequest);
     if (core.isDebug()) {
       core.debug("Update check response: " + JSON.stringify(githubResponse, undefined, 2));
     }

@@ -1,4 +1,4 @@
-import { XmlEntities } from "html-entities";
+import { decode } from "html-entities";
 import { parseAttrs } from "saxophone-ts";
 import {
   CDATANode,
@@ -33,7 +33,7 @@ export default class CheckstyleParser extends ReportParser<CheckstyleReport> {
   }
 
   private onFileOpen(attrs: FileAttrs) {
-    this.filePath = XmlEntities.decode(attrs.name);
+    this.filePath = decode(attrs.name, { level: "xml" });
   }
 
   private onErrorOpen(attrs: ErrorAttrs) {
@@ -41,9 +41,9 @@ export default class CheckstyleParser extends ReportParser<CheckstyleReport> {
       filePath: this.filePath,
       line: Number(attrs.line),
       column: Number(attrs.column) || 0,
-      rule: XmlEntities.decode(attrs.source),
+      rule: decode(attrs.source, { level: "xml" }),
       severity: attrs.severity,
-      message: XmlEntities.decode(attrs.message),
+      message: decode(attrs.message, { level: "xml" }),
     });
   }
 

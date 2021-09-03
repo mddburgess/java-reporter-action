@@ -1,4 +1,4 @@
-import { XmlEntities } from "html-entities";
+import { decode } from "html-entities";
 import { parseAttrs } from "saxophone-ts";
 import {
   CDATANode,
@@ -55,13 +55,13 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
   }
 
   private onTestCaseOpen(attrs: TestCaseAttrs) {
-    this.testCase.className = XmlEntities.decode(attrs.classname);
-    this.testCase.testName = XmlEntities.decode(attrs.name);
+    this.testCase.className = decode(attrs.classname, { level: "xml" });
+    this.testCase.testName = decode(attrs.name, { level: "xml" });
   }
 
   private onTestResultOpen(result: SurefireTestResult, attrs: TestResultAttrs) {
     this.testCase.result = result;
-    this.testCase.message = XmlEntities.decode(attrs.message);
+    this.testCase.message = decode(attrs.message, { level: "xml" });
   }
 
   protected onTagClose(tag: TagCloseNode): void {
@@ -82,7 +82,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
     const context = this.getContext();
     if (context === "failure" || context === "error" || context === "skipped") {
       this.testCase.stackTrace = (this.testCase.stackTrace || "").concat(
-        XmlEntities.decode(tag.contents)
+        decode(tag.contents, { level: "xml" })
       );
     }
   }
