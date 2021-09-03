@@ -1,6 +1,6 @@
 import CheckResult from "../check/result";
+import { RunCondition } from "../check/types";
 import { AnnotationLevel, CheckAnnotation, CheckConclusion } from "../github/types";
-import { RunCondition } from "../check";
 import SpotbugsReport, { SpotbugsBug } from "./types";
 import { plural, sum } from "../common/utils";
 import wrap from "word-wrap";

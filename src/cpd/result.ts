@@ -1,5 +1,5 @@
 import CheckResult from "../check/result";
-import { RunCondition } from "../check";
+import { RunCondition } from "../check/types";
 import CpdReport, { CpdDuplication, CpdFile } from "./types";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
 import { plural, relativePath, sum } from "../common/utils";

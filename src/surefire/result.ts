@@ -1,6 +1,6 @@
 import CheckResult from "../check/result";
+import { RunCondition } from "../check/types";
 import { AnnotationLevel, CheckAnnotation, CheckConclusion } from "../github/types";
-import { RunCondition } from "../check";
 import SurefireReport, { SurefireTestCase } from "./types";
 import { plural } from "../common/utils";
 import { flatMap } from "lodash";

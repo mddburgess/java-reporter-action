@@ -38,11 +38,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.RunCondition = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const glob = __importStar(__nccwpck_require__(8090));
-const check_run_1 = __importDefault(__nccwpck_require__(3244));
 const no_reports_1 = __importDefault(__nccwpck_require__(8909));
+const check_run_1 = __importDefault(__nccwpck_require__(3244));
+const types_1 = __nccwpck_require__(2084);
 class Check {
     constructor(type, friendlyName) {
         this.type = type;
@@ -57,19 +57,19 @@ class Check {
             case "autodetect":
             case "expected":
             case "required":
-                return RunCondition[condition];
+                return types_1.RunCondition[condition];
             default:
                 core.warning(`Invalid input: ${this.type} -- defaulting to autodetect`);
-                return RunCondition.autodetect;
+                return types_1.RunCondition.autodetect;
         }
     }
     run() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.runCondition === RunCondition.disabled) {
+            if (this.runCondition === types_1.RunCondition.disabled) {
                 core.warning(`${this.friendlyName} check is disabled.`);
                 return;
             }
-            if (this.runCondition >= RunCondition.expected) {
+            if (this.runCondition >= types_1.RunCondition.expected) {
                 yield this.checkRun.queue();
             }
             const result = yield this.runCheck();
@@ -113,13 +113,6 @@ class Check {
     }
 }
 exports.default = Check;
-var RunCondition;
-(function (RunCondition) {
-    RunCondition[RunCondition["disabled"] = 0] = "disabled";
-    RunCondition[RunCondition["autodetect"] = 1] = "autodetect";
-    RunCondition[RunCondition["expected"] = 2] = "expected";
-    RunCondition[RunCondition["required"] = 3] = "required";
-})(RunCondition = exports.RunCondition || (exports.RunCondition = {}));
 
 
 /***/ }),
@@ -133,6 +126,24 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 class CheckResult {
 }
 exports.default = CheckResult;
+
+
+/***/ }),
+
+/***/ 2084:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RunCondition = void 0;
+var RunCondition;
+(function (RunCondition) {
+    RunCondition[RunCondition["disabled"] = 0] = "disabled";
+    RunCondition[RunCondition["autodetect"] = 1] = "autodetect";
+    RunCondition[RunCondition["expected"] = 2] = "expected";
+    RunCondition[RunCondition["required"] = 3] = "required";
+})(RunCondition = exports.RunCondition || (exports.RunCondition = {}));
 
 
 /***/ }),
@@ -321,7 +332,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const result_1 = __importDefault(__nccwpck_require__(1009));
-const check_1 = __nccwpck_require__(2799);
+const types_1 = __nccwpck_require__(2084);
 class NoReportsResult extends result_1.default {
     constructor(friendlyName, runCondition, searchPaths) {
         super();
@@ -330,16 +341,16 @@ class NoReportsResult extends result_1.default {
         this.searchPaths = searchPaths;
     }
     shouldCompleteCheck() {
-        return this.runCondition >= check_1.RunCondition.expected;
+        return this.runCondition >= types_1.RunCondition.expected;
     }
     get conclusion() {
-        return this.runCondition === check_1.RunCondition.required ? "failure" : "skipped";
+        return this.runCondition === types_1.RunCondition.required ? "failure" : "skipped";
     }
     get title() {
         return "No reports found";
     }
     get summary() {
-        const runConditionName = this.runCondition === check_1.RunCondition.required ? "required" : "expected";
+        const runConditionName = this.runCondition === types_1.RunCondition.required ? "required" : "expected";
         return `The ${this.friendlyName} check is ${runConditionName}, but no ${this.friendlyName} reports were found.`;
     }
     get text() {
@@ -569,7 +580,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const result_1 = __importDefault(__nccwpck_require__(1009));
-const check_1 = __nccwpck_require__(2799);
+const types_1 = __nccwpck_require__(2084);
 const utils_1 = __nccwpck_require__(1855);
 const lodash_1 = __nccwpck_require__(250);
 class CpdResult extends result_1.default {
@@ -579,7 +590,7 @@ class CpdResult extends result_1.default {
         this.reports = reports;
     }
     shouldCompleteCheck() {
-        return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
+        return this.runCondition >= types_1.RunCondition.expected || this.reports.length > 0;
     }
     get conclusion() {
         const duplications = (0, utils_1.sum)(this.reports, (report) => report.duplications.length);
@@ -653,16 +664,10 @@ const utils_1 = __nccwpck_require__(1855);
 const utils_2 = __nccwpck_require__(1824);
 class CheckRun {
     constructor(name) {
-        this.github = new index_1.default();
-        this.name = name;
-    }
-    queue() {
-        return __awaiter(this, void 0, void 0, function* () {
+        this.queue = () => __awaiter(this, void 0, void 0, function* () {
             yield this.saveCheck({ status: "queued" });
         });
-    }
-    complete(result) {
-        return __awaiter(this, void 0, void 0, function* () {
+        this.complete = (result) => __awaiter(this, void 0, void 0, function* () {
             const chunks = (0, utils_1.chunk)(result.annotations.sort(utils_2.compareAnnotations), 50);
             for (const annotations of chunks) {
                 yield this.saveCheck({
@@ -677,16 +682,15 @@ class CheckRun {
                 });
             }
         });
-    }
-    saveCheck(request) {
-        return __awaiter(this, void 0, void 0, function* () {
+        this.saveCheck = (request) => __awaiter(this, void 0, void 0, function* () {
             if (this.checkRunId === undefined) {
-                this.checkRunId = yield this.github.createCheck(Object.assign({ name: this.name }, request));
+                this.checkRunId = yield index_1.default.createCheck(Object.assign({ name: this.name }, request));
             }
             else {
-                yield this.github.updateCheck(Object.assign({ check_run_id: this.checkRunId }, request));
+                return index_1.default.updateCheck(Object.assign({ check_run_id: this.checkRunId }, request));
             }
         });
+        this.name = name;
     }
 }
 exports.default = CheckRun;
@@ -730,42 +734,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-class Github {
-    constructor() {
-        this.token = core.getInput("github-token", { required: true });
-        this.octokit = github.getOctokit(this.token);
+const token = core.getInput("github-token", { required: true });
+const octokit = github.getOctokit(token);
+const headSha = () => { var _a, _b; return (_b = (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head.sha) !== null && _b !== void 0 ? _b : github.context.sha; };
+const createCheck = (request) => __awaiter(void 0, void 0, void 0, function* () {
+    const githubRequest = Object.assign(Object.assign(Object.assign({}, github.context.repo), { head_sha: headSha() }), request);
+    if (core.isDebug()) {
+        core.debug("Create check request: " + JSON.stringify(githubRequest, undefined, 2));
     }
-    createCheck(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const githubRequest = Object.assign(Object.assign(Object.assign({}, github.context.repo), { head_sha: Github.resolveHeadSha() }), request);
-            if (core.isDebug()) {
-                core.debug("Create check request: " + JSON.stringify(githubRequest, undefined, 2));
-            }
-            const githubResponse = yield this.octokit.rest.checks.create(githubRequest);
-            if (core.isDebug()) {
-                core.debug("Create check response: " + JSON.stringify(githubResponse, undefined, 2));
-            }
-            return githubResponse.data.id;
-        });
+    const githubResponse = yield octokit.rest.checks.create(githubRequest);
+    if (core.isDebug()) {
+        core.debug("Create check response: " + JSON.stringify(githubResponse, undefined, 2));
     }
-    updateCheck(request) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const githubRequest = Object.assign(Object.assign({}, github.context.repo), request);
-            if (core.isDebug()) {
-                core.debug("Update check request: " + JSON.stringify(githubRequest, undefined, 2));
-            }
-            const githubResponse = yield this.octokit.rest.checks.update(githubRequest);
-            if (core.isDebug()) {
-                core.debug("Update check response: " + JSON.stringify(githubResponse, undefined, 2));
-            }
-        });
+    return githubResponse.data.id;
+});
+const updateCheck = (request) => __awaiter(void 0, void 0, void 0, function* () {
+    const githubRequest = Object.assign(Object.assign({}, github.context.repo), request);
+    if (core.isDebug()) {
+        core.debug("Update check request: " + JSON.stringify(githubRequest, undefined, 2));
     }
-    static resolveHeadSha() {
-        var _a, _b;
-        return (_b = (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head.sha) !== null && _b !== void 0 ? _b : github.context.sha;
+    const githubResponse = yield octokit.rest.checks.update(githubRequest);
+    if (core.isDebug()) {
+        core.debug("Update check response: " + JSON.stringify(githubResponse, undefined, 2));
     }
-}
-exports.default = Github;
+});
+exports.default = {
+    createCheck,
+    updateCheck,
+};
 
 
 /***/ }),
@@ -972,7 +968,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.annotateViolation = void 0;
 const result_1 = __importDefault(__nccwpck_require__(1009));
-const check_1 = __nccwpck_require__(2799);
+const types_1 = __nccwpck_require__(2084);
 const utils_1 = __nccwpck_require__(1855);
 const lodash_1 = __nccwpck_require__(250);
 class PmdResult extends result_1.default {
@@ -982,7 +978,7 @@ class PmdResult extends result_1.default {
         this.reports = reports;
     }
     shouldCompleteCheck() {
-        return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
+        return this.runCondition >= types_1.RunCondition.expected || this.reports.length > 0;
     }
     get conclusion() {
         const violations = (0, utils_1.sum)(this.reports, (report) => report.violations.length);
@@ -1259,7 +1255,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const result_1 = __importDefault(__nccwpck_require__(1009));
-const check_1 = __nccwpck_require__(2799);
+const types_1 = __nccwpck_require__(2084);
 const utils_1 = __nccwpck_require__(1855);
 const word_wrap_1 = __importDefault(__nccwpck_require__(3578));
 const lodash_1 = __nccwpck_require__(250);
@@ -1271,7 +1267,7 @@ class SpotbugsResult extends result_1.default {
         this.classpath = classpath;
     }
     shouldCompleteCheck() {
-        return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
+        return this.runCondition >= types_1.RunCondition.expected || this.reports.length > 0;
     }
     get conclusion() {
         const bugs = (0, utils_1.sum)(this.reports, (report) => report.bugs.length);
@@ -1447,7 +1443,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const result_1 = __importDefault(__nccwpck_require__(1009));
-const check_1 = __nccwpck_require__(2799);
+const types_1 = __nccwpck_require__(2084);
 const utils_1 = __nccwpck_require__(1855);
 const lodash_1 = __nccwpck_require__(250);
 class SurefireResult extends result_1.default {
@@ -1468,7 +1464,7 @@ class SurefireResult extends result_1.default {
         }));
     }
     shouldCompleteCheck() {
-        return this.runCondition >= check_1.RunCondition.expected || this.reports.length > 0;
+        return this.runCondition >= types_1.RunCondition.expected || this.reports.length > 0;
     }
     get conclusion() {
         if (this.aggregate.failures + this.aggregate.errors > 0) {

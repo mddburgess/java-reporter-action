@@ -1,8 +1,9 @@
 import * as core from "@actions/core";
 import * as glob from "@actions/glob";
-import CheckRun from "../github/check-run";
 import NoReportsResult from "../common/no-reports";
+import CheckRun from "../github/check-run";
 import CheckResult from "./result";
+import { RunCondition } from "./types";
 
 export default abstract class Check<T> {
   private readonly type: string;
@@ -85,11 +86,4 @@ export default abstract class Check<T> {
 
   protected abstract readReport(reportPath: string): T | undefined;
   protected abstract getResult(reports: T[]): CheckResult;
-}
-
-export enum RunCondition {
-  disabled,
-  autodetect,
-  expected,
-  required,
 }

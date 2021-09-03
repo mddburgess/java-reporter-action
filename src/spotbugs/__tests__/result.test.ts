@@ -1,5 +1,5 @@
+import { RunCondition } from "../../check/types";
 import SpotbugsResult from "../result";
-import { RunCondition } from "../../check";
 
 describe("SpotbugsResult", () => {
   it("can handle an empty report", () => {

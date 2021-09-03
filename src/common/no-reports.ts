@@ -1,6 +1,6 @@
 import CheckResult from "../check/result";
+import { RunCondition } from "../check/types";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
-import { RunCondition } from "../check";
 
 export default class NoReportsResult extends CheckResult {
   constructor(

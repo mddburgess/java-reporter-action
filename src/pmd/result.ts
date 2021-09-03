@@ -1,6 +1,6 @@
 import CheckResult from "../check/result";
+import { RunCondition } from "../check/types";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
-import { RunCondition } from "../check";
 import PmdReport, { PmdViolation } from "./types";
 import { plural, relativePath, sum } from "../common/utils";
 import { flatMap } from "lodash";

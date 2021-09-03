@@ -5,12 +5,11 @@
   "main": "build/main.js",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write src",
     "lint": "eslint --ext .ts src",
     "lint-report": "eslint --ext .ts src -o eslint-report.json -f json",
     "package": "ncc build --source-map --license licenses.txt",
     "test": "jest --coverage",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test",
+    "all": "npm run build && npm run lint && npm test",
     "prepare": "husky install"
   },
   "repository": {

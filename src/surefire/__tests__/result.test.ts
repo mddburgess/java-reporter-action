@@ -1,4 +1,4 @@
-import { RunCondition } from "../../check";
+import { RunCondition } from "../../check/types";
 import SurefireResult from "../result";
 
 describe("SurefireResult", () => {

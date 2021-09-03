@@ -1,24 +1,22 @@
-import Github from "./index";
+import GitHub from "./index";
 import { CheckRequest } from "./types";
 import CheckResult from "../check/result";
 import { chunk } from "../common/utils";
 import { compareAnnotations } from "./utils";
 
 export default class CheckRun {
-  private readonly github: Github;
   private readonly name: string;
   private checkRunId?: number;
 
   constructor(name: string) {
-    this.github = new Github();
     this.name = name;
   }
 
-  async queue() {
+  queue = async (): Promise<void> => {
     await this.saveCheck({ status: "queued" });
-  }
+  };
 
-  async complete(result: CheckResult) {
+  complete = async (result: CheckResult): Promise<void> => {
     const chunks = chunk(result.annotations.sort(compareAnnotations), 50);
     for (const annotations of chunks) {
       await this.saveCheck({
@@ -32,19 +30,19 @@ export default class CheckRun {
         },
       });
     }
-  }
+  };
 
-  async saveCheck(request: CheckRequest) {
+  private saveCheck = async (request: CheckRequest): Promise<void> => {
     if (this.checkRunId === undefined) {
-      this.checkRunId = await this.github.createCheck({
+      this.checkRunId = await GitHub.createCheck({
         name: this.name,
         ...request,
       });
     } else {
-      await this.github.updateCheck({
+      return GitHub.updateCheck({
         check_run_id: this.checkRunId,
         ...request,
       });
     }
-  }
+  };
 }
