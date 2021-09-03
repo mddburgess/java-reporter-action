@@ -42,6 +42,8 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
       case "BugCategory":
         this.onBugCategoryOpen(parseAttrs(tag.attrs) as BugCategoryAttrs);
         break;
+      default:
+        break;
     }
   }
 
@@ -84,6 +86,8 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
         break;
       case "Description":
         this.category && this.report.categories.set(this.category, tag.contents);
+        break;
+      default:
         break;
     }
   }

@@ -18,7 +18,7 @@ export default abstract class ReportParser<T> {
 
   protected constructor(protected readonly report: T, private readonly reportPath: string) {}
 
-  read() {
+  read(): T | undefined {
     try {
       const xml = fs.readFileSync(this.reportPath, { encoding: "utf-8" });
       this.parser.parse(xml);
@@ -29,7 +29,7 @@ export default abstract class ReportParser<T> {
     }
   }
 
-  protected getContext() {
+  protected getContext(): string {
     return this.context[0];
   }
 

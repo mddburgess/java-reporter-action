@@ -206,6 +206,8 @@ class CheckstyleParser extends parser_1.default {
             case "error":
                 this.onErrorOpen((0, saxophone_ts_1.parseAttrs)(tag.attrs));
                 break;
+            default:
+                break;
         }
     }
     onFileOpen(attrs) {
@@ -221,10 +223,10 @@ class CheckstyleParser extends parser_1.default {
             message: (0, html_entities_1.decode)(attrs.message, { level: "xml" }),
         });
     }
-    onTagClose(tag) {
+    onTagClose() {
         // do nothing
     }
-    onText(tag) {
+    onText() {
         // do nothing
     }
 }
@@ -266,9 +268,7 @@ const getCategory = (rule) => {
     const idx = rule.lastIndexOf(".");
     return idx === -1 ? "" : rule.slice(0, idx);
 };
-const getType = (rule) => {
-    return rule.split(".").slice(-1)[0];
-};
+const getType = (rule) => rule.split(".").slice(-1)[0];
 
 
 /***/ }),
@@ -309,14 +309,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.loadClasspath = void 0;
 const glob = __importStar(__nccwpck_require__(8090));
-function loadClasspath() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const globber = yield glob.create("**/*.java");
-        const searchPath = globber.getSearchPaths()[0];
-        const javaPaths = yield globber.glob();
-        return javaPaths.map((path) => path.slice(searchPath.length + 1));
-    });
-}
+const loadClasspath = () => __awaiter(void 0, void 0, void 0, function* () {
+    const globber = yield glob.create("**/*.java");
+    const searchPath = globber.getSearchPaths()[0];
+    const javaPaths = yield globber.glob();
+    return javaPaths.map((path) => path.slice(searchPath.length + 1));
+});
 exports.loadClasspath = loadClasspath;
 
 
@@ -451,7 +449,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.sum = exports.relativePath = exports.plural = exports.chunk = void 0;
 const path_1 = __importDefault(__nccwpck_require__(5622));
-function chunk(array, size) {
+const chunk = (array, size) => {
     if (array === undefined || array.length === 0) {
         return [[]];
     }
@@ -460,21 +458,15 @@ function chunk(array, size) {
         chunks.push(array.slice(i, i + size));
     }
     return chunks;
-}
+};
 exports.chunk = chunk;
-function plural(quantity, noun) {
-    return quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
-}
+const plural = (quantity, noun) => quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
 exports.plural = plural;
-function relativePath(absolutePath) {
-    return process.env.GITHUB_WORKSPACE
-        ? path_1.default.relative(process.env.GITHUB_WORKSPACE, absolutePath)
-        : absolutePath;
-}
+const relativePath = (absolutePath) => process.env.GITHUB_WORKSPACE
+    ? path_1.default.relative(process.env.GITHUB_WORKSPACE, absolutePath)
+    : absolutePath;
 exports.relativePath = relativePath;
-function sum(array, fn) {
-    return array.map(fn).reduce((a, b) => a + b, 0);
-}
+const sum = (array, fn) => array.map(fn).reduce((a, b) => a + b, 0);
 exports.sum = sum;
 
 
@@ -539,6 +531,8 @@ class CpdParser extends parser_1.default {
             case "file":
                 this.onFileOpen((0, saxophone_ts_1.parseAttrs)(tag.attrs));
                 break;
+            default:
+                break;
         }
     }
     onDuplicationOpen(attrs) {
@@ -558,10 +552,10 @@ class CpdParser extends parser_1.default {
             endColumn: Number(attrs.endcolumn),
         });
     }
-    onTagClose(tag) {
+    onTagClose() {
         // do nothing
     }
-    onText(tag) {
+    onText() {
         // do nothing
     }
 }
@@ -736,7 +730,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 const token = core.getInput("github-token", { required: true });
 const octokit = github.getOctokit(token);
-const headSha = () => { var _a, _b; return (_b = (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head.sha) !== null && _b !== void 0 ? _b : github.context.sha; };
+const headSha = () => { var _a, _b; return (_b = (_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.head.sha) !== null && _b !== void 0 ? _b : github.context.sha; }; // eslint-disable-line
 const createCheck = (request) => __awaiter(void 0, void 0, void 0, function* () {
     const githubRequest = Object.assign(Object.assign(Object.assign({}, github.context.repo), { head_sha: headSha() }), request);
     if (core.isDebug()) {
@@ -773,7 +767,7 @@ exports.default = {
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.compareAnnotations = void 0;
-function compareAnnotations(a, b) {
+const compareAnnotations = (a, b) => {
     if (a.annotation_level !== b.annotation_level) {
         return levelValue(a.annotation_level) - levelValue(b.annotation_level);
     }
@@ -784,9 +778,9 @@ function compareAnnotations(a, b) {
         return a.start_line - b.start_line;
     }
     return 0;
-}
+};
 exports.compareAnnotations = compareAnnotations;
-function levelValue(level) {
+const levelValue = (level) => {
     switch (level) {
         case "failure":
             return 1;
@@ -794,8 +788,10 @@ function levelValue(level) {
             return 2;
         case "notice":
             return 3;
+        default:
+            throw Error("Unknown annotation level");
     }
-}
+};
 
 
 /***/ }),
@@ -919,6 +915,8 @@ class PmdParser extends parser_1.default {
             case "violation":
                 this.onViolationOpen((0, saxophone_ts_1.parseAttrs)(tag.attrs));
                 break;
+            default:
+                break;
         }
     }
     onFileOpen(attrs) {
@@ -995,30 +993,22 @@ class PmdResult extends result_1.default {
         return undefined;
     }
     get annotations() {
-        return (0, lodash_1.flatMap)(this.reports, (report) => this.annotateReport(report));
-    }
-    annotateReport(report) {
-        return report.violations.map(annotateViolation);
+        return (0, lodash_1.flatMap)(this.reports, (report) => annotateReport(report));
     }
 }
 exports.default = PmdResult;
-function annotateViolation(violation) {
-    return {
-        path: (0, utils_1.relativePath)(violation.filePath),
-        start_line: violation.startLine,
-        end_line: violation.startLine,
-        annotation_level: resolveAnnotationLevel(violation),
-        message: violation.message,
-        title: resolveTitle(violation),
-    };
-}
+const annotateReport = (report) => report.violations.map(exports.annotateViolation);
+const annotateViolation = (violation) => ({
+    path: (0, utils_1.relativePath)(violation.filePath),
+    start_line: violation.startLine,
+    end_line: violation.startLine,
+    annotation_level: resolveAnnotationLevel(violation),
+    message: violation.message,
+    title: resolveTitle(violation),
+});
 exports.annotateViolation = annotateViolation;
-function resolveAnnotationLevel(violation) {
-    return Number(violation.priority) <= 2 ? "failure" : "warning";
-}
-function resolveTitle(violation) {
-    return `${violation.ruleset}: ${violation.rule}`;
-}
+const resolveAnnotationLevel = (violation) => Number(violation.priority) <= 2 ? "failure" : "warning";
+const resolveTitle = (violation) => `${violation.ruleset}: ${violation.rule}`;
 
 
 /***/ }),
@@ -1199,6 +1189,8 @@ class SpotbugsParser extends parser_1.default {
             case "BugCategory":
                 this.onBugCategoryOpen((0, saxophone_ts_1.parseAttrs)(tag.attrs));
                 break;
+            default:
+                break;
         }
     }
     onBugInstanceOpen(attrs) {
@@ -1236,6 +1228,8 @@ class SpotbugsParser extends parser_1.default {
                 break;
             case "Description":
                 this.category && this.report.categories.set(this.category, tag.contents);
+                break;
+            default:
                 break;
         }
     }
@@ -1391,6 +1385,8 @@ class SurefireParser extends parser_1.default {
             case "skipped":
                 this.onTestResultOpen(tag.name, (0, saxophone_ts_1.parseAttrs)(tag.attrs));
                 break;
+            default:
+                break;
         }
     }
     onTestSuiteOpen(attrs) {
@@ -1492,7 +1488,7 @@ class SurefireResult extends result_1.default {
             this.aggregate.skipped;
         return [
             `|Tests run|${this.aggregate.tests}|`,
-            `|:--|--:|`,
+            "|:--|--:|",
             `|:green_square: Passed|${passed}|`,
             `|:orange_square: Failures|${this.aggregate.failures}|`,
             `|:red_square: Errors|${this.aggregate.errors}|`,
@@ -1501,8 +1497,8 @@ class SurefireResult extends result_1.default {
     }
     get text() {
         return [
-            `|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|`,
-            `|:--|--:|--:|--:|--:|--:|`,
+            "|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|",
+            "|:--|--:|--:|--:|--:|--:|",
             ...this.reports.map((report) => this.reportText(report)),
         ].join("\n");
     }

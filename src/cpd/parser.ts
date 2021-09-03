@@ -1,11 +1,6 @@
 import { decode } from "html-entities";
 import { parseAttrs } from "saxophone-ts";
-import {
-  CDATANode,
-  TagCloseNode,
-  TagOpenNode,
-  TextNode,
-} from "saxophone-ts/dist/types/src/static/nodes";
+import { TagOpenNode } from "saxophone-ts/dist/types/src/static/nodes";
 import ReportParser from "../common/parser";
 import CpdReport, { CpdDuplication } from "./types";
 
@@ -33,6 +28,8 @@ export default class CpdParser extends ReportParser<CpdReport> {
       case "file":
         this.onFileOpen(parseAttrs(tag.attrs) as FileAttrs);
         break;
+      default:
+        break;
     }
   }
 
@@ -55,11 +52,11 @@ export default class CpdParser extends ReportParser<CpdReport> {
     });
   }
 
-  protected onTagClose(tag: TagCloseNode): void {
+  protected onTagClose(): void {
     // do nothing
   }
 
-  protected onText(tag: TextNode | CDATANode): void {
+  protected onText(): void {
     // do nothing
   }
 }

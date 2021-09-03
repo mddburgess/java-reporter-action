@@ -1,11 +1,6 @@
 import { decode } from "html-entities";
 import { parseAttrs } from "saxophone-ts";
-import {
-  CDATANode,
-  TagCloseNode,
-  TagOpenNode,
-  TextNode,
-} from "saxophone-ts/dist/types/src/static/nodes";
+import { TagOpenNode } from "saxophone-ts/dist/types/src/static/nodes";
 import ReportParser from "../common/parser";
 import CheckstyleReport, { CheckstyleSeverity } from "./types";
 
@@ -19,6 +14,8 @@ export default class CheckstyleParser extends ReportParser<CheckstyleReport> {
         break;
       case "error":
         this.onErrorOpen(parseAttrs(tag.attrs) as ErrorAttrs);
+        break;
+      default:
         break;
     }
   }
@@ -47,11 +44,11 @@ export default class CheckstyleParser extends ReportParser<CheckstyleReport> {
     });
   }
 
-  protected onTagClose(tag: TagCloseNode): void {
+  protected onTagClose(): void {
     // do nothing
   }
 
-  protected onText(tag: TextNode | CDATANode): void {
+  protected onText(): void {
     // do nothing
   }
 }

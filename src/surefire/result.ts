@@ -60,7 +60,7 @@ export default class SurefireResult extends CheckResult {
 
     return [
       `|Tests run|${this.aggregate.tests}|`,
-      `|:--|--:|`,
+      "|:--|--:|",
       `|:green_square: Passed|${passed}|`,
       `|:orange_square: Failures|${this.aggregate.failures}|`,
       `|:red_square: Errors|${this.aggregate.errors}|`,
@@ -70,8 +70,8 @@ export default class SurefireResult extends CheckResult {
 
   get text(): string | undefined {
     return [
-      `|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|`,
-      `|:--|--:|--:|--:|--:|--:|`,
+      "|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|",
+      "|:--|--:|--:|--:|--:|--:|",
       ...this.reports.map((report) => this.reportText(report)),
     ].join("\n");
   }

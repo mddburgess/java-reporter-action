@@ -43,6 +43,8 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
       case "skipped":
         this.onTestResultOpen(tag.name, parseAttrs(tag.attrs) as TestResultAttrs);
         break;
+      default:
+        break;
     }
   }
 

@@ -33,29 +33,23 @@ export default class PmdResult extends CheckResult {
   }
 
   get annotations(): CheckAnnotation[] {
-    return flatMap(this.reports, (report) => this.annotateReport(report));
-  }
-
-  private annotateReport(report: PmdReport): CheckAnnotation[] {
-    return report.violations.map(annotateViolation);
+    return flatMap(this.reports, (report) => annotateReport(report));
   }
 }
 
-export function annotateViolation(violation: PmdViolation): CheckAnnotation {
-  return {
-    path: relativePath(violation.filePath),
-    start_line: violation.startLine,
-    end_line: violation.startLine,
-    annotation_level: resolveAnnotationLevel(violation),
-    message: violation.message,
-    title: resolveTitle(violation),
-  };
-}
+const annotateReport = (report: PmdReport): CheckAnnotation[] =>
+  report.violations.map(annotateViolation);
 
-function resolveAnnotationLevel(violation: PmdViolation) {
-  return Number(violation.priority) <= 2 ? "failure" : "warning";
-}
+export const annotateViolation = (violation: PmdViolation): CheckAnnotation => ({
+  path: relativePath(violation.filePath),
+  start_line: violation.startLine,
+  end_line: violation.startLine,
+  annotation_level: resolveAnnotationLevel(violation),
+  message: violation.message,
+  title: resolveTitle(violation),
+});
 
-function resolveTitle(violation: PmdViolation) {
-  return `${violation.ruleset}: ${violation.rule}`;
-}
+const resolveAnnotationLevel = (violation: PmdViolation) =>
+  Number(violation.priority) <= 2 ? "failure" : "warning";
+
+const resolveTitle = (violation: PmdViolation) => `${violation.ruleset}: ${violation.rule}`;

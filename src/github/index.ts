@@ -5,7 +5,7 @@ import { CreateCheckRequest, UpdateCheckRequest } from "./types";
 const token = core.getInput("github-token", { required: true });
 const octokit = github.getOctokit(token);
 
-const headSha = (): string => github.context.payload.pull_request?.head.sha ?? github.context.sha;
+const headSha = (): string => github.context.payload.pull_request?.head.sha ?? github.context.sha; // eslint-disable-line
 
 const createCheck = async (request: CreateCheckRequest): Promise<number> => {
   const githubRequest = {

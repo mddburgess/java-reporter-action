@@ -32,7 +32,7 @@ export default abstract class Check<T> {
     }
   }
 
-  async run() {
+  async run(): Promise<void> {
     if (this.runCondition === RunCondition.disabled) {
       core.warning(`${this.friendlyName} check is disabled.`);
       return;
@@ -47,7 +47,7 @@ export default abstract class Check<T> {
     core.info(`${this.friendlyName} check finished.`);
   }
 
-  async runCheck() {
+  private async runCheck() {
     const searchPaths = this.resolveSearchPaths();
 
     const reportPaths = await this.resolveReportPaths(searchPaths);

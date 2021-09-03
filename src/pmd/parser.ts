@@ -30,6 +30,8 @@ export default class PmdParser extends ReportParser<PmdReport> {
       case "violation":
         this.onViolationOpen(parseAttrs(tag.attrs) as ViolationAttrs);
         break;
+      default:
+        break;
     }
   }
 
