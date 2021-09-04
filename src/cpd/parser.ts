@@ -11,7 +11,7 @@ export default class CpdParser extends ReportParser<CpdReport> {
     files: [],
   };
 
-  constructor(reportPath: string) {
+  public constructor(reportPath: string) {
     super(
       {
         duplications: [],

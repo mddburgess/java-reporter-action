@@ -5,7 +5,7 @@ import CheckResult from "../check/result";
 import SurefireResult from "./result";
 
 export default class SurefireCheck extends Check<SurefireReport> {
-  constructor() {
+  public constructor() {
     super("surefire", "Surefire");
   }
 

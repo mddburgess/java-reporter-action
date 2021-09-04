@@ -5,7 +5,7 @@ import CpdResult from "./result";
 import CpdParser from "./parser";
 
 export default class CpdCheck extends Check<CpdReport> {
-  constructor() {
+  public constructor() {
     super("cpd", "CPD");
   }
 

@@ -6,33 +6,36 @@ import { plural, relativePath, sum } from "../common/utils";
 import { flatMap } from "lodash";
 
 export default class PmdResult extends CheckResult {
-  constructor(private readonly runCondition: RunCondition, private readonly reports: PmdReport[]) {
+  public constructor(
+    private readonly runCondition: RunCondition,
+    private readonly reports: PmdReport[]
+  ) {
     super();
   }
 
-  shouldCompleteCheck(): boolean {
+  public shouldCompleteCheck(): boolean {
     return this.runCondition >= RunCondition.expected || this.reports.length > 0;
   }
 
-  get conclusion(): CheckConclusion {
+  public get conclusion(): CheckConclusion {
     const violations = sum(this.reports, (report) => report.violations.length);
     return violations > 0 ? "neutral" : "success";
   }
 
-  get title(): string {
+  public get title(): string {
     const violations = sum(this.reports, (report) => report.violations.length);
     return `${plural(violations, "violation")} found`;
   }
 
-  get summary(): string {
+  public get summary(): string {
     return this.title;
   }
 
-  get text(): string | undefined {
+  public get text(): string | undefined {
     return undefined;
   }
 
-  get annotations(): CheckAnnotation[] {
+  public get annotations(): CheckAnnotation[] {
     return flatMap(this.reports, (report) => annotateReport(report));
   }
 }

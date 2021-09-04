@@ -6,7 +6,7 @@ import CheckstyleParser from "./parser";
 import CheckstyleReport, { toLintAnnotation } from "./types";
 
 export default class CheckstyleCheck extends Check<CheckstyleReport> {
-  constructor() {
+  public constructor() {
     super("checkstyle", "Checkstyle");
   }
 

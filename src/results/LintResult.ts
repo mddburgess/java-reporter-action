@@ -7,16 +7,16 @@ import LintAnnotation, { toCheckAnnotation } from "./LintAnnotation";
 export default class LintResult extends CheckResult {
   private readonly countByLevel: Dictionary<number>;
 
-  constructor(private readonly lintAnnotations: LintAnnotation[]) {
+  public constructor(private readonly lintAnnotations: LintAnnotation[]) {
     super();
     this.countByLevel = countBy(this.lintAnnotations, (annotation) => annotation.level);
   }
 
-  shouldCompleteCheck(): boolean {
+  public shouldCompleteCheck(): boolean {
     return true;
   }
 
-  get conclusion(): CheckConclusion {
+  public get conclusion(): CheckConclusion {
     if (this.countByLevel["failure"] > 0) {
       return "failure";
     }
@@ -26,7 +26,7 @@ export default class LintResult extends CheckResult {
     return "success";
   }
 
-  get title(): string {
+  public get title(): string {
     if (this.countByLevel["failure"] > 0) {
       return plural(this.countByLevel["failure"], "failure");
     }
@@ -39,7 +39,7 @@ export default class LintResult extends CheckResult {
     return "Passed";
   }
 
-  get summary(): string {
+  public get summary(): string {
     if (this.lintAnnotations.length === 0) {
       return "Passed";
     }
@@ -61,7 +61,7 @@ export default class LintResult extends CheckResult {
     ].join("\n");
   }
 
-  get text(): string | undefined {
+  public get text(): string | undefined {
     if (this.lintAnnotations.length === 0) {
       return undefined;
     }
@@ -81,7 +81,7 @@ export default class LintResult extends CheckResult {
     );
   }
 
-  get annotations(): CheckAnnotation[] {
+  public get annotations(): CheckAnnotation[] {
     return this.lintAnnotations.map(toCheckAnnotation);
   }
 }

@@ -6,9 +6,9 @@ import CheckResult from "./result";
 import { RunCondition } from "./types";
 
 export default abstract class Check<T> {
+  protected readonly runCondition: RunCondition;
   private readonly type: string;
   private readonly friendlyName: string;
-  readonly runCondition: RunCondition;
   private readonly checkRun: CheckRun;
 
   protected constructor(type: string, friendlyName: string) {
@@ -32,7 +32,7 @@ export default abstract class Check<T> {
     }
   }
 
-  async run(): Promise<void> {
+  public async run(): Promise<void> {
     if (this.runCondition === RunCondition.disabled) {
       core.warning(`${this.friendlyName} check is disabled.`);
       return;

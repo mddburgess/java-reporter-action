@@ -13,7 +13,7 @@ export default class PmdParser extends ReportParser<PmdReport> {
   private filePath = "";
   private violation?: PmdViolation;
 
-  constructor(reportPath: string) {
+  public constructor(reportPath: string) {
     super(
       {
         violations: [],

@@ -8,15 +8,15 @@ export default class CheckRun {
   private readonly name: string;
   private checkRunId?: number;
 
-  constructor(name: string) {
+  public constructor(name: string) {
     this.name = name;
   }
 
-  queue = async (): Promise<void> => {
+  public async queue(): Promise<void> {
     await this.saveCheck({ status: "queued" });
-  };
+  }
 
-  complete = async (result: CheckResult): Promise<void> => {
+  public async complete(result: CheckResult): Promise<void> {
     const chunks = chunk(result.annotations.sort(compareAnnotations), 50);
     for (const annotations of chunks) {
       await this.saveCheck({
@@ -30,9 +30,9 @@ export default class CheckRun {
         },
       });
     }
-  };
+  }
 
-  private saveCheck = async (request: CheckRequest): Promise<void> => {
+  private async saveCheck(request: CheckRequest): Promise<void> {
     if (this.checkRunId === undefined) {
       this.checkRunId = await GitHub.createCheck({
         name: this.name,
@@ -44,5 +44,5 @@ export default class CheckRun {
         ...request,
       });
     }
-  };
+  }
 }

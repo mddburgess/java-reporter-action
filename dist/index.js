@@ -658,10 +658,15 @@ const utils_1 = __nccwpck_require__(1855);
 const utils_2 = __nccwpck_require__(1824);
 class CheckRun {
     constructor(name) {
-        this.queue = () => __awaiter(this, void 0, void 0, function* () {
+        this.name = name;
+    }
+    queue() {
+        return __awaiter(this, void 0, void 0, function* () {
             yield this.saveCheck({ status: "queued" });
         });
-        this.complete = (result) => __awaiter(this, void 0, void 0, function* () {
+    }
+    complete(result) {
+        return __awaiter(this, void 0, void 0, function* () {
             const chunks = (0, utils_1.chunk)(result.annotations.sort(utils_2.compareAnnotations), 50);
             for (const annotations of chunks) {
                 yield this.saveCheck({
@@ -676,7 +681,9 @@ class CheckRun {
                 });
             }
         });
-        this.saveCheck = (request) => __awaiter(this, void 0, void 0, function* () {
+    }
+    saveCheck(request) {
+        return __awaiter(this, void 0, void 0, function* () {
             if (this.checkRunId === undefined) {
                 this.checkRunId = yield index_1.default.createCheck(Object.assign({ name: this.name }, request));
             }
@@ -684,7 +691,6 @@ class CheckRun {
                 return index_1.default.updateCheck(Object.assign({ check_run_id: this.checkRunId }, request));
             }
         });
-        this.name = name;
     }
 }
 exports.default = CheckRun;

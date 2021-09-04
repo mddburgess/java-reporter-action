@@ -21,7 +21,7 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
     longMessage: "",
   };
 
-  constructor(reportPath: string) {
+  public constructor(reportPath: string) {
     super(
       {
         categories: new Map<string, string>(),

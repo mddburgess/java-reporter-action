@@ -7,7 +7,7 @@ import wrap from "word-wrap";
 import { flatMap } from "lodash";
 
 export default class SpotbugsResult extends CheckResult {
-  constructor(
+  public constructor(
     private readonly runCondition: RunCondition,
     private readonly reports: SpotbugsReport[],
     private readonly classpath: string[]
@@ -15,29 +15,29 @@ export default class SpotbugsResult extends CheckResult {
     super();
   }
 
-  shouldCompleteCheck(): boolean {
+  public shouldCompleteCheck(): boolean {
     return this.runCondition >= RunCondition.expected || this.reports.length > 0;
   }
 
-  get conclusion(): CheckConclusion {
+  public get conclusion(): CheckConclusion {
     const bugs = sum(this.reports, (report) => report.bugs.length);
     return bugs > 0 ? "neutral" : "success";
   }
 
-  get title(): string {
+  public get title(): string {
     const bugs = sum(this.reports, (report) => report.bugs.length);
     return `${plural(bugs, "bug")} found`;
   }
 
-  get summary(): string {
+  public get summary(): string {
     return this.title;
   }
 
-  get text(): string | undefined {
+  public get text(): string | undefined {
     return undefined;
   }
 
-  get annotations(): CheckAnnotation[] {
+  public get annotations(): CheckAnnotation[] {
     return flatMap(this.reports, (report) => this.annotateReport(report));
   }
 

@@ -16,7 +16,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
     result: "success",
   };
 
-  constructor(reportPath: string) {
+  public constructor(reportPath: string) {
     super(
       {
         name: "",

@@ -20,7 +20,7 @@ export default class CheckstyleParser extends ReportParser<CheckstyleReport> {
     }
   }
 
-  constructor(reportPath: string) {
+  public constructor(reportPath: string) {
     super(
       {
         violations: [],
