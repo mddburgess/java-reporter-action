@@ -11,7 +11,8 @@ export default class SurefireResult extends CheckResult {
 
   public constructor(
     private readonly runCondition: RunCondition,
-    private readonly reports: SurefireReport[]
+    private readonly reports: SurefireReport[],
+    private readonly classpath: string[]
   ) {
     super();
     this.aggregate = this.reports.reduce(aggregateReport);
@@ -69,7 +70,28 @@ export default class SurefireResult extends CheckResult {
   }
 
   public get annotations(): CheckAnnotation[] {
-    return flatMap(this.reports, (report) => annotateReport(report));
+    return flatMap(this.reports, (report) => this.annotateReport(report));
+  }
+
+  private annotateReport(report: SurefireReport): CheckAnnotation[] {
+    return report.testCases.map((testCase) => this.annotateTestCase(testCase));
+  }
+
+  private annotateTestCase(testCase: SurefireTestCase): CheckAnnotation {
+    const line = resolveLine(testCase);
+    return {
+      path: this.resolvePath(testCase.path) ?? testCase.className,
+      start_line: line,
+      end_line: line,
+      annotation_level: resolveAnnotationLevel(testCase),
+      message: resolveMessage(testCase),
+      title: resolveTitle(testCase),
+      raw_details: testCase.stackTrace,
+    };
+  }
+
+  private resolvePath(path: string): string | undefined {
+    return this.classpath.filter((cp) => cp.endsWith(path))[0];
   }
 }
 
@@ -82,22 +104,6 @@ const aggregateReport = (acc: SurefireReport, curr: SurefireReport): SurefireRep
     acc.skipped + curr.skipped,
     []
   );
-
-const annotateReport = (report: SurefireReport): CheckAnnotation[] =>
-  report.testCases.map((testCase) => annotateTestCase(testCase));
-
-const annotateTestCase = (testCase: SurefireTestCase): CheckAnnotation => {
-  const line = resolveLine(testCase);
-  return {
-    path: testCase.className,
-    start_line: line,
-    end_line: line,
-    annotation_level: resolveAnnotationLevel(testCase),
-    message: resolveMessage(testCase),
-    title: resolveTitle(testCase),
-    raw_details: testCase.stackTrace,
-  };
-};
 
 const resolveLine = (testCase: SurefireTestCase): number => {
   if (testCase.stackTrace) {
@@ -126,7 +132,5 @@ const resolveAnnotationLevel = (testCase: SurefireTestCase): AnnotationLevel => 
 const resolveMessage = (testCase: SurefireTestCase): string =>
   testCase.stackTrace ?? testCase.message ?? `Test ${testCase.result}`;
 
-const resolveTitle = (testCase: SurefireTestCase): string => {
-  const [simpleClassName] = testCase.className.split(".").slice(-1);
-  return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
-};
+const resolveTitle = (testCase: SurefireTestCase): string =>
+  `Test ${testCase.result}: ${testCase.simpleClassName}.${testCase.testName}`;

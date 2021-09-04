@@ -18,12 +18,21 @@ export default class SurefireReport {
   }
 }
 
-export interface SurefireTestCase {
-  className: string;
-  testName: string;
-  result?: SurefireTestResult;
-  message?: string;
-  stackTrace?: string;
+export class SurefireTestCase {
+  public className = "";
+  public testName = "";
+  public result: SurefireTestResult = "success";
+  public message?: string;
+  public stackTrace?: string;
+
+  public get simpleClassName(): string {
+    const idx = this.className.lastIndexOf(".") + 1;
+    return this.className.slice(idx);
+  }
+
+  public get path(): string {
+    return `${this.className.split(".").join("/")}.java`;
+  }
 }
 
 export type SurefireTestResult = "success" | "failure" | "error" | "skipped";

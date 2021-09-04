@@ -6,7 +6,7 @@ import SurefireReport from "../types";
 describe("SurefireResult", () => {
   it("can handle an empty Surefire report", () => {
     const report = new SurefireReport();
-    const result = new SurefireResult(RunCondition.autodetect, [report]);
+    const result = new SurefireResult(RunCondition.autodetect, [report], []);
 
     expect(result.shouldCompleteCheck()).toBe(true);
     expect(result.conclusion).toBe("success");
@@ -20,7 +20,7 @@ describe("SurefireResult", () => {
     const report = new SurefireParser("src/surefire/__tests__/__fixtures__/v3/junit5.xml").read();
     expect(report).toBeDefined();
 
-    const result = new SurefireResult(RunCondition.autodetect, [report!]); // eslint-disable-line
+    const result = new SurefireResult(RunCondition.autodetect, [report!], []); // eslint-disable-line
     expect(result.shouldCompleteCheck()).toBe(true);
     expect(result.conclusion).toBe("failure");
     expect(result.title).toBe("6 tests failed");

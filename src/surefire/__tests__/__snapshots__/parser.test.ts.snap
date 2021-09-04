@@ -7,7 +7,7 @@ SurefireReport {
   "name": "org.example.JUnit4Test",
   "skipped": 4,
   "testCases": Array [
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "Assertion message expected:<5> but was:<4>",
       "result": "failure",
@@ -15,7 +15,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testAssertionFailureWithMessage(JUnit4Test.java:26)",
       "testName": "testAssertionFailureWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "error",
@@ -23,7 +23,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testError(JUnit4Test.java:41)",
       "testName": "testError",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "failure",
@@ -31,7 +31,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testFail(JUnit4Test.java:31)",
       "testName": "testFail",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "Error message",
       "result": "error",
@@ -39,14 +39,14 @@ SurefireReport {
 	at org.example.JUnit4Test.testErrorWithMessage(JUnit4Test.java:46)",
       "testName": "testErrorWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "Ignore message",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testIgnoredWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "Assumption message",
       "result": "skipped",
@@ -54,7 +54,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testSkippedWithMessage(JUnit4Test.java:56)",
       "testName": "testSkippedWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "Failure message",
       "result": "failure",
@@ -62,7 +62,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testFailWithMessage(JUnit4Test.java:36)",
       "testName": "testFailWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "expected:<5> but was:<4>",
       "result": "failure",
@@ -70,14 +70,14 @@ SurefireReport {
 	at org.example.JUnit4Test.testAssertionFailure(JUnit4Test.java:20)",
       "testName": "testAssertionFailure",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testIgnored",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "got: <false>, expected: is <true>",
       "result": "skipped",
@@ -97,7 +97,7 @@ SurefireReport {
   "name": "org.example.JUnit5Test",
   "skipped": 4,
   "testCases": Array [
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "Assertion message ==> expected: <5> but was: <4>",
       "result": "failure",
@@ -105,7 +105,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testAssertionFailureWithMessage(JUnit5Test.java:28)",
       "testName": "testAssertionFailureWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "error",
@@ -113,7 +113,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testError(JUnit5Test.java:43)",
       "testName": "testError",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "failure",
@@ -121,14 +121,14 @@ SurefireReport {
 	at org.example.JUnit5Test.testFail(JUnit5Test.java:33)",
       "testName": "testFail",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "Disable message",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testDisabledWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "Error message",
       "result": "error",
@@ -136,7 +136,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testErrorWithMessage(JUnit5Test.java:48)",
       "testName": "testErrorWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "Assumption failed: Assumption message",
       "result": "skipped",
@@ -144,7 +144,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testSkippedWithMessage(JUnit5Test.java:58)",
       "testName": "testSkippedWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "Failure message",
       "result": "failure",
@@ -152,14 +152,14 @@ SurefireReport {
 	at org.example.JUnit5Test.testFailWithMessage(JUnit5Test.java:38)",
       "testName": "testFailWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "public void org.example.JUnit5Test.testDisabled() is @Disabled",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testDisabled",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "expected: <5> but was: <4>",
       "result": "failure",
@@ -167,7 +167,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testAssertionFailure(JUnit5Test.java:22)",
       "testName": "testAssertionFailure",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "Assumption failed: assumption is not true",
       "result": "skipped",
@@ -187,7 +187,7 @@ SurefireReport {
   "name": "org.example.JUnit4Test",
   "skipped": 4,
   "testCases": Array [
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "failure",
@@ -195,7 +195,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testAssertionFailureWithMessage(JUnit4Test.java:26)",
       "testName": "testAssertionFailureWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "error",
@@ -203,7 +203,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testError(JUnit4Test.java:41)",
       "testName": "testError",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "failure",
@@ -211,7 +211,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testFail(JUnit4Test.java:31)",
       "testName": "testFail",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "error",
@@ -219,14 +219,14 @@ SurefireReport {
 	at org.example.JUnit4Test.testErrorWithMessage(JUnit4Test.java:46)",
       "testName": "testErrorWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "Ignore message",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testIgnoredWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "skipped",
@@ -234,7 +234,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testSkippedWithMessage(JUnit4Test.java:56)",
       "testName": "testSkippedWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "failure",
@@ -242,7 +242,7 @@ SurefireReport {
 	at org.example.JUnit4Test.testFailWithMessage(JUnit4Test.java:36)",
       "testName": "testFailWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "failure",
@@ -250,14 +250,14 @@ SurefireReport {
 	at org.example.JUnit4Test.testAssertionFailure(JUnit4Test.java:20)",
       "testName": "testAssertionFailure",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testIgnored",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
       "message": "",
       "result": "skipped",
@@ -277,7 +277,7 @@ SurefireReport {
   "name": "org.example.JUnit5Test",
   "skipped": 4,
   "testCases": Array [
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "failure",
@@ -285,7 +285,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testAssertionFailureWithMessage(JUnit5Test.java:28)",
       "testName": "testAssertionFailureWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "error",
@@ -293,7 +293,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testError(JUnit5Test.java:43)",
       "testName": "testError",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "failure",
@@ -301,14 +301,14 @@ SurefireReport {
 	at org.example.JUnit5Test.testFail(JUnit5Test.java:33)",
       "testName": "testFail",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "Disable message",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testDisabledWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "error",
@@ -316,7 +316,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testErrorWithMessage(JUnit5Test.java:48)",
       "testName": "testErrorWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "skipped",
@@ -324,7 +324,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testSkippedWithMessage(JUnit5Test.java:58)",
       "testName": "testSkippedWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "failure",
@@ -332,14 +332,14 @@ SurefireReport {
 	at org.example.JUnit5Test.testFailWithMessage(JUnit5Test.java:38)",
       "testName": "testFailWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "public void org.example.JUnit5Test.testDisabled() is @Disabled",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testDisabled",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "failure",
@@ -347,7 +347,7 @@ SurefireReport {
 	at org.example.JUnit5Test.testAssertionFailure(JUnit5Test.java:22)",
       "testName": "testAssertionFailure",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
       "message": "",
       "result": "skipped",

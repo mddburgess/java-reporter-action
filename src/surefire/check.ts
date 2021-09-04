@@ -5,7 +5,7 @@ import CheckResult from "../check/result";
 import SurefireResult from "./result";
 
 export default class SurefireCheck extends Check<SurefireReport> {
-  public constructor() {
+  public constructor(private readonly classpath: string[]) {
     super("surefire", "Surefire");
   }
 
@@ -14,6 +14,6 @@ export default class SurefireCheck extends Check<SurefireReport> {
   }
 
   protected getResult(reports: SurefireReport[]): CheckResult {
-    return new SurefireResult(this.runCondition, reports);
+    return new SurefireResult(this.runCondition, reports, this.classpath);
   }
 }

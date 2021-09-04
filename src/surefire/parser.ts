@@ -10,11 +10,7 @@ import ReportParser from "../common/parser";
 import SurefireReport, { SurefireTestCase, SurefireTestResult } from "./types";
 
 export default class SurefireParser extends ReportParser<SurefireReport> {
-  private testCase: SurefireTestCase = {
-    className: "",
-    testName: "",
-    result: "success",
-  };
+  private testCase = new SurefireTestCase();
 
   public constructor(reportPath: string) {
     super(new SurefireReport(), reportPath);
@@ -63,11 +59,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
 
     this.testCase.stackTrace = this.testCase.stackTrace?.trim();
     this.report.testCases.push(this.testCase);
-    this.testCase = {
-      className: "",
-      testName: "",
-      result: "success",
-    };
+    this.testCase = new SurefireTestCase();
   }
 
   protected onText(tag: TextNode | CDATANode): void {
