@@ -438,6 +438,40 @@ exports.default = ReportParser;
 
 /***/ }),
 
+/***/ 9090:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.configureTable = void 0;
+const lodash_1 = __nccwpck_require__(250);
+var Justify;
+(function (Justify) {
+    Justify["left"] = ":-";
+    Justify["center"] = ":-:";
+    Justify["right"] = "-:";
+})(Justify || (Justify = {}));
+const configureTable = (options) => (objects) => {
+    const dict = (0, lodash_1.groupBy)(objects, options.listBy);
+    const dict2 = (0, lodash_1.map)(dict, (value) => values((0, lodash_1.reduce)(value, options.reducer), options.columns));
+    return (0, lodash_1.join)([headers(options.columns), justifiers(options.columns), ...dict2], "\n");
+};
+exports.configureTable = configureTable;
+const headers = (columns) => `|${(0, lodash_1.join)(columns.map((column) => column.header), "|")}|`;
+const justifiers = (columns) => `|${(0, lodash_1.join)(columns.map((column) => Justify[column.justify]), "|")}|`;
+const values = (obj, columns) => {
+    if (obj === undefined) {
+        return undefined;
+    }
+    else {
+        return `|${(0, lodash_1.join)(columns.map((column) => column.value(obj)), "|")}|`;
+    }
+};
+
+
+/***/ }),
+
 /***/ 1855:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -1368,6 +1402,7 @@ class SurefireParser extends parser_1.default {
         super({
             name: "",
             tests: 0,
+            passed: 0,
             failures: 0,
             errors: 0,
             skipped: 0,
@@ -1402,6 +1437,8 @@ class SurefireParser extends parser_1.default {
         this.report.failures = Number(attrs.failures);
         this.report.errors = Number(attrs.errors);
         this.report.skipped = Number(attrs.skipped);
+        this.report.passed =
+            this.report.tests - this.report.failures - this.report.errors - this.report.skipped;
     }
     onTestCaseOpen(attrs) {
         this.testCase.className = (0, html_entities_1.decode)(attrs.classname, { level: "xml" });
@@ -1448,6 +1485,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const result_1 = __importDefault(__nccwpck_require__(1009));
 const types_1 = __nccwpck_require__(2084);
+const table_1 = __nccwpck_require__(9090);
 const utils_1 = __nccwpck_require__(1855);
 const lodash_1 = __nccwpck_require__(250);
 class SurefireResult extends result_1.default {
@@ -1455,17 +1493,7 @@ class SurefireResult extends result_1.default {
         super();
         this.runCondition = runCondition;
         this.reports = reports;
-        this.aggregate = SurefireResult.aggregate(reports);
-    }
-    static aggregate(reports) {
-        return reports.reduce((summary, report) => ({
-            name: "",
-            tests: summary.tests + report.tests,
-            failures: summary.failures + report.failures,
-            errors: summary.errors + report.errors,
-            skipped: summary.skipped + report.skipped,
-            testCases: [],
-        }));
+        this.aggregate = this.reports.reduce(aggregateReport);
     }
     shouldCompleteCheck() {
         return this.runCondition >= types_1.RunCondition.expected || this.reports.length > 0;
@@ -1490,80 +1518,84 @@ class SurefireResult extends result_1.default {
         return `${(0, utils_1.plural)(passed, "test")} passed`;
     }
     get summary() {
-        const passed = this.aggregate.tests -
-            this.aggregate.failures -
-            this.aggregate.errors -
-            this.aggregate.skipped;
         return [
             `|Tests run|${this.aggregate.tests}|`,
-            "|:--|--:|",
-            `|:green_square: Passed|${passed}|`,
-            `|:orange_square: Failures|${this.aggregate.failures}|`,
-            `|:red_square: Errors|${this.aggregate.errors}|`,
-            `|:black_large_square: Skipped|${this.aggregate.skipped}|`,
+            "|:-|-:|",
+            `|Passed|${this.aggregate.passed}|`,
+            `|Failures|${this.aggregate.failures}|`,
+            `|Errors|${this.aggregate.errors}|`,
+            `|Skipped|${this.aggregate.skipped}|`,
         ].join("\n");
     }
     get text() {
-        return [
-            "|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|",
-            "|:--|--:|--:|--:|--:|--:|",
-            ...this.reports.map((report) => this.reportText(report)),
-        ].join("\n");
-    }
-    reportText(report) {
-        const passed = report.tests - report.failures - report.errors - report.skipped;
-        return `|\`\`${report.name}\`\`|${report.tests}|${passed}|${report.failures}|${report.errors}|${report.skipped}|`;
+        const table = (0, table_1.configureTable)({
+            listBy: (report) => report.name,
+            reducer: aggregateReport,
+            columns: [
+                { header: "Class", justify: "left", value: (report) => `\`report.name\`` },
+                { header: "Tests", justify: "right", value: (report) => `${report.tests}` },
+                { header: "Passed", justify: "right", value: (report) => `${report.passed}` },
+                { header: "Failures", justify: "right", value: (report) => `${report.failures}` },
+                { header: "Errors", justify: "right", value: (report) => `${report.errors}` },
+                { header: "Skipped", justify: "right", value: (report) => `${report.skipped}` },
+            ],
+        });
+        return table(this.reports);
     }
     get annotations() {
-        return (0, lodash_1.flatMap)(this.reports, (report) => this.annotateReport(report));
-    }
-    annotateReport(report) {
-        return report.testCases.map((testCase) => this.annotateTestCase(testCase));
-    }
-    annotateTestCase(testCase) {
-        const line = this.resolveLine(testCase);
-        return {
-            path: testCase.className,
-            start_line: line,
-            end_line: line,
-            annotation_level: this.resolveAnnotationLevel(testCase),
-            message: this.resolveMessage(testCase),
-            title: this.resolveTitle(testCase),
-            raw_details: testCase.stackTrace,
-        };
-    }
-    resolveLine(testCase) {
-        if (testCase.stackTrace) {
-            const stackFrames = RegExp(`${testCase.className}.*:\\d+`).exec(testCase.stackTrace);
-            if (stackFrames) {
-                const [stackFrame] = stackFrames.slice(-1);
-                const [, line] = stackFrame.split(":");
-                return Number(line);
-            }
-        }
-        return 1;
-    }
-    resolveAnnotationLevel(testCase) {
-        switch (testCase.result) {
-            case "failure":
-            case "error":
-                return "failure";
-            case "skipped":
-                return "notice";
-            default:
-                throw Error();
-        }
-    }
-    resolveMessage(testCase) {
-        var _a, _b;
-        return (_b = (_a = testCase.stackTrace) !== null && _a !== void 0 ? _a : testCase.message) !== null && _b !== void 0 ? _b : `Test ${testCase.result}`;
-    }
-    resolveTitle(testCase) {
-        const [simpleClassName] = testCase.className.split(".").slice(-1);
-        return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
+        return (0, lodash_1.flatMap)(this.reports, (report) => annotateReport(report));
     }
 }
 exports.default = SurefireResult;
+const aggregateReport = (acc, curr) => ({
+    name: acc.name,
+    tests: acc.tests + curr.tests,
+    passed: acc.passed + curr.passed,
+    failures: acc.failures + curr.failures,
+    errors: acc.errors + curr.errors,
+    skipped: acc.skipped + curr.skipped,
+    testCases: [],
+});
+const annotateReport = (report) => report.testCases.map((testCase) => annotateTestCase(testCase));
+const annotateTestCase = (testCase) => {
+    const line = resolveLine(testCase);
+    return {
+        path: testCase.className,
+        start_line: line,
+        end_line: line,
+        annotation_level: resolveAnnotationLevel(testCase),
+        message: resolveMessage(testCase),
+        title: resolveTitle(testCase),
+        raw_details: testCase.stackTrace,
+    };
+};
+const resolveLine = (testCase) => {
+    if (testCase.stackTrace) {
+        const stackFrames = RegExp(`${testCase.className}.*:\\d+`).exec(testCase.stackTrace);
+        if (stackFrames) {
+            const [stackFrame] = stackFrames.slice(-1);
+            const [, line] = stackFrame.split(":");
+            return Number(line);
+        }
+    }
+    return 1;
+};
+const resolveAnnotationLevel = (testCase) => {
+    switch (testCase.result) {
+        case "failure":
+        case "error":
+            return "failure";
+        case "skipped":
+            return "notice";
+        default:
+            throw Error();
+    }
+};
+const resolveMessage = (testCase) => { var _a, _b; return (_b = (_a = testCase.stackTrace) !== null && _a !== void 0 ? _a : testCase.message) !== null && _b !== void 0 ? _b : `Test ${testCase.result}`; };
+const resolveTitle = (testCase) => {
+    const [simpleClassName] = testCase.className.split(".").slice(-1);
+    return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
+};
 
 
 /***/ }),

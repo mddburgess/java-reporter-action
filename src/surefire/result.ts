@@ -1,5 +1,6 @@
 import CheckResult from "../check/result";
 import { RunCondition } from "../check/types";
+import { configureTable } from "../common/table";
 import { AnnotationLevel, CheckAnnotation, CheckConclusion } from "../github/types";
 import SurefireReport, { SurefireTestCase } from "./types";
 import { plural } from "../common/utils";
@@ -13,18 +14,7 @@ export default class SurefireResult extends CheckResult {
     private readonly reports: SurefireReport[]
   ) {
     super();
-    this.aggregate = SurefireResult.aggregate(reports);
-  }
-
-  private static aggregate(reports: SurefireReport[]) {
-    return reports.reduce((summary, report) => ({
-      name: "",
-      tests: summary.tests + report.tests,
-      failures: summary.failures + report.failures,
-      errors: summary.errors + report.errors,
-      skipped: summary.skipped + report.skipped,
-      testCases: [],
-    }));
+    this.aggregate = this.reports.reduce(aggregateReport);
   }
 
   public shouldCompleteCheck(): boolean {
@@ -52,86 +42,91 @@ export default class SurefireResult extends CheckResult {
   }
 
   public get summary(): string {
-    const passed =
-      this.aggregate.tests -
-      this.aggregate.failures -
-      this.aggregate.errors -
-      this.aggregate.skipped;
-
     return [
       `|Tests run|${this.aggregate.tests}|`,
-      "|:--|--:|",
-      `|:green_square: Passed|${passed}|`,
-      `|:orange_square: Failures|${this.aggregate.failures}|`,
-      `|:red_square: Errors|${this.aggregate.errors}|`,
-      `|:black_large_square: Skipped|${this.aggregate.skipped}|`,
+      "|:-|-:|",
+      `|Passed|${this.aggregate.passed}|`,
+      `|Failures|${this.aggregate.failures}|`,
+      `|Errors|${this.aggregate.errors}|`,
+      `|Skipped|${this.aggregate.skipped}|`,
     ].join("\n");
   }
 
   public get text(): string | undefined {
-    return [
-      "|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|",
-      "|:--|--:|--:|--:|--:|--:|",
-      ...this.reports.map((report) => this.reportText(report)),
-    ].join("\n");
-  }
-
-  private reportText(report: SurefireReport): string {
-    const passed = report.tests - report.failures - report.errors - report.skipped;
-    return `|\`\`${report.name}\`\`|${report.tests}|${passed}|${report.failures}|${report.errors}|${report.skipped}|`;
+    const table = configureTable({
+      listBy: (report: SurefireReport) => report.name,
+      reducer: aggregateReport,
+      columns: [
+        { header: "Class", justify: "left", value: (report) => `\`report.name\`` },
+        { header: "Tests", justify: "right", value: (report) => `${report.tests}` },
+        { header: "Passed", justify: "right", value: (report) => `${report.passed}` },
+        { header: "Failures", justify: "right", value: (report) => `${report.failures}` },
+        { header: "Errors", justify: "right", value: (report) => `${report.errors}` },
+        { header: "Skipped", justify: "right", value: (report) => `${report.skipped}` },
+      ],
+    });
+    return table(this.reports);
   }
 
   public get annotations(): CheckAnnotation[] {
-    return flatMap(this.reports, (report) => this.annotateReport(report));
-  }
-
-  private annotateReport(report: SurefireReport): CheckAnnotation[] {
-    return report.testCases.map((testCase) => this.annotateTestCase(testCase));
-  }
-
-  private annotateTestCase(testCase: SurefireTestCase): CheckAnnotation {
-    const line = this.resolveLine(testCase);
-    return {
-      path: testCase.className,
-      start_line: line,
-      end_line: line,
-      annotation_level: this.resolveAnnotationLevel(testCase),
-      message: this.resolveMessage(testCase),
-      title: this.resolveTitle(testCase),
-      raw_details: testCase.stackTrace,
-    };
-  }
-
-  private resolveLine(testCase: SurefireTestCase): number {
-    if (testCase.stackTrace) {
-      const stackFrames = RegExp(`${testCase.className}.*:\\d+`).exec(testCase.stackTrace);
-      if (stackFrames) {
-        const [stackFrame] = stackFrames.slice(-1);
-        const [, line] = stackFrame.split(":");
-        return Number(line);
-      }
-    }
-    return 1;
-  }
-
-  private resolveAnnotationLevel(testCase: SurefireTestCase): AnnotationLevel {
-    switch (testCase.result) {
-      case "failure":
-      case "error":
-        return "failure";
-      case "skipped":
-        return "notice";
-      default:
-        throw Error();
-    }
-  }
-
-  private resolveMessage(testCase: SurefireTestCase): string {
-    return testCase.stackTrace ?? testCase.message ?? `Test ${testCase.result}`;
-  }
-
-  private resolveTitle(testCase: SurefireTestCase): string {
-    const [simpleClassName] = testCase.className.split(".").slice(-1);
-    return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
+    return flatMap(this.reports, (report) => annotateReport(report));
   }
 }
+
+const aggregateReport = (acc: SurefireReport, curr: SurefireReport): SurefireReport => ({
+  name: acc.name,
+  tests: acc.tests + curr.tests,
+  passed: acc.passed + curr.passed,
+  failures: acc.failures + curr.failures,
+  errors: acc.errors + curr.errors,
+  skipped: acc.skipped + curr.skipped,
+  testCases: [],
+});
+
+const annotateReport = (report: SurefireReport): CheckAnnotation[] =>
+  report.testCases.map((testCase) => annotateTestCase(testCase));
+
+const annotateTestCase = (testCase: SurefireTestCase): CheckAnnotation => {
+  const line = resolveLine(testCase);
+  return {
+    path: testCase.className,
+    start_line: line,
+    end_line: line,
+    annotation_level: resolveAnnotationLevel(testCase),
+    message: resolveMessage(testCase),
+    title: resolveTitle(testCase),
+    raw_details: testCase.stackTrace,
+  };
+};
+
+const resolveLine = (testCase: SurefireTestCase): number => {
+  if (testCase.stackTrace) {
+    const stackFrames = RegExp(`${testCase.className}.*:\\d+`).exec(testCase.stackTrace);
+    if (stackFrames) {
+      const [stackFrame] = stackFrames.slice(-1);
+      const [, line] = stackFrame.split(":");
+      return Number(line);
+    }
+  }
+  return 1;
+};
+
+const resolveAnnotationLevel = (testCase: SurefireTestCase): AnnotationLevel => {
+  switch (testCase.result) {
+    case "failure":
+    case "error":
+      return "failure";
+    case "skipped":
+      return "notice";
+    default:
+      throw Error();
+  }
+};
+
+const resolveMessage = (testCase: SurefireTestCase): string =>
+  testCase.stackTrace ?? testCase.message ?? `Test ${testCase.result}`;
+
+const resolveTitle = (testCase: SurefireTestCase): string => {
+  const [simpleClassName] = testCase.className.split(".").slice(-1);
+  return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
+};

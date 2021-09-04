@@ -1,6 +1,7 @@
 export default interface SurefireReport {
   name: string;
   tests: number;
+  passed: number;
   failures: number;
   errors: number;
   skipped: number;

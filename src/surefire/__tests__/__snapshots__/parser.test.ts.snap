@@ -5,6 +5,7 @@ Object {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit4Test",
+  "passed": 1,
   "skipped": 4,
   "testCases": Array [
     Object {
@@ -95,6 +96,7 @@ Object {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit5Test",
+  "passed": 1,
   "skipped": 4,
   "testCases": Array [
     Object {
@@ -185,6 +187,7 @@ Object {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit4Test",
+  "passed": 1,
   "skipped": 4,
   "testCases": Array [
     Object {
@@ -275,6 +278,7 @@ Object {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit5Test",
+  "passed": 1,
   "skipped": 4,
   "testCases": Array [
     Object {
