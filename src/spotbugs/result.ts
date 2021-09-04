@@ -72,7 +72,7 @@ export default class SpotbugsResult extends CheckResult {
   }
 
   private resolveTitle(bug: SpotbugsBug, categories: Map<string, string>) {
-    const category = categories.get(bug.category) || bug.category;
+    const category = categories.get(bug.category) ?? bug.category;
     return `${category}: ${bug.shortMessage}`;
   }
 }

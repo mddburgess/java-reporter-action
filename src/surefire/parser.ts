@@ -83,7 +83,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
   protected onText(tag: TextNode | CDATANode): void {
     const context = this.getContext();
     if (context === "failure" || context === "error" || context === "skipped") {
-      this.testCase.stackTrace = (this.testCase.stackTrace || "").concat(
+      this.testCase.stackTrace = (this.testCase.stackTrace ?? "").concat(
         decode(tag.contents, { level: "xml" })
       );
     }

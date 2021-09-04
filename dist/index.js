@@ -1313,7 +1313,8 @@ class SpotbugsResult extends result_1.default {
         }
     }
     resolveTitle(bug, categories) {
-        const category = categories.get(bug.category) || bug.category;
+        var _a;
+        const category = (_a = categories.get(bug.category)) !== null && _a !== void 0 ? _a : bug.category;
         return `${category}: ${bug.shortMessage}`;
     }
 }
@@ -1424,9 +1425,10 @@ class SurefireParser extends parser_1.default {
         };
     }
     onText(tag) {
+        var _a;
         const context = this.getContext();
         if (context === "failure" || context === "error" || context === "skipped") {
-            this.testCase.stackTrace = (this.testCase.stackTrace || "").concat((0, html_entities_1.decode)(tag.contents, { level: "xml" }));
+            this.testCase.stackTrace = ((_a = this.testCase.stackTrace) !== null && _a !== void 0 ? _a : "").concat((0, html_entities_1.decode)(tag.contents, { level: "xml" }));
         }
     }
 }
@@ -1553,7 +1555,8 @@ class SurefireResult extends result_1.default {
         }
     }
     resolveMessage(testCase) {
-        return testCase.stackTrace || testCase.message || `Test ${testCase.result}`;
+        var _a, _b;
+        return (_b = (_a = testCase.stackTrace) !== null && _a !== void 0 ? _a : testCase.message) !== null && _b !== void 0 ? _b : `Test ${testCase.result}`;
     }
     resolveTitle(testCase) {
         const [simpleClassName] = testCase.className.split(".").slice(-1);

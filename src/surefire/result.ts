@@ -127,7 +127,7 @@ export default class SurefireResult extends CheckResult {
   }
 
   private resolveMessage(testCase: SurefireTestCase): string {
-    return testCase.stackTrace || testCase.message || `Test ${testCase.result}`;
+    return testCase.stackTrace ?? testCase.message ?? `Test ${testCase.result}`;
   }
 
   private resolveTitle(testCase: SurefireTestCase): string {
