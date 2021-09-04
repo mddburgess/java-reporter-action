@@ -21,7 +21,7 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
     longMessage: "",
   };
 
-  constructor(reportPath: string) {
+  public constructor(reportPath: string) {
     super(
       {
         categories: new Map<string, string>(),
@@ -41,6 +41,8 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
         break;
       case "BugCategory":
         this.onBugCategoryOpen(parseAttrs(tag.attrs) as BugCategoryAttrs);
+        break;
+      default:
         break;
     }
   }
@@ -84,6 +86,8 @@ export default class SpotbugsParser extends ReportParser<SpotbugsReport> {
         break;
       case "Description":
         this.category && this.report.categories.set(this.category, tag.contents);
+        break;
+      default:
         break;
     }
   }

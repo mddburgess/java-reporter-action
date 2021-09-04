@@ -5,7 +5,7 @@ import PmdParser from "./parser";
 import PmdResult from "./result";
 
 export default class PmdCheck extends Check<PmdReport> {
-  constructor() {
+  public constructor() {
     super("pmd", "PMD");
   }
 

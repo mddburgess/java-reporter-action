@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SurefireResult can handle a real Surefire report 1`] = `
+"|Tests run|11|
+|:--|--:|
+|:green_square: Passed|1|
+|:orange_square: Failures|4|
+|:red_square: Errors|2|
+|:black_large_square: Skipped|4|"
+`;
+
+exports[`SurefireResult can handle a real Surefire report 2`] = `
+"|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|
+|:--|--:|--:|--:|--:|--:|
+|\`\`org.example.JUnit5Test\`\`|11|1|4|2|4|"
+`;
+
+exports[`SurefireResult can handle a real Surefire report 3`] = `
+Array [
+  Object {
+    "annotation_level": "failure",
+    "end_line": 28,
+    "message": "org.opentest4j.AssertionFailedError: Assertion message ==> expected: <5> but was: <4>
+	at org.example.JUnit5Test.testAssertionFailureWithMessage(JUnit5Test.java:28)",
+    "path": "org.example.JUnit5Test",
+    "raw_details": "org.opentest4j.AssertionFailedError: Assertion message ==> expected: <5> but was: <4>
+	at org.example.JUnit5Test.testAssertionFailureWithMessage(JUnit5Test.java:28)",
+    "start_line": 28,
+    "title": "Test failure: JUnit5Test.testAssertionFailureWithMessage",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 43,
+    "message": "java.lang.RuntimeException
+	at org.example.JUnit5Test.testError(JUnit5Test.java:43)",
+    "path": "org.example.JUnit5Test",
+    "raw_details": "java.lang.RuntimeException
+	at org.example.JUnit5Test.testError(JUnit5Test.java:43)",
+    "start_line": 43,
+    "title": "Test error: JUnit5Test.testError",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 33,
+    "message": "org.opentest4j.AssertionFailedError: 
+	at org.example.JUnit5Test.testFail(JUnit5Test.java:33)",
+    "path": "org.example.JUnit5Test",
+    "raw_details": "org.opentest4j.AssertionFailedError: 
+	at org.example.JUnit5Test.testFail(JUnit5Test.java:33)",
+    "start_line": 33,
+    "title": "Test failure: JUnit5Test.testFail",
+  },
+  Object {
+    "annotation_level": "notice",
+    "end_line": 1,
+    "message": "Disable message",
+    "path": "org.example.JUnit5Test",
+    "raw_details": undefined,
+    "start_line": 1,
+    "title": "Test skipped: JUnit5Test.testDisabledWithMessage",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 48,
+    "message": "java.lang.RuntimeException: Error message
+	at org.example.JUnit5Test.testErrorWithMessage(JUnit5Test.java:48)",
+    "path": "org.example.JUnit5Test",
+    "raw_details": "java.lang.RuntimeException: Error message
+	at org.example.JUnit5Test.testErrorWithMessage(JUnit5Test.java:48)",
+    "start_line": 48,
+    "title": "Test error: JUnit5Test.testErrorWithMessage",
+  },
+  Object {
+    "annotation_level": "notice",
+    "end_line": 58,
+    "message": "org.opentest4j.TestAbortedException: Assumption failed: Assumption message
+	at org.example.JUnit5Test.testSkippedWithMessage(JUnit5Test.java:58)",
+    "path": "org.example.JUnit5Test",
+    "raw_details": "org.opentest4j.TestAbortedException: Assumption failed: Assumption message
+	at org.example.JUnit5Test.testSkippedWithMessage(JUnit5Test.java:58)",
+    "start_line": 58,
+    "title": "Test skipped: JUnit5Test.testSkippedWithMessage",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 38,
+    "message": "org.opentest4j.AssertionFailedError: Failure message
+	at org.example.JUnit5Test.testFailWithMessage(JUnit5Test.java:38)",
+    "path": "org.example.JUnit5Test",
+    "raw_details": "org.opentest4j.AssertionFailedError: Failure message
+	at org.example.JUnit5Test.testFailWithMessage(JUnit5Test.java:38)",
+    "start_line": 38,
+    "title": "Test failure: JUnit5Test.testFailWithMessage",
+  },
+  Object {
+    "annotation_level": "notice",
+    "end_line": 1,
+    "message": "public void org.example.JUnit5Test.testDisabled() is @Disabled",
+    "path": "org.example.JUnit5Test",
+    "raw_details": undefined,
+    "start_line": 1,
+    "title": "Test skipped: JUnit5Test.testDisabled",
+  },
+  Object {
+    "annotation_level": "failure",
+    "end_line": 22,
+    "message": "org.opentest4j.AssertionFailedError: expected: <5> but was: <4>
+	at org.example.JUnit5Test.testAssertionFailure(JUnit5Test.java:22)",
+    "path": "org.example.JUnit5Test",
+    "raw_details": "org.opentest4j.AssertionFailedError: expected: <5> but was: <4>
+	at org.example.JUnit5Test.testAssertionFailure(JUnit5Test.java:22)",
+    "start_line": 22,
+    "title": "Test failure: JUnit5Test.testAssertionFailure",
+  },
+  Object {
+    "annotation_level": "notice",
+    "end_line": 53,
+    "message": "org.opentest4j.TestAbortedException: Assumption failed: assumption is not true
+	at org.example.JUnit5Test.testSkipped(JUnit5Test.java:53)",
+    "path": "org.example.JUnit5Test",
+    "raw_details": "org.opentest4j.TestAbortedException: Assumption failed: assumption is not true
+	at org.example.JUnit5Test.testSkipped(JUnit5Test.java:53)",
+    "start_line": 53,
+    "title": "Test skipped: JUnit5Test.testSkipped",
+  },
+]
+`;

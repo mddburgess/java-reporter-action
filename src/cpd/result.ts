@@ -1,38 +1,41 @@
 import CheckResult from "../check/result";
-import { RunCondition } from "../check";
+import { RunCondition } from "../check/types";
 import CpdReport, { CpdDuplication, CpdFile } from "./types";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
 import { plural, relativePath, sum } from "../common/utils";
 import { flatMap } from "lodash";
 
 export default class CpdResult extends CheckResult {
-  constructor(private readonly runCondition: RunCondition, private readonly reports: CpdReport[]) {
+  public constructor(
+    private readonly runCondition: RunCondition,
+    private readonly reports: CpdReport[]
+  ) {
     super();
   }
 
-  shouldCompleteCheck(): boolean {
+  public shouldCompleteCheck(): boolean {
     return this.runCondition >= RunCondition.expected || this.reports.length > 0;
   }
 
-  get conclusion(): CheckConclusion {
+  public get conclusion(): CheckConclusion {
     const duplications = sum(this.reports, (report) => report.duplications.length);
     return duplications > 0 ? "neutral" : "success";
   }
 
-  get title(): string {
+  public get title(): string {
     const duplications = sum(this.reports, (report) => report.duplications.length);
     return `${plural(duplications, "duplication")} found`;
   }
 
-  get summary(): string {
+  public get summary(): string {
     return this.title;
   }
 
-  get text(): string | undefined {
+  public get text(): string | undefined {
     return undefined;
   }
 
-  get annotations(): CheckAnnotation[] {
+  public get annotations(): CheckAnnotation[] {
     return flatMap(this.reports, (report) => this.annotateReport(report));
   }
 

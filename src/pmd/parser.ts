@@ -13,7 +13,7 @@ export default class PmdParser extends ReportParser<PmdReport> {
   private filePath = "";
   private violation?: PmdViolation;
 
-  constructor(reportPath: string) {
+  public constructor(reportPath: string) {
     super(
       {
         violations: [],
@@ -29,6 +29,8 @@ export default class PmdParser extends ReportParser<PmdReport> {
         break;
       case "violation":
         this.onViolationOpen(parseAttrs(tag.attrs) as ViolationAttrs);
+        break;
+      default:
         break;
     }
   }

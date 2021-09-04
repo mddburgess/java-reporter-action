@@ -1,6 +1,6 @@
 import CheckResult from "../check/result";
+import { RunCondition } from "../check/types";
 import { AnnotationLevel, CheckAnnotation, CheckConclusion } from "../github/types";
-import { RunCondition } from "../check";
 import SurefireReport, { SurefireTestCase } from "./types";
 import { plural } from "../common/utils";
 import { flatMap } from "lodash";
@@ -8,7 +8,7 @@ import { flatMap } from "lodash";
 export default class SurefireResult extends CheckResult {
   private readonly aggregate: SurefireReport;
 
-  constructor(
+  public constructor(
     private readonly runCondition: RunCondition,
     private readonly reports: SurefireReport[]
   ) {
@@ -27,11 +27,11 @@ export default class SurefireResult extends CheckResult {
     }));
   }
 
-  shouldCompleteCheck(): boolean {
+  public shouldCompleteCheck(): boolean {
     return this.runCondition >= RunCondition.expected || this.reports.length > 0;
   }
 
-  get conclusion(): CheckConclusion {
+  public get conclusion(): CheckConclusion {
     if (this.aggregate.failures + this.aggregate.errors > 0) {
       return "failure";
     } else if (this.aggregate.skipped > 0) {
@@ -41,7 +41,7 @@ export default class SurefireResult extends CheckResult {
     }
   }
 
-  get title(): string {
+  public get title(): string {
     const failuresAndErrors = this.aggregate.failures + this.aggregate.errors;
     if (failuresAndErrors > 0) {
       return `${plural(failuresAndErrors, "test")} failed`;
@@ -51,7 +51,7 @@ export default class SurefireResult extends CheckResult {
     return `${plural(passed, "test")} passed`;
   }
 
-  get summary(): string {
+  public get summary(): string {
     const passed =
       this.aggregate.tests -
       this.aggregate.failures -
@@ -60,7 +60,7 @@ export default class SurefireResult extends CheckResult {
 
     return [
       `|Tests run|${this.aggregate.tests}|`,
-      `|:--|--:|`,
+      "|:--|--:|",
       `|:green_square: Passed|${passed}|`,
       `|:orange_square: Failures|${this.aggregate.failures}|`,
       `|:red_square: Errors|${this.aggregate.errors}|`,
@@ -68,10 +68,10 @@ export default class SurefireResult extends CheckResult {
     ].join("\n");
   }
 
-  get text(): string | undefined {
+  public get text(): string | undefined {
     return [
-      `|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|`,
-      `|:--|--:|--:|--:|--:|--:|`,
+      "|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|",
+      "|:--|--:|--:|--:|--:|--:|",
       ...this.reports.map((report) => this.reportText(report)),
     ].join("\n");
   }
@@ -81,7 +81,7 @@ export default class SurefireResult extends CheckResult {
     return `|\`\`${report.name}\`\`|${report.tests}|${passed}|${report.failures}|${report.errors}|${report.skipped}|`;
   }
 
-  get annotations(): CheckAnnotation[] {
+  public get annotations(): CheckAnnotation[] {
     return flatMap(this.reports, (report) => this.annotateReport(report));
   }
 
@@ -127,7 +127,7 @@ export default class SurefireResult extends CheckResult {
   }
 
   private resolveMessage(testCase: SurefireTestCase): string {
-    return testCase.stackTrace || testCase.message || `Test ${testCase.result}`;
+    return testCase.stackTrace ?? testCase.message ?? `Test ${testCase.result}`;
   }
 
   private resolveTitle(testCase: SurefireTestCase): string {

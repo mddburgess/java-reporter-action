@@ -6,7 +6,7 @@
     "project": "tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "jest"],
+  "plugins": ["@typescript-eslint", "jest", "prefer-arrow"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -16,15 +16,24 @@
     "prettier"
   ],
   "rules": {
-    "default-case": "warn",
+    "arrow-body-style": ["warn", "as-needed"],
+    "default-case": "error",
     "default-case-last": "error",
     "eqeqeq": "error",
     "no-template-curly-in-string": "error",
+    "prefer-arrow-callback": "error",
 
     "@typescript-eslint/consistent-type-definitions": ["warn", "interface"],
+    "@typescript-eslint/explicit-member-accessibility": "error",
     "@typescript-eslint/no-unnecessary-condition": "error",
     "@typescript-eslint/no-unsafe-member-access": "warn",
     "@typescript-eslint/no-unsafe-return": "warn",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/quotes": [
+      "warn",
+      "double",
+      { "avoidEscape": true, "allowTemplateLiterals": false }
+    ],
     "@typescript-eslint/restrict-template-expressions": ["error", { "allowNullish": true }],
 
     "jest/consistent-test-it": "warn",
@@ -38,6 +47,8 @@
     "jest/prefer-strict-equal": "error",
     "jest/prefer-todo": "error",
     "jest/require-to-throw-message": "warn",
-    "jest/require-top-level-describe": "error"
+    "jest/require-top-level-describe": "error",
+
+    "prefer-arrow/prefer-arrow-functions": ["warn", { "classPropertiesAllowed": false }]
   }
 }

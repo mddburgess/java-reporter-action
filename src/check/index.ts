@@ -1,13 +1,14 @@
 import * as core from "@actions/core";
 import * as glob from "@actions/glob";
-import CheckRun from "../github/check-run";
 import NoReportsResult from "../common/no-reports";
+import CheckRun from "../github/check-run";
 import CheckResult from "./result";
+import { RunCondition } from "./types";
 
 export default abstract class Check<T> {
+  protected readonly runCondition: RunCondition;
   private readonly type: string;
   private readonly friendlyName: string;
-  readonly runCondition: RunCondition;
   private readonly checkRun: CheckRun;
 
   protected constructor(type: string, friendlyName: string) {
@@ -31,7 +32,7 @@ export default abstract class Check<T> {
     }
   }
 
-  async run() {
+  public async run(): Promise<void> {
     if (this.runCondition === RunCondition.disabled) {
       core.warning(`${this.friendlyName} check is disabled.`);
       return;
@@ -46,7 +47,7 @@ export default abstract class Check<T> {
     core.info(`${this.friendlyName} check finished.`);
   }
 
-  async runCheck() {
+  private async runCheck() {
     const searchPaths = this.resolveSearchPaths();
 
     const reportPaths = await this.resolveReportPaths(searchPaths);
@@ -85,11 +86,4 @@ export default abstract class Check<T> {
 
   protected abstract readReport(reportPath: string): T | undefined;
   protected abstract getResult(reports: T[]): CheckResult;
-}
-
-export enum RunCondition {
-  disabled,
-  autodetect,
-  expected,
-  required,
 }

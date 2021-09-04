@@ -1,6 +1,6 @@
 import path from "path";
 
-export function chunk<T>(array: T[] | undefined, size: number): T[][] {
+export const chunk = <T>(array: T[] | undefined, size: number): T[][] => {
   if (array === undefined || array.length === 0) {
     return [[]];
   }
@@ -9,18 +9,15 @@ export function chunk<T>(array: T[] | undefined, size: number): T[][] {
     chunks.push(array.slice(i, i + size));
   }
   return chunks;
-}
+};
 
-export function plural(quantity: number, noun: string): string {
-  return quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
-}
+export const plural = (quantity: number, noun: string): string =>
+  quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
 
-export function relativePath(absolutePath: string): string {
-  return process.env.GITHUB_WORKSPACE
+export const relativePath = (absolutePath: string): string =>
+  process.env.GITHUB_WORKSPACE
     ? path.relative(process.env.GITHUB_WORKSPACE, absolutePath)
     : absolutePath;
-}
 
-export function sum<T>(array: T[], fn: (item: T) => number): number {
-  return array.map(fn).reduce((a, b) => a + b, 0);
-}
+export const sum = <T>(array: T[], fn: (item: T) => number): number =>
+  array.map(fn).reduce((a, b) => a + b, 0);

@@ -1,5 +1,5 @@
+import { RunCondition } from "../../check/types";
 import CpdResult from "../result";
-import { RunCondition } from "../../check";
 
 describe("CpdResult", () => {
   it("can handle an empty report", () => {

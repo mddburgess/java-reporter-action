@@ -59,12 +59,10 @@ describe("compareAnnotations()", () => {
   });
 });
 
-function annotation(level: AnnotationLevel, path = "", line = 0): CheckAnnotation {
-  return {
-    path: path,
-    start_line: line,
-    end_line: line,
-    annotation_level: level,
-    message: "",
-  };
-}
+const annotation = (level: AnnotationLevel, path = "", line = 0): CheckAnnotation => ({
+  path: path,
+  start_line: line,
+  end_line: line,
+  annotation_level: level,
+  message: "",
+});

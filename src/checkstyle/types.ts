@@ -44,6 +44,4 @@ const getCategory = (rule: string): string => {
   return idx === -1 ? "" : rule.slice(0, idx);
 };
 
-const getType = (rule: string): string => {
-  return rule.split(".").slice(-1)[0];
-};
+const getType = (rule: string): string => rule.split(".").slice(-1)[0];
