@@ -1,7 +1,7 @@
 import { RunCondition } from "../../check/types";
 import SurefireParser from "../parser";
-import SurefireResult from "../result";
-import SurefireReport from "../types";
+import SurefireResult, { resolveTitle } from "../result";
+import SurefireReport, { SurefireTestCase } from "../types";
 
 describe("SurefireResult", () => {
   it("can handle an empty Surefire report", () => {
@@ -27,5 +27,17 @@ describe("SurefireResult", () => {
     expect(result.summary).toMatchSnapshot();
     expect(result.text).toMatchSnapshot();
     expect(result.annotations).toMatchSnapshot();
+  });
+});
+
+describe("resolveTitle()", () => {
+  it("handles a test case with a test name", () => {
+    const testCase = new SurefireTestCase("ClassName", "testName", "failure");
+    expect(resolveTitle(testCase)).toBe("Test failure: ClassName.testName");
+  });
+
+  it("handles a test case with a blank test name", () => {
+    const testCase = new SurefireTestCase("ClassName", "", "failure");
+    expect(resolveTitle(testCase)).toBe("Test failure: ClassName");
   });
 });

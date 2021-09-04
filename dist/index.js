@@ -1486,6 +1486,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.resolveTitle = void 0;
 const result_1 = __importDefault(__nccwpck_require__(1009));
 const types_1 = __nccwpck_require__(2084);
 const table_1 = __nccwpck_require__(9090);
@@ -1562,7 +1563,7 @@ class SurefireResult extends result_1.default {
             end_line: line,
             annotation_level: resolveAnnotationLevel(testCase),
             message: resolveMessage(testCase),
-            title: resolveTitle(testCase),
+            title: (0, exports.resolveTitle)(testCase),
             raw_details: testCase.stackTrace,
         };
     }
@@ -1595,7 +1596,15 @@ const resolveAnnotationLevel = (testCase) => {
     }
 };
 const resolveMessage = (testCase) => { var _a, _b; return (_b = (_a = testCase.stackTrace) !== null && _a !== void 0 ? _a : testCase.message) !== null && _b !== void 0 ? _b : `Test ${testCase.result}`; };
-const resolveTitle = (testCase) => `Test ${testCase.result}: ${testCase.simpleClassName}.${testCase.testName}`;
+const resolveTitle = (testCase) => {
+    if (testCase.testName) {
+        return `Test ${testCase.result}: ${testCase.simpleClassName}.${testCase.testName}`;
+    }
+    else {
+        return `Test ${testCase.result}: ${testCase.simpleClassName}`;
+    }
+};
+exports.resolveTitle = resolveTitle;
 
 
 /***/ }),
@@ -1626,10 +1635,12 @@ class SurefireReport {
 }
 exports.default = SurefireReport;
 class SurefireTestCase {
-    constructor() {
-        this.className = "";
-        this.testName = "";
-        this.result = "success";
+    constructor(className = "", testName = "", result = "success", message, stackTrace) {
+        this.className = className;
+        this.testName = testName;
+        this.result = result;
+        this.message = message;
+        this.stackTrace = stackTrace;
     }
     get simpleClassName() {
         const idx = this.className.lastIndexOf(".") + 1;

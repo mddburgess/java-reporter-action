@@ -132,5 +132,10 @@ const resolveAnnotationLevel = (testCase: SurefireTestCase): AnnotationLevel => 
 const resolveMessage = (testCase: SurefireTestCase): string =>
   testCase.stackTrace ?? testCase.message ?? `Test ${testCase.result}`;
 
-const resolveTitle = (testCase: SurefireTestCase): string =>
-  `Test ${testCase.result}: ${testCase.simpleClassName}.${testCase.testName}`;
+export const resolveTitle = (testCase: SurefireTestCase): string => {
+  if (testCase.testName) {
+    return `Test ${testCase.result}: ${testCase.simpleClassName}.${testCase.testName}`;
+  } else {
+    return `Test ${testCase.result}: ${testCase.simpleClassName}`;
+  }
+};

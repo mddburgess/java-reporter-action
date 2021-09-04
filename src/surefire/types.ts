@@ -19,11 +19,13 @@ export default class SurefireReport {
 }
 
 export class SurefireTestCase {
-  public className = "";
-  public testName = "";
-  public result: SurefireTestResult = "success";
-  public message?: string;
-  public stackTrace?: string;
+  public constructor(
+    public className = "",
+    public testName = "",
+    public result: SurefireTestResult = "success",
+    public message?: string,
+    public stackTrace?: string
+  ) {}
 
   public get simpleClassName(): string {
     const idx = this.className.lastIndexOf(".") + 1;
