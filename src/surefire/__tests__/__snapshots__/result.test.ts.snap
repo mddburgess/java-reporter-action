@@ -12,7 +12,7 @@ exports[`SurefireResult can handle a real Surefire report 1`] = `
 exports[`SurefireResult can handle a real Surefire report 2`] = `
 "|Class|Tests|Passed|Failures|Errors|Skipped|
 |:-|-:|-:|-:|-:|-:|
-|\`report.name\`|11|1|4|2|4|"
+|\`org.example.JUnit5Test\`|11|1|4|2|4|"
 `;
 
 exports[`SurefireResult can handle a real Surefire report 3`] = `

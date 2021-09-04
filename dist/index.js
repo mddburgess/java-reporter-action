@@ -1532,7 +1532,7 @@ class SurefireResult extends result_1.default {
             listBy: (report) => report.name,
             reducer: aggregateReport,
             columns: [
-                { header: "Class", justify: "left", value: (report) => `\`report.name\`` },
+                { header: "Class", justify: "left", value: (report) => `\`${report.name}\`` },
                 { header: "Tests", justify: "right", value: (report) => `${report.tests}` },
                 { header: "Passed", justify: "right", value: (report) => `${report.passed}` },
                 { header: "Failures", justify: "right", value: (report) => `${report.failures}` },
