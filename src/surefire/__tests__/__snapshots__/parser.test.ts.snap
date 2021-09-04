@@ -1,11 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SurefireParser can parse a Surefire v2 report for JUnit 4 1`] = `
-Object {
+SurefireReport {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit4Test",
-  "passed": 1,
   "skipped": 4,
   "testCases": Array [
     Object {
@@ -92,11 +91,10 @@ Object {
 `;
 
 exports[`SurefireParser can parse a Surefire v2 report for JUnit 5 1`] = `
-Object {
+SurefireReport {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit5Test",
-  "passed": 1,
   "skipped": 4,
   "testCases": Array [
     Object {
@@ -183,11 +181,10 @@ Object {
 `;
 
 exports[`SurefireParser can parse a Surefire v3 report for JUnit 4 1`] = `
-Object {
+SurefireReport {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit4Test",
-  "passed": 1,
   "skipped": 4,
   "testCases": Array [
     Object {
@@ -274,11 +271,10 @@ Object {
 `;
 
 exports[`SurefireParser can parse a Surefire v3 report for JUnit 5 1`] = `
-Object {
+SurefireReport {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit5Test",
-  "passed": 1,
   "skipped": 4,
   "testCases": Array [
     Object {

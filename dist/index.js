@@ -1397,17 +1397,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const html_entities_1 = __nccwpck_require__(2589);
 const saxophone_ts_1 = __nccwpck_require__(3902);
 const parser_1 = __importDefault(__nccwpck_require__(3234));
+const types_1 = __importDefault(__nccwpck_require__(7040));
 class SurefireParser extends parser_1.default {
     constructor(reportPath) {
-        super({
-            name: "",
-            tests: 0,
-            passed: 0,
-            failures: 0,
-            errors: 0,
-            skipped: 0,
-            testCases: [],
-        }, reportPath);
+        super(new types_1.default(), reportPath);
         this.testCase = {
             className: "",
             testName: "",
@@ -1437,8 +1430,6 @@ class SurefireParser extends parser_1.default {
         this.report.failures = Number(attrs.failures);
         this.report.errors = Number(attrs.errors);
         this.report.skipped = Number(attrs.skipped);
-        this.report.passed =
-            this.report.tests - this.report.failures - this.report.errors - this.report.skipped;
     }
     onTestCaseOpen(attrs) {
         this.testCase.className = (0, html_entities_1.decode)(attrs.classname, { level: "xml" });
@@ -1486,6 +1477,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const result_1 = __importDefault(__nccwpck_require__(1009));
 const types_1 = __nccwpck_require__(2084);
 const table_1 = __nccwpck_require__(9090);
+const types_2 = __importDefault(__nccwpck_require__(7040));
 const utils_1 = __nccwpck_require__(1855);
 const lodash_1 = __nccwpck_require__(250);
 class SurefireResult extends result_1.default {
@@ -1529,10 +1521,10 @@ class SurefireResult extends result_1.default {
     }
     get text() {
         const table = (0, table_1.configureTable)({
-            listBy: (report) => report.name,
+            listBy: (report) => report.packageName,
             reducer: aggregateReport,
             columns: [
-                { header: "Class", justify: "left", value: (report) => `\`${report.name}\`` },
+                { header: "Class", justify: "left", value: (report) => `\`${report.packageName}\`` },
                 { header: "Tests", justify: "right", value: (report) => `${report.tests}` },
                 { header: "Passed", justify: "right", value: (report) => `${report.passed}` },
                 { header: "Failures", justify: "right", value: (report) => `${report.failures}` },
@@ -1547,15 +1539,7 @@ class SurefireResult extends result_1.default {
     }
 }
 exports.default = SurefireResult;
-const aggregateReport = (acc, curr) => ({
-    name: acc.name,
-    tests: acc.tests + curr.tests,
-    passed: acc.passed + curr.passed,
-    failures: acc.failures + curr.failures,
-    errors: acc.errors + curr.errors,
-    skipped: acc.skipped + curr.skipped,
-    testCases: [],
-});
+const aggregateReport = (acc, curr) => new types_2.default(acc.name, acc.tests + curr.tests, acc.failures + curr.failures, acc.errors + curr.errors, acc.skipped + curr.skipped, []);
 const annotateReport = (report) => report.testCases.map((testCase) => annotateTestCase(testCase));
 const annotateTestCase = (testCase) => {
     const line = resolveLine(testCase);
@@ -1596,6 +1580,34 @@ const resolveTitle = (testCase) => {
     const [simpleClassName] = testCase.className.split(".").slice(-1);
     return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
 };
+
+
+/***/ }),
+
+/***/ 7040:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+class SurefireReport {
+    constructor(name = "", tests = 0, failures = 0, errors = 0, skipped = 0, testCases = []) {
+        this.name = name;
+        this.tests = tests;
+        this.failures = failures;
+        this.errors = errors;
+        this.skipped = skipped;
+        this.testCases = testCases;
+    }
+    get passed() {
+        return this.tests - this.failures - this.errors - this.skipped;
+    }
+    get packageName() {
+        const idx = this.name.lastIndexOf(".");
+        return idx === -1 ? "<no package>" : this.name.slice(0, idx);
+    }
+}
+exports.default = SurefireReport;
 
 
 /***/ }),

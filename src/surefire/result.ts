@@ -54,10 +54,10 @@ export default class SurefireResult extends CheckResult {
 
   public get text(): string | undefined {
     const table = configureTable({
-      listBy: (report: SurefireReport) => report.name,
+      listBy: (report: SurefireReport) => report.packageName,
       reducer: aggregateReport,
       columns: [
-        { header: "Class", justify: "left", value: (report) => `\`${report.name}\`` },
+        { header: "Class", justify: "left", value: (report) => `\`${report.packageName}\`` },
         { header: "Tests", justify: "right", value: (report) => `${report.tests}` },
         { header: "Passed", justify: "right", value: (report) => `${report.passed}` },
         { header: "Failures", justify: "right", value: (report) => `${report.failures}` },
@@ -73,15 +73,15 @@ export default class SurefireResult extends CheckResult {
   }
 }
 
-const aggregateReport = (acc: SurefireReport, curr: SurefireReport): SurefireReport => ({
-  name: acc.name,
-  tests: acc.tests + curr.tests,
-  passed: acc.passed + curr.passed,
-  failures: acc.failures + curr.failures,
-  errors: acc.errors + curr.errors,
-  skipped: acc.skipped + curr.skipped,
-  testCases: [],
-});
+const aggregateReport = (acc: SurefireReport, curr: SurefireReport): SurefireReport =>
+  new SurefireReport(
+    acc.name,
+    acc.tests + curr.tests,
+    acc.failures + curr.failures,
+    acc.errors + curr.errors,
+    acc.skipped + curr.skipped,
+    []
+  );
 
 const annotateReport = (report: SurefireReport): CheckAnnotation[] =>
   report.testCases.map((testCase) => annotateTestCase(testCase));

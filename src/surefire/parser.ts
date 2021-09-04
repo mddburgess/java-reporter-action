@@ -17,18 +17,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
   };
 
   public constructor(reportPath: string) {
-    super(
-      {
-        name: "",
-        tests: 0,
-        passed: 0,
-        failures: 0,
-        errors: 0,
-        skipped: 0,
-        testCases: [],
-      },
-      reportPath
-    );
+    super(new SurefireReport(), reportPath);
   }
 
   protected onTagOpen(tag: TagOpenNode): void {
@@ -55,8 +44,6 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
     this.report.failures = Number(attrs.failures);
     this.report.errors = Number(attrs.errors);
     this.report.skipped = Number(attrs.skipped);
-    this.report.passed =
-      this.report.tests - this.report.failures - this.report.errors - this.report.skipped;
   }
 
   private onTestCaseOpen(attrs: TestCaseAttrs) {

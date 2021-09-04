@@ -1,18 +1,11 @@
 import { RunCondition } from "../../check/types";
 import SurefireParser from "../parser";
 import SurefireResult from "../result";
+import SurefireReport from "../types";
 
 describe("SurefireResult", () => {
   it("can handle an empty Surefire report", () => {
-    const report = {
-      name: "com.example.ExampleTest",
-      tests: 0,
-      passed: 0,
-      failures: 0,
-      errors: 0,
-      skipped: 0,
-      testCases: [],
-    };
+    const report = new SurefireReport();
     const result = new SurefireResult(RunCondition.autodetect, [report]);
 
     expect(result.shouldCompleteCheck()).toBe(true);
