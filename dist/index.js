@@ -307,15 +307,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.loadClasspath = void 0;
+exports.findClasspath = exports.loadClasspath = void 0;
+const core = __importStar(__nccwpck_require__(2186));
 const glob = __importStar(__nccwpck_require__(8090));
+const classpath = [];
 const loadClasspath = () => __awaiter(void 0, void 0, void 0, function* () {
-    const globber = yield glob.create("**/*.java");
-    const searchPath = globber.getSearchPaths()[0];
-    const javaPaths = yield globber.glob();
-    return javaPaths.map((path) => path.slice(searchPath.length + 1));
+    if (classpath === []) {
+        core.info("Loading classpath");
+        const globber = yield glob.create("**/*.java");
+        const searchPath = globber.getSearchPaths()[0];
+        const javaPaths = yield globber.glob();
+        classpath.push(...javaPaths.map((path) => path.slice(searchPath.length + 1)));
+        core.startGroup("Classpath loaded");
+        classpath.forEach(core.info);
+        core.endGroup();
+    }
+    return classpath;
 });
 exports.loadClasspath = loadClasspath;
+const findClasspath = (path) => classpath.filter((cp) => cp.endsWith(path))[0];
+exports.findClasspath = findClasspath;
 
 
 /***/ }),
@@ -481,7 +492,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.sum = exports.relativePath = exports.plural = exports.chunk = void 0;
+exports.sum = exports.relativePath = exports.plural = exports.flatMap = exports.chunk = void 0;
 const path_1 = __importDefault(__nccwpck_require__(5622));
 const chunk = (array, size) => {
     if (array === undefined || array.length === 0) {
@@ -494,6 +505,8 @@ const chunk = (array, size) => {
     return chunks;
 };
 exports.chunk = chunk;
+const flatMap = (array, fn) => array.map(fn).reduce((acc, curr) => acc.concat(...curr), []);
+exports.flatMap = flatMap;
 const plural = (quantity, noun) => quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
 exports.plural = plural;
 const relativePath = (absolutePath) => process.env.GITHUB_WORKSPACE
@@ -883,7 +896,7 @@ const files_1 = __nccwpck_require__(9337);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const classpath = yield (0, files_1.loadClasspath)();
     const checks = [
-        new check_1.default(classpath),
+        new check_1.default(),
         new check_2.default(),
         new check_3.default(),
         new check_4.default(classpath),
@@ -1357,6 +1370,115 @@ exports.default = SpotbugsResult;
 
 /***/ }),
 
+/***/ 4405:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+class SurefireReport {
+    constructor(name = "", tests = 0, failures = 0, errors = 0, skipped = 0, testCases = []) {
+        this.name = name;
+        this.tests = tests;
+        this.failures = failures;
+        this.errors = errors;
+        this.skipped = skipped;
+        this.testCases = testCases;
+    }
+    get passed() {
+        return this.tests - this.failures - this.errors - this.skipped;
+    }
+    get packageName() {
+        const idx = this.name.lastIndexOf(".");
+        return idx === -1 ? "<no package>" : this.name.slice(0, idx);
+    }
+    get annotations() {
+        return this.testCases.map((testCase) => testCase.annotation);
+    }
+}
+exports.default = SurefireReport;
+
+
+/***/ }),
+
+/***/ 183:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const files_1 = __nccwpck_require__(9337);
+class SurefireTestCase {
+    constructor(className = "", testName = "", result = "success", message, stackTrace) {
+        this.className = className;
+        this.testName = testName;
+        this.result = result;
+        this.message = message;
+        this.stackTrace = stackTrace;
+        this.line = 0;
+    }
+    get simpleClassName() {
+        const idx = this.className.lastIndexOf(".") + 1;
+        return this.className.slice(idx);
+    }
+    get annotation() {
+        var _a;
+        return {
+            path: (_a = (0, files_1.findClasspath)(this.annotationPath)) !== null && _a !== void 0 ? _a : this.className,
+            start_line: this.annotationLine,
+            end_line: this.annotationLine,
+            annotation_level: this.annotationLevel,
+            message: this.annotationMessage,
+            title: this.annotationTitle,
+            raw_details: this.stackTrace,
+        };
+    }
+    get annotationPath() {
+        const idx = this.className.lastIndexOf("$");
+        const topLevelClass = idx === -1 ? this.className : this.className.slice(0, idx);
+        return `${topLevelClass.split(".").join("/")}.java`;
+    }
+    get annotationLine() {
+        var _a;
+        if (this.line === 0) {
+            this.line = 1;
+            const trace = (_a = this.stackTrace) === null || _a === void 0 ? void 0 : _a.split("\n").filter((st) => st.includes(this.className)).pop();
+            if (trace) {
+                const match = RegExp(".*:(\\d+)").exec(trace);
+                this.line = Number(match ? match[1] : 1);
+            }
+        }
+        return this.line;
+    }
+    get annotationLevel() {
+        switch (this.result) {
+            case "failure":
+            case "error":
+                return "failure";
+            case "skipped":
+                return "notice";
+            default:
+                throw Error();
+        }
+    }
+    get annotationMessage() {
+        var _a, _b;
+        return (_b = (_a = this.stackTrace) !== null && _a !== void 0 ? _a : this.message) !== null && _b !== void 0 ? _b : `Test ${this.result}`;
+    }
+    get annotationTitle() {
+        if (this.testName) {
+            return `Test ${this.result}: ${this.simpleClassName}.${this.testName}`;
+        }
+        else {
+            return `Test ${this.result}: ${this.simpleClassName}`;
+        }
+    }
+}
+exports.default = SurefireTestCase;
+
+
+/***/ }),
+
 /***/ 4624:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -1370,15 +1492,14 @@ const check_1 = __importDefault(__nccwpck_require__(2799));
 const parser_1 = __importDefault(__nccwpck_require__(6142));
 const result_1 = __importDefault(__nccwpck_require__(4917));
 class SurefireCheck extends check_1.default {
-    constructor(classpath) {
+    constructor() {
         super("surefire", "Surefire");
-        this.classpath = classpath;
     }
     readReport(reportPath) {
         return new parser_1.default(reportPath).read();
     }
     getResult(reports) {
-        return new result_1.default(this.runCondition, reports, this.classpath);
+        return new result_1.default(this.runCondition, reports);
     }
 }
 exports.default = SurefireCheck;
@@ -1391,25 +1512,6 @@ exports.default = SurefireCheck;
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -1417,11 +1519,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const html_entities_1 = __nccwpck_require__(2589);
 const saxophone_ts_1 = __nccwpck_require__(3902);
 const parser_1 = __importDefault(__nccwpck_require__(3234));
-const types_1 = __importStar(__nccwpck_require__(7040));
+const SurefireReport_1 = __importDefault(__nccwpck_require__(4405));
+const SurefireTestCase_1 = __importDefault(__nccwpck_require__(183));
 class SurefireParser extends parser_1.default {
     constructor(reportPath) {
-        super(new types_1.default(), reportPath);
-        this.testCase = new types_1.SurefireTestCase();
+        super(new SurefireReport_1.default(), reportPath);
+        this.testCase = new SurefireTestCase_1.default();
     }
     onTagOpen(tag) {
         switch (tag.name) {
@@ -1462,7 +1565,7 @@ class SurefireParser extends parser_1.default {
         }
         this.testCase.stackTrace = (_a = this.testCase.stackTrace) === null || _a === void 0 ? void 0 : _a.trim();
         this.report.testCases.push(this.testCase);
-        this.testCase = new types_1.SurefireTestCase();
+        this.testCase = new SurefireTestCase_1.default();
     }
     onText(tag) {
         var _a;
@@ -1486,19 +1589,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.resolveTitle = exports.resolveLine = void 0;
 const result_1 = __importDefault(__nccwpck_require__(1009));
 const types_1 = __nccwpck_require__(2084);
 const table_1 = __nccwpck_require__(9090);
-const types_2 = __importDefault(__nccwpck_require__(7040));
+const SurefireReport_1 = __importDefault(__nccwpck_require__(4405));
 const utils_1 = __nccwpck_require__(1855);
-const lodash_1 = __nccwpck_require__(250);
 class SurefireResult extends result_1.default {
-    constructor(runCondition, reports, classpath) {
+    constructor(runCondition, reports) {
         super();
         this.runCondition = runCondition;
         this.reports = reports;
-        this.classpath = classpath;
         this.aggregate = this.reports.reduce(aggregateReport);
     }
     shouldCompleteCheck() {
@@ -1549,113 +1649,11 @@ class SurefireResult extends result_1.default {
         return table(this.reports);
     }
     get annotations() {
-        return (0, lodash_1.flatMap)(this.reports, (report) => this.annotateReport(report));
-    }
-    annotateReport(report) {
-        return report.testCases.map((testCase) => this.annotateTestCase(testCase));
-    }
-    annotateTestCase(testCase) {
-        var _a;
-        const line = (0, exports.resolveLine)(testCase);
-        return {
-            path: (_a = this.resolvePath(testCase.path)) !== null && _a !== void 0 ? _a : testCase.className,
-            start_line: line,
-            end_line: line,
-            annotation_level: resolveAnnotationLevel(testCase),
-            message: resolveMessage(testCase),
-            title: (0, exports.resolveTitle)(testCase),
-            raw_details: testCase.stackTrace,
-        };
-    }
-    resolvePath(path) {
-        return this.classpath.filter((cp) => cp.endsWith(path))[0];
+        return (0, utils_1.flatMap)(this.reports, (report) => report.annotations);
     }
 }
 exports.default = SurefireResult;
-const aggregateReport = (acc, curr) => new types_2.default(acc.name, acc.tests + curr.tests, acc.failures + curr.failures, acc.errors + curr.errors, acc.skipped + curr.skipped, []);
-const resolveLine = (testCase) => {
-    if (testCase.stackTrace) {
-        const trace = testCase.stackTrace
-            .split("\n")
-            .filter((line) => line.includes(testCase.className))
-            .pop();
-        if (trace) {
-            const match = RegExp(".*:(\\d+)").exec(trace);
-            return Number(match ? match[1] : 1);
-        }
-    }
-    return 1;
-};
-exports.resolveLine = resolveLine;
-const resolveAnnotationLevel = (testCase) => {
-    switch (testCase.result) {
-        case "failure":
-        case "error":
-            return "failure";
-        case "skipped":
-            return "notice";
-        default:
-            throw Error();
-    }
-};
-const resolveMessage = (testCase) => { var _a, _b; return (_b = (_a = testCase.stackTrace) !== null && _a !== void 0 ? _a : testCase.message) !== null && _b !== void 0 ? _b : `Test ${testCase.result}`; };
-const resolveTitle = (testCase) => {
-    if (testCase.testName) {
-        return `Test ${testCase.result}: ${testCase.simpleClassName}.${testCase.testName}`;
-    }
-    else {
-        return `Test ${testCase.result}: ${testCase.simpleClassName}`;
-    }
-};
-exports.resolveTitle = resolveTitle;
-
-
-/***/ }),
-
-/***/ 7040:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SurefireTestCase = void 0;
-class SurefireReport {
-    constructor(name = "", tests = 0, failures = 0, errors = 0, skipped = 0, testCases = []) {
-        this.name = name;
-        this.tests = tests;
-        this.failures = failures;
-        this.errors = errors;
-        this.skipped = skipped;
-        this.testCases = testCases;
-    }
-    get passed() {
-        return this.tests - this.failures - this.errors - this.skipped;
-    }
-    get packageName() {
-        const idx = this.name.lastIndexOf(".");
-        return idx === -1 ? "<no package>" : this.name.slice(0, idx);
-    }
-}
-exports.default = SurefireReport;
-class SurefireTestCase {
-    constructor(className = "", testName = "", result = "success", message, stackTrace) {
-        this.className = className;
-        this.testName = testName;
-        this.result = result;
-        this.message = message;
-        this.stackTrace = stackTrace;
-    }
-    get simpleClassName() {
-        const idx = this.className.lastIndexOf(".") + 1;
-        return this.className.slice(idx);
-    }
-    get path() {
-        const idx = this.className.lastIndexOf("$");
-        const topLevelClass = idx === -1 ? this.className : this.className.slice(0, idx);
-        return `${topLevelClass.split(".").join("/")}.java`;
-    }
-}
-exports.SurefireTestCase = SurefireTestCase;
+const aggregateReport = (acc, curr) => new SurefireReport_1.default(acc.name, acc.tests + curr.tests, acc.failures + curr.failures, acc.errors + curr.errors, acc.skipped + curr.skipped, []);
 
 
 /***/ }),

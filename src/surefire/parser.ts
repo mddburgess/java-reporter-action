@@ -7,7 +7,8 @@ import {
   TextNode,
 } from "saxophone-ts/dist/types/src/static/nodes";
 import ReportParser from "../common/parser";
-import SurefireReport, { SurefireTestCase, SurefireTestResult } from "./types";
+import SurefireReport from "./SurefireReport";
+import SurefireTestCase, { SurefireTestResult } from "./SurefireTestCase";
 
 export default class SurefireParser extends ReportParser<SurefireReport> {
   private testCase = new SurefireTestCase();

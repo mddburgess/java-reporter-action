@@ -1,18 +1,16 @@
 import CheckResult from "../check/result";
 import { RunCondition } from "../check/types";
 import { configureTable } from "../common/table";
-import { AnnotationLevel, CheckAnnotation, CheckConclusion } from "../github/types";
-import SurefireReport, { SurefireTestCase } from "./types";
-import { plural } from "../common/utils";
-import { flatMap } from "lodash";
+import { CheckAnnotation, CheckConclusion } from "../github/types";
+import SurefireReport from "./SurefireReport";
+import { flatMap, plural } from "../common/utils";
 
 export default class SurefireResult extends CheckResult {
   private readonly aggregate: SurefireReport;
 
   public constructor(
     private readonly runCondition: RunCondition,
-    private readonly reports: SurefireReport[],
-    private readonly classpath: string[]
+    private readonly reports: SurefireReport[]
   ) {
     super();
     this.aggregate = this.reports.reduce(aggregateReport);
@@ -70,28 +68,7 @@ export default class SurefireResult extends CheckResult {
   }
 
   public get annotations(): CheckAnnotation[] {
-    return flatMap(this.reports, (report) => this.annotateReport(report));
-  }
-
-  private annotateReport(report: SurefireReport): CheckAnnotation[] {
-    return report.testCases.map((testCase) => this.annotateTestCase(testCase));
-  }
-
-  private annotateTestCase(testCase: SurefireTestCase): CheckAnnotation {
-    const line = resolveLine(testCase);
-    return {
-      path: this.resolvePath(testCase.path) ?? testCase.className,
-      start_line: line,
-      end_line: line,
-      annotation_level: resolveAnnotationLevel(testCase),
-      message: resolveMessage(testCase),
-      title: resolveTitle(testCase),
-      raw_details: testCase.stackTrace,
-    };
-  }
-
-  private resolvePath(path: string): string | undefined {
-    return this.classpath.filter((cp) => cp.endsWith(path))[0];
+    return flatMap(this.reports, (report) => report.annotations);
   }
 }
 
@@ -104,40 +81,3 @@ const aggregateReport = (acc: SurefireReport, curr: SurefireReport): SurefireRep
     acc.skipped + curr.skipped,
     []
   );
-
-export const resolveLine = (testCase: SurefireTestCase): number => {
-  if (testCase.stackTrace) {
-    const trace = testCase.stackTrace
-      .split("\n")
-      .filter((line) => line.includes(testCase.className))
-      .pop();
-    if (trace) {
-      const match = RegExp(".*:(\\d+)").exec(trace);
-      return Number(match ? match[1] : 1);
-    }
-  }
-  return 1;
-};
-
-const resolveAnnotationLevel = (testCase: SurefireTestCase): AnnotationLevel => {
-  switch (testCase.result) {
-    case "failure":
-    case "error":
-      return "failure";
-    case "skipped":
-      return "notice";
-    default:
-      throw Error();
-  }
-};
-
-const resolveMessage = (testCase: SurefireTestCase): string =>
-  testCase.stackTrace ?? testCase.message ?? `Test ${testCase.result}`;
-
-export const resolveTitle = (testCase: SurefireTestCase): string => {
-  if (testCase.testName) {
-    return `Test ${testCase.result}: ${testCase.simpleClassName}.${testCase.testName}`;
-  } else {
-    return `Test ${testCase.result}: ${testCase.simpleClassName}`;
-  }
-};

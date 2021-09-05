@@ -1,12 +1,12 @@
 import { RunCondition } from "../../check/types";
 import SurefireParser from "../parser";
-import SurefireResult, { resolveLine, resolveTitle } from "../result";
-import SurefireReport, { SurefireTestCase } from "../types";
+import SurefireResult from "../result";
+import SurefireReport from "../SurefireReport";
 
 describe("SurefireResult", () => {
   it("can handle an empty Surefire report", () => {
     const report = new SurefireReport();
-    const result = new SurefireResult(RunCondition.autodetect, [report], []);
+    const result = new SurefireResult(RunCondition.autodetect, [report]);
 
     expect(result.shouldCompleteCheck()).toBe(true);
     expect(result.conclusion).toBe("success");
@@ -20,50 +20,12 @@ describe("SurefireResult", () => {
     const report = new SurefireParser("src/surefire/__tests__/__fixtures__/v3/junit5.xml").read();
     expect(report).toBeDefined();
 
-    const result = new SurefireResult(RunCondition.autodetect, [report!], []); // eslint-disable-line
+    const result = new SurefireResult(RunCondition.autodetect, [report!]); // eslint-disable-line
     expect(result.shouldCompleteCheck()).toBe(true);
     expect(result.conclusion).toBe("failure");
     expect(result.title).toBe("6 tests failed");
     expect(result.summary).toMatchSnapshot();
     expect(result.text).toMatchSnapshot();
     expect(result.annotations).toMatchSnapshot();
-  });
-});
-
-describe("resolveLine()", () => {
-  it("handles an ordinary test stacktrace", () => {
-    const testCase = new SurefireTestCase(
-      "org.example.ClassTest",
-      "testName",
-      "failure",
-      "",
-      "java.lang.RuntimeException: Error message\n" +
-        "\tat org.example.ClassTest.testName(ClassName.java:42)"
-    );
-    expect(resolveLine(testCase)).toBe(42);
-  });
-
-  it("handles a nested test stacktrace", () => {
-    const testCase = new SurefireTestCase(
-      "org.example.ClassTest$NestedTest",
-      "testName",
-      "failure",
-      "",
-      "java.lang.RuntimeException: Error message\n" +
-        "\tat org.example.ClassTest$NestedTest.testName(ClassName.java:42)"
-    );
-    expect(resolveLine(testCase)).toBe(42);
-  });
-});
-
-describe("resolveTitle()", () => {
-  it("handles a test case with a test name", () => {
-    const testCase = new SurefireTestCase("ClassName", "testName", "failure");
-    expect(resolveTitle(testCase)).toBe("Test failure: ClassName.testName");
-  });
-
-  it("handles a test case with a blank test name", () => {
-    const testCase = new SurefireTestCase("ClassName", "", "failure");
-    expect(resolveTitle(testCase)).toBe("Test failure: ClassName");
   });
 });

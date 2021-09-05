@@ -9,6 +9,7 @@ SurefireReport {
   "testCases": Array [
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Assertion message expected:<5> but was:<4>",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: Assertion message expected:<5> but was:<4>
@@ -17,6 +18,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException
@@ -25,6 +27,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError
@@ -33,6 +36,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Error message",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException: Error message
@@ -41,6 +45,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Ignore message",
       "result": "skipped",
       "stackTrace": undefined,
@@ -48,6 +53,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Assumption message",
       "result": "skipped",
       "stackTrace": "org.junit.AssumptionViolatedException: Assumption message
@@ -56,6 +62,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Failure message",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: Failure message
@@ -64,6 +71,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "expected:<5> but was:<4>",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: expected:<5> but was:<4>
@@ -72,6 +80,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": undefined,
@@ -79,6 +88,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "got: <false>, expected: is <true>",
       "result": "skipped",
       "stackTrace": "org.junit.AssumptionViolatedException: got: <false>, expected: is <true>
@@ -99,6 +109,7 @@ SurefireReport {
   "testCases": Array [
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Assertion message ==> expected: <5> but was: <4>",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: Assertion message ==> expected: <5> but was: <4>
@@ -107,6 +118,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException
@@ -115,6 +127,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: 
@@ -123,6 +136,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Disable message",
       "result": "skipped",
       "stackTrace": undefined,
@@ -130,6 +144,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Error message",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException: Error message
@@ -138,6 +153,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Assumption failed: Assumption message",
       "result": "skipped",
       "stackTrace": "org.opentest4j.TestAbortedException: Assumption failed: Assumption message
@@ -146,6 +162,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Failure message",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: Failure message
@@ -154,6 +171,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "public void org.example.JUnit5Test.testDisabled() is @Disabled",
       "result": "skipped",
       "stackTrace": undefined,
@@ -161,6 +179,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "expected: <5> but was: <4>",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: expected: <5> but was: <4>
@@ -169,6 +188,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Assumption failed: assumption is not true",
       "result": "skipped",
       "stackTrace": "org.opentest4j.TestAbortedException: Assumption failed: assumption is not true
@@ -189,6 +209,7 @@ SurefireReport {
   "testCases": Array [
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: Assertion message expected:<5> but was:<4>
@@ -197,6 +218,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException
@@ -205,6 +227,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError
@@ -213,6 +236,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException: Error message
@@ -221,6 +245,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Ignore message",
       "result": "skipped",
       "stackTrace": undefined,
@@ -228,6 +253,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": "org.junit.AssumptionViolatedException: Assumption message
@@ -236,6 +262,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: Failure message
@@ -244,6 +271,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: expected:<5> but was:<4>
@@ -252,6 +280,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": undefined,
@@ -259,6 +288,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": "org.junit.AssumptionViolatedException: got: <false>, expected: is <true>
@@ -279,6 +309,7 @@ SurefireReport {
   "testCases": Array [
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: Assertion message ==> expected: <5> but was: <4>
@@ -287,6 +318,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException
@@ -295,6 +327,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: 
@@ -303,6 +336,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Disable message",
       "result": "skipped",
       "stackTrace": undefined,
@@ -310,6 +344,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException: Error message
@@ -318,6 +353,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": "org.opentest4j.TestAbortedException: Assumption failed: Assumption message
@@ -326,6 +362,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: Failure message
@@ -334,6 +371,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "public void org.example.JUnit5Test.testDisabled() is @Disabled",
       "result": "skipped",
       "stackTrace": undefined,
@@ -341,6 +379,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: expected: <5> but was: <4>
@@ -349,6 +388,7 @@ SurefireReport {
     },
     SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": "org.opentest4j.TestAbortedException: Assumption failed: assumption is not true

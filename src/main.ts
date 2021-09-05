@@ -10,7 +10,7 @@ const main = async () => {
   const classpath = await loadClasspath();
 
   const checks = [
-    new SurefireCheck(classpath),
+    new SurefireCheck(),
     new PmdCheck(),
     new CpdCheck(),
     new SpotbugsCheck(classpath),
