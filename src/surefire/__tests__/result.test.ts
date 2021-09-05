@@ -1,6 +1,6 @@
 import { RunCondition } from "../../check/types";
 import SurefireParser from "../parser";
-import SurefireResult, { resolveTitle } from "../result";
+import SurefireResult, { resolveLine, resolveTitle } from "../result";
 import SurefireReport, { SurefireTestCase } from "../types";
 
 describe("SurefireResult", () => {
@@ -27,6 +27,32 @@ describe("SurefireResult", () => {
     expect(result.summary).toMatchSnapshot();
     expect(result.text).toMatchSnapshot();
     expect(result.annotations).toMatchSnapshot();
+  });
+});
+
+describe("resolveLine()", () => {
+  it("handles an ordinary test stacktrace", () => {
+    const testCase = new SurefireTestCase(
+      "org.example.ClassTest",
+      "testName",
+      "failure",
+      "",
+      "java.lang.RuntimeException: Error message\n" +
+        "\tat org.example.ClassTest.testName(ClassName.java:42)"
+    );
+    expect(resolveLine(testCase)).toBe(42);
+  });
+
+  it("handles a nested test stacktrace", () => {
+    const testCase = new SurefireTestCase(
+      "org.example.ClassTest$NestedTest",
+      "testName",
+      "failure",
+      "",
+      "java.lang.RuntimeException: Error message\n" +
+        "\tat org.example.ClassTest$NestedTest.testName(ClassName.java:42)"
+    );
+    expect(resolveLine(testCase)).toBe(42);
   });
 });
 

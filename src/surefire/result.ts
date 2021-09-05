@@ -105,13 +105,15 @@ const aggregateReport = (acc: SurefireReport, curr: SurefireReport): SurefireRep
     []
   );
 
-const resolveLine = (testCase: SurefireTestCase): number => {
+export const resolveLine = (testCase: SurefireTestCase): number => {
   if (testCase.stackTrace) {
-    const stackFrames = RegExp(`${testCase.className}.*:\\d+`).exec(testCase.stackTrace);
-    if (stackFrames) {
-      const [stackFrame] = stackFrames.slice(-1);
-      const [, line] = stackFrame.split(":");
-      return Number(line);
+    const trace = testCase.stackTrace
+      .split("\n")
+      .filter((line) => line.includes(testCase.className))
+      .pop();
+    if (trace) {
+      const match = RegExp(".*:(\\d+)").exec(trace);
+      return Number(match ? match[1] : 1);
     }
   }
   return 1;

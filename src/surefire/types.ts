@@ -33,7 +33,9 @@ export class SurefireTestCase {
   }
 
   public get path(): string {
-    return `${this.className.split(".").join("/")}.java`;
+    const idx = this.className.lastIndexOf("$");
+    const topLevelClass = idx === -1 ? this.className : this.className.slice(0, idx);
+    return `${topLevelClass.split(".").join("/")}.java`;
   }
 }
 

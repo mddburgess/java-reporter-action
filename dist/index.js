@@ -1486,7 +1486,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.resolveTitle = void 0;
+exports.resolveTitle = exports.resolveLine = void 0;
 const result_1 = __importDefault(__nccwpck_require__(1009));
 const types_1 = __nccwpck_require__(2084);
 const table_1 = __nccwpck_require__(9090);
@@ -1556,7 +1556,7 @@ class SurefireResult extends result_1.default {
     }
     annotateTestCase(testCase) {
         var _a;
-        const line = resolveLine(testCase);
+        const line = (0, exports.resolveLine)(testCase);
         return {
             path: (_a = this.resolvePath(testCase.path)) !== null && _a !== void 0 ? _a : testCase.className,
             start_line: line,
@@ -1575,15 +1575,18 @@ exports.default = SurefireResult;
 const aggregateReport = (acc, curr) => new types_2.default(acc.name, acc.tests + curr.tests, acc.failures + curr.failures, acc.errors + curr.errors, acc.skipped + curr.skipped, []);
 const resolveLine = (testCase) => {
     if (testCase.stackTrace) {
-        const stackFrames = RegExp(`${testCase.className}.*:\\d+`).exec(testCase.stackTrace);
-        if (stackFrames) {
-            const [stackFrame] = stackFrames.slice(-1);
-            const [, line] = stackFrame.split(":");
-            return Number(line);
+        const trace = testCase.stackTrace
+            .split("\n")
+            .filter((line) => line.includes(testCase.className))
+            .pop();
+        if (trace) {
+            const match = RegExp(".*:(\\d+)").exec(trace);
+            return Number(match ? match[1] : 1);
         }
     }
     return 1;
 };
+exports.resolveLine = resolveLine;
 const resolveAnnotationLevel = (testCase) => {
     switch (testCase.result) {
         case "failure":
@@ -1647,7 +1650,9 @@ class SurefireTestCase {
         return this.className.slice(idx);
     }
     get path() {
-        return `${this.className.split(".").join("/")}.java`;
+        const idx = this.className.lastIndexOf("$");
+        const topLevelClass = idx === -1 ? this.className : this.className.slice(0, idx);
+        return `${topLevelClass.split(".").join("/")}.java`;
     }
 }
 exports.SurefireTestCase = SurefireTestCase;
