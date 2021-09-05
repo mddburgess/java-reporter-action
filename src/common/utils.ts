@@ -11,6 +11,9 @@ export const chunk = <T>(array: T[] | undefined, size: number): T[][] => {
   return chunks;
 };
 
+export const flatMap = <T, R>(array: T[], fn: (item: T) => R[]): R[] =>
+  array.map(fn).reduce((acc, curr) => acc.concat(...curr), []);
+
 export const plural = (quantity: number, noun: string): string =>
   quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
 

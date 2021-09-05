@@ -1,84 +1,94 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`SurefireParser can parse a Surefire v2 report for JUnit 4 1`] = `
-Object {
+SurefireReport {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit4Test",
   "skipped": 4,
   "testCases": Array [
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Assertion message expected:<5> but was:<4>",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: Assertion message expected:<5> but was:<4>
 	at org.example.JUnit4Test.testAssertionFailureWithMessage(JUnit4Test.java:26)",
       "testName": "testAssertionFailureWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException
 	at org.example.JUnit4Test.testError(JUnit4Test.java:41)",
       "testName": "testError",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError
 	at org.example.JUnit4Test.testFail(JUnit4Test.java:31)",
       "testName": "testFail",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Error message",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException: Error message
 	at org.example.JUnit4Test.testErrorWithMessage(JUnit4Test.java:46)",
       "testName": "testErrorWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Ignore message",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testIgnoredWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Assumption message",
       "result": "skipped",
       "stackTrace": "org.junit.AssumptionViolatedException: Assumption message
 	at org.example.JUnit4Test.testSkippedWithMessage(JUnit4Test.java:56)",
       "testName": "testSkippedWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Failure message",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: Failure message
 	at org.example.JUnit4Test.testFailWithMessage(JUnit4Test.java:36)",
       "testName": "testFailWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "expected:<5> but was:<4>",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: expected:<5> but was:<4>
 	at org.example.JUnit4Test.testAssertionFailure(JUnit4Test.java:20)",
       "testName": "testAssertionFailure",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testIgnored",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "got: <false>, expected: is <true>",
       "result": "skipped",
       "stackTrace": "org.junit.AssumptionViolatedException: got: <false>, expected: is <true>
@@ -91,84 +101,94 @@ Object {
 `;
 
 exports[`SurefireParser can parse a Surefire v2 report for JUnit 5 1`] = `
-Object {
+SurefireReport {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit5Test",
   "skipped": 4,
   "testCases": Array [
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Assertion message ==> expected: <5> but was: <4>",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: Assertion message ==> expected: <5> but was: <4>
 	at org.example.JUnit5Test.testAssertionFailureWithMessage(JUnit5Test.java:28)",
       "testName": "testAssertionFailureWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException
 	at org.example.JUnit5Test.testError(JUnit5Test.java:43)",
       "testName": "testError",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: 
 	at org.example.JUnit5Test.testFail(JUnit5Test.java:33)",
       "testName": "testFail",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Disable message",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testDisabledWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Error message",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException: Error message
 	at org.example.JUnit5Test.testErrorWithMessage(JUnit5Test.java:48)",
       "testName": "testErrorWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Assumption failed: Assumption message",
       "result": "skipped",
       "stackTrace": "org.opentest4j.TestAbortedException: Assumption failed: Assumption message
 	at org.example.JUnit5Test.testSkippedWithMessage(JUnit5Test.java:58)",
       "testName": "testSkippedWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Failure message",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: Failure message
 	at org.example.JUnit5Test.testFailWithMessage(JUnit5Test.java:38)",
       "testName": "testFailWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "public void org.example.JUnit5Test.testDisabled() is @Disabled",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testDisabled",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "expected: <5> but was: <4>",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: expected: <5> but was: <4>
 	at org.example.JUnit5Test.testAssertionFailure(JUnit5Test.java:22)",
       "testName": "testAssertionFailure",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Assumption failed: assumption is not true",
       "result": "skipped",
       "stackTrace": "org.opentest4j.TestAbortedException: Assumption failed: assumption is not true
@@ -181,84 +201,94 @@ Object {
 `;
 
 exports[`SurefireParser can parse a Surefire v3 report for JUnit 4 1`] = `
-Object {
+SurefireReport {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit4Test",
   "skipped": 4,
   "testCases": Array [
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: Assertion message expected:<5> but was:<4>
 	at org.example.JUnit4Test.testAssertionFailureWithMessage(JUnit4Test.java:26)",
       "testName": "testAssertionFailureWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException
 	at org.example.JUnit4Test.testError(JUnit4Test.java:41)",
       "testName": "testError",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError
 	at org.example.JUnit4Test.testFail(JUnit4Test.java:31)",
       "testName": "testFail",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException: Error message
 	at org.example.JUnit4Test.testErrorWithMessage(JUnit4Test.java:46)",
       "testName": "testErrorWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "Ignore message",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testIgnoredWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": "org.junit.AssumptionViolatedException: Assumption message
 	at org.example.JUnit4Test.testSkippedWithMessage(JUnit4Test.java:56)",
       "testName": "testSkippedWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: Failure message
 	at org.example.JUnit4Test.testFailWithMessage(JUnit4Test.java:36)",
       "testName": "testFailWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "java.lang.AssertionError: expected:<5> but was:<4>
 	at org.example.JUnit4Test.testAssertionFailure(JUnit4Test.java:20)",
       "testName": "testAssertionFailure",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testIgnored",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit4Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": "org.junit.AssumptionViolatedException: got: <false>, expected: is <true>
@@ -271,84 +301,94 @@ Object {
 `;
 
 exports[`SurefireParser can parse a Surefire v3 report for JUnit 5 1`] = `
-Object {
+SurefireReport {
   "errors": 2,
   "failures": 4,
   "name": "org.example.JUnit5Test",
   "skipped": 4,
   "testCases": Array [
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: Assertion message ==> expected: <5> but was: <4>
 	at org.example.JUnit5Test.testAssertionFailureWithMessage(JUnit5Test.java:28)",
       "testName": "testAssertionFailureWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException
 	at org.example.JUnit5Test.testError(JUnit5Test.java:43)",
       "testName": "testError",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: 
 	at org.example.JUnit5Test.testFail(JUnit5Test.java:33)",
       "testName": "testFail",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "Disable message",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testDisabledWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "error",
       "stackTrace": "java.lang.RuntimeException: Error message
 	at org.example.JUnit5Test.testErrorWithMessage(JUnit5Test.java:48)",
       "testName": "testErrorWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": "org.opentest4j.TestAbortedException: Assumption failed: Assumption message
 	at org.example.JUnit5Test.testSkippedWithMessage(JUnit5Test.java:58)",
       "testName": "testSkippedWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: Failure message
 	at org.example.JUnit5Test.testFailWithMessage(JUnit5Test.java:38)",
       "testName": "testFailWithMessage",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "public void org.example.JUnit5Test.testDisabled() is @Disabled",
       "result": "skipped",
       "stackTrace": undefined,
       "testName": "testDisabled",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "failure",
       "stackTrace": "org.opentest4j.AssertionFailedError: expected: <5> but was: <4>
 	at org.example.JUnit5Test.testAssertionFailure(JUnit5Test.java:22)",
       "testName": "testAssertionFailure",
     },
-    Object {
+    SurefireTestCase {
       "className": "org.example.JUnit5Test",
+      "line": 0,
       "message": "",
       "result": "skipped",
       "stackTrace": "org.opentest4j.TestAbortedException: Assumption failed: assumption is not true

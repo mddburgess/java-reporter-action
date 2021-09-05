@@ -307,15 +307,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.loadClasspath = void 0;
+exports.findClasspath = exports.loadClasspath = void 0;
+const core = __importStar(__nccwpck_require__(2186));
 const glob = __importStar(__nccwpck_require__(8090));
+const classpath = [];
 const loadClasspath = () => __awaiter(void 0, void 0, void 0, function* () {
-    const globber = yield glob.create("**/*.java");
-    const searchPath = globber.getSearchPaths()[0];
-    const javaPaths = yield globber.glob();
-    return javaPaths.map((path) => path.slice(searchPath.length + 1));
+    if (classpath.length === 0) {
+        core.info("Loading classpath");
+        const globber = yield glob.create("**/*.java");
+        const searchPath = globber.getSearchPaths()[0];
+        const javaPaths = yield globber.glob();
+        classpath.push(...javaPaths.map((path) => path.slice(searchPath.length + 1)));
+        core.startGroup("Classpath loaded");
+        classpath.forEach(core.info);
+        core.endGroup();
+    }
+    return classpath;
 });
 exports.loadClasspath = loadClasspath;
+const findClasspath = (path) => classpath.filter((cp) => cp.endsWith(path))[0];
+exports.findClasspath = findClasspath;
 
 
 /***/ }),
@@ -438,6 +449,40 @@ exports.default = ReportParser;
 
 /***/ }),
 
+/***/ 9090:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.configureTable = void 0;
+const lodash_1 = __nccwpck_require__(250);
+var Justify;
+(function (Justify) {
+    Justify["left"] = ":-";
+    Justify["center"] = ":-:";
+    Justify["right"] = "-:";
+})(Justify || (Justify = {}));
+const configureTable = (options) => (objects) => {
+    const dict = (0, lodash_1.groupBy)(objects, options.listBy);
+    const dict2 = (0, lodash_1.map)(dict, (value) => values((0, lodash_1.reduce)(value, options.reducer), options.columns));
+    return (0, lodash_1.join)([headers(options.columns), justifiers(options.columns), ...dict2], "\n");
+};
+exports.configureTable = configureTable;
+const headers = (columns) => `|${(0, lodash_1.join)(columns.map((column) => column.header), "|")}|`;
+const justifiers = (columns) => `|${(0, lodash_1.join)(columns.map((column) => Justify[column.justify]), "|")}|`;
+const values = (obj, columns) => {
+    if (obj === undefined) {
+        return undefined;
+    }
+    else {
+        return `|${(0, lodash_1.join)(columns.map((column) => column.value(obj)), "|")}|`;
+    }
+};
+
+
+/***/ }),
+
 /***/ 1855:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -447,7 +492,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.sum = exports.relativePath = exports.plural = exports.chunk = void 0;
+exports.sum = exports.relativePath = exports.plural = exports.flatMap = exports.chunk = void 0;
 const path_1 = __importDefault(__nccwpck_require__(5622));
 const chunk = (array, size) => {
     if (array === undefined || array.length === 0) {
@@ -460,6 +505,8 @@ const chunk = (array, size) => {
     return chunks;
 };
 exports.chunk = chunk;
+const flatMap = (array, fn) => array.map(fn).reduce((acc, curr) => acc.concat(...curr), []);
+exports.flatMap = flatMap;
 const plural = (quantity, noun) => quantity === 1 ? `${quantity} ${noun}` : `${quantity} ${noun}s`;
 exports.plural = plural;
 const relativePath = (absolutePath) => process.env.GITHUB_WORKSPACE
@@ -1323,6 +1370,126 @@ exports.default = SpotbugsResult;
 
 /***/ }),
 
+/***/ 4405:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const files_1 = __nccwpck_require__(9337);
+class SurefireReport {
+    constructor(name = "", tests = 0, failures = 0, errors = 0, skipped = 0, testCases = []) {
+        this.name = name;
+        this.tests = tests;
+        this.failures = failures;
+        this.errors = errors;
+        this.skipped = skipped;
+        this.testCases = testCases;
+    }
+    get passed() {
+        return this.tests - this.failures - this.errors - this.skipped;
+    }
+    get moduleName() {
+        const idx = this.name.lastIndexOf("$");
+        const topLevelClass = idx === -1 ? this.name : this.name.slice(0, idx);
+        const path = (0, files_1.findClasspath)(`${topLevelClass.split(".").join("/")}.java`);
+        if (path) {
+            const match = /(.*)\/src\/test\/java\/.*/.exec(path);
+            return match ? match[1] : "";
+        }
+        return "";
+    }
+    get packageName() {
+        const idx = this.name.lastIndexOf(".");
+        return idx === -1 ? "<no package>" : this.name.slice(0, idx);
+    }
+    get annotations() {
+        return this.testCases.map((testCase) => testCase.annotation);
+    }
+}
+exports.default = SurefireReport;
+
+
+/***/ }),
+
+/***/ 183:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const files_1 = __nccwpck_require__(9337);
+class SurefireTestCase {
+    constructor(className = "", testName = "", result = "success", message, stackTrace) {
+        this.className = className;
+        this.testName = testName;
+        this.result = result;
+        this.message = message;
+        this.stackTrace = stackTrace;
+        this.line = 0;
+    }
+    get simpleClassName() {
+        const idx = this.className.lastIndexOf(".") + 1;
+        return this.className.slice(idx);
+    }
+    get annotation() {
+        var _a;
+        return {
+            path: (_a = (0, files_1.findClasspath)(this.annotationPath)) !== null && _a !== void 0 ? _a : this.className,
+            start_line: this.annotationLine,
+            end_line: this.annotationLine,
+            annotation_level: this.annotationLevel,
+            message: this.annotationMessage,
+            title: this.annotationTitle,
+            raw_details: this.stackTrace,
+        };
+    }
+    get annotationPath() {
+        const idx = this.className.lastIndexOf("$");
+        const topLevelClass = idx === -1 ? this.className : this.className.slice(0, idx);
+        return `${topLevelClass.split(".").join("/")}.java`;
+    }
+    get annotationLine() {
+        var _a;
+        if (this.line === 0) {
+            this.line = 1;
+            const trace = (_a = this.stackTrace) === null || _a === void 0 ? void 0 : _a.split("\n").filter((st) => st.includes(this.className)).pop();
+            if (trace) {
+                const match = /.*:(\d+)/.exec(trace);
+                this.line = Number(match ? match[1] : 1);
+            }
+        }
+        return this.line;
+    }
+    get annotationLevel() {
+        switch (this.result) {
+            case "failure":
+            case "error":
+                return "failure";
+            case "skipped":
+                return "notice";
+            default:
+                throw Error();
+        }
+    }
+    get annotationMessage() {
+        var _a, _b;
+        return (_b = (_a = this.stackTrace) !== null && _a !== void 0 ? _a : this.message) !== null && _b !== void 0 ? _b : `Test ${this.result}`;
+    }
+    get annotationTitle() {
+        if (this.testName) {
+            return `Test ${this.result}: ${this.simpleClassName}.${this.testName}`;
+        }
+        else {
+            return `Test ${this.result}: ${this.simpleClassName}`;
+        }
+    }
+}
+exports.default = SurefireTestCase;
+
+
+/***/ }),
+
 /***/ 4624:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -1363,21 +1530,12 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const html_entities_1 = __nccwpck_require__(2589);
 const saxophone_ts_1 = __nccwpck_require__(3902);
 const parser_1 = __importDefault(__nccwpck_require__(3234));
+const SurefireReport_1 = __importDefault(__nccwpck_require__(4405));
+const SurefireTestCase_1 = __importDefault(__nccwpck_require__(183));
 class SurefireParser extends parser_1.default {
     constructor(reportPath) {
-        super({
-            name: "",
-            tests: 0,
-            failures: 0,
-            errors: 0,
-            skipped: 0,
-            testCases: [],
-        }, reportPath);
-        this.testCase = {
-            className: "",
-            testName: "",
-            result: "success",
-        };
+        super(new SurefireReport_1.default(), reportPath);
+        this.testCase = new SurefireTestCase_1.default();
     }
     onTagOpen(tag) {
         switch (tag.name) {
@@ -1418,11 +1576,7 @@ class SurefireParser extends parser_1.default {
         }
         this.testCase.stackTrace = (_a = this.testCase.stackTrace) === null || _a === void 0 ? void 0 : _a.trim();
         this.report.testCases.push(this.testCase);
-        this.testCase = {
-            className: "",
-            testName: "",
-            result: "success",
-        };
+        this.testCase = new SurefireTestCase_1.default();
     }
     onText(tag) {
         var _a;
@@ -1446,26 +1600,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+const lodash_1 = __nccwpck_require__(250);
 const result_1 = __importDefault(__nccwpck_require__(1009));
 const types_1 = __nccwpck_require__(2084);
+const table_1 = __nccwpck_require__(9090);
 const utils_1 = __nccwpck_require__(1855);
-const lodash_1 = __nccwpck_require__(250);
+const SurefireReport_1 = __importDefault(__nccwpck_require__(4405));
 class SurefireResult extends result_1.default {
     constructor(runCondition, reports) {
         super();
         this.runCondition = runCondition;
         this.reports = reports;
-        this.aggregate = SurefireResult.aggregate(reports);
-    }
-    static aggregate(reports) {
-        return reports.reduce((summary, report) => ({
-            name: "",
-            tests: summary.tests + report.tests,
-            failures: summary.failures + report.failures,
-            errors: summary.errors + report.errors,
-            skipped: summary.skipped + report.skipped,
-            testCases: [],
-        }));
+        this.aggregate = this.reports.reduce(aggregateReport);
     }
     shouldCompleteCheck() {
         return this.runCondition >= types_1.RunCondition.expected || this.reports.length > 0;
@@ -1490,80 +1636,39 @@ class SurefireResult extends result_1.default {
         return `${(0, utils_1.plural)(passed, "test")} passed`;
     }
     get summary() {
-        const passed = this.aggregate.tests -
-            this.aggregate.failures -
-            this.aggregate.errors -
-            this.aggregate.skipped;
         return [
             `|Tests run|${this.aggregate.tests}|`,
-            "|:--|--:|",
-            `|:green_square: Passed|${passed}|`,
-            `|:orange_square: Failures|${this.aggregate.failures}|`,
-            `|:red_square: Errors|${this.aggregate.errors}|`,
-            `|:black_large_square: Skipped|${this.aggregate.skipped}|`,
+            "|:-|-:|",
+            `|Passed|${this.aggregate.passed}|`,
+            `|Failures|${this.aggregate.failures}|`,
+            `|Errors|${this.aggregate.errors}|`,
+            `|Skipped|${this.aggregate.skipped}|`,
         ].join("\n");
     }
     get text() {
-        return [
-            "|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|",
-            "|:--|--:|--:|--:|--:|--:|",
-            ...this.reports.map((report) => this.reportText(report)),
-        ].join("\n");
-    }
-    reportText(report) {
-        const passed = report.tests - report.failures - report.errors - report.skipped;
-        return `|\`\`${report.name}\`\`|${report.tests}|${passed}|${report.failures}|${report.errors}|${report.skipped}|`;
+        const table = (0, table_1.configureTable)({
+            listBy: (report) => report.packageName,
+            reducer: aggregateReport,
+            columns: [
+                { header: "Package", justify: "left", value: (report) => `\`${report.packageName}\`` },
+                { header: "Tests", justify: "right", value: (report) => `${report.tests}` },
+                { header: "Passed", justify: "right", value: (report) => `${report.passed}` },
+                { header: "Failures", justify: "right", value: (report) => `${report.failures}` },
+                { header: "Errors", justify: "right", value: (report) => `${report.errors}` },
+                { header: "Skipped", justify: "right", value: (report) => `${report.skipped}` },
+            ],
+        });
+        const reportsByModule = (0, lodash_1.groupBy)(this.reports, "moduleName");
+        const modules = (0, lodash_1.keys)(reportsByModule).sort();
+        const tables = modules.map((module) => `### ${module}\n${table(reportsByModule[module])}`);
+        return tables.join("\n");
     }
     get annotations() {
-        return (0, lodash_1.flatMap)(this.reports, (report) => this.annotateReport(report));
-    }
-    annotateReport(report) {
-        return report.testCases.map((testCase) => this.annotateTestCase(testCase));
-    }
-    annotateTestCase(testCase) {
-        const line = this.resolveLine(testCase);
-        return {
-            path: testCase.className,
-            start_line: line,
-            end_line: line,
-            annotation_level: this.resolveAnnotationLevel(testCase),
-            message: this.resolveMessage(testCase),
-            title: this.resolveTitle(testCase),
-            raw_details: testCase.stackTrace,
-        };
-    }
-    resolveLine(testCase) {
-        if (testCase.stackTrace) {
-            const stackFrames = RegExp(`${testCase.className}.*:\\d+`).exec(testCase.stackTrace);
-            if (stackFrames) {
-                const [stackFrame] = stackFrames.slice(-1);
-                const [, line] = stackFrame.split(":");
-                return Number(line);
-            }
-        }
-        return 1;
-    }
-    resolveAnnotationLevel(testCase) {
-        switch (testCase.result) {
-            case "failure":
-            case "error":
-                return "failure";
-            case "skipped":
-                return "notice";
-            default:
-                throw Error();
-        }
-    }
-    resolveMessage(testCase) {
-        var _a, _b;
-        return (_b = (_a = testCase.stackTrace) !== null && _a !== void 0 ? _a : testCase.message) !== null && _b !== void 0 ? _b : `Test ${testCase.result}`;
-    }
-    resolveTitle(testCase) {
-        const [simpleClassName] = testCase.className.split(".").slice(-1);
-        return `Test ${testCase.result}: ${simpleClassName}.${testCase.testName}`;
+        return (0, utils_1.flatMap)(this.reports, (report) => report.annotations);
     }
 }
 exports.default = SurefireResult;
+const aggregateReport = (acc, curr) => new SurefireReport_1.default(acc.name, acc.tests + curr.tests, acc.failures + curr.failures, acc.errors + curr.errors, acc.skipped + curr.skipped, []);
 
 
 /***/ }),

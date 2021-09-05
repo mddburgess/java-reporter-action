@@ -2,17 +2,18 @@
 
 exports[`SurefireResult can handle a real Surefire report 1`] = `
 "|Tests run|11|
-|:--|--:|
-|:green_square: Passed|1|
-|:orange_square: Failures|4|
-|:red_square: Errors|2|
-|:black_large_square: Skipped|4|"
+|:-|-:|
+|Passed|1|
+|Failures|4|
+|Errors|2|
+|Skipped|4|"
 `;
 
 exports[`SurefireResult can handle a real Surefire report 2`] = `
-"|Test suite|Tests|:green_square:|:orange_square:|:red_square:|:black_large_square:|
-|:--|--:|--:|--:|--:|--:|
-|\`\`org.example.JUnit5Test\`\`|11|1|4|2|4|"
+"### 
+|Package|Tests|Passed|Failures|Errors|Skipped|
+|:-|-:|-:|-:|-:|-:|
+|\`org.example\`|11|1|4|2|4|"
 `;
 
 exports[`SurefireResult can handle a real Surefire report 3`] = `

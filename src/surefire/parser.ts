@@ -7,27 +7,14 @@ import {
   TextNode,
 } from "saxophone-ts/dist/types/src/static/nodes";
 import ReportParser from "../common/parser";
-import SurefireReport, { SurefireTestCase, SurefireTestResult } from "./types";
+import SurefireReport from "./SurefireReport";
+import SurefireTestCase, { SurefireTestResult } from "./SurefireTestCase";
 
 export default class SurefireParser extends ReportParser<SurefireReport> {
-  private testCase: SurefireTestCase = {
-    className: "",
-    testName: "",
-    result: "success",
-  };
+  private testCase = new SurefireTestCase();
 
   public constructor(reportPath: string) {
-    super(
-      {
-        name: "",
-        tests: 0,
-        failures: 0,
-        errors: 0,
-        skipped: 0,
-        testCases: [],
-      },
-      reportPath
-    );
+    super(new SurefireReport(), reportPath);
   }
 
   protected onTagOpen(tag: TagOpenNode): void {
@@ -73,11 +60,7 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
 
     this.testCase.stackTrace = this.testCase.stackTrace?.trim();
     this.report.testCases.push(this.testCase);
-    this.testCase = {
-      className: "",
-      testName: "",
-      result: "success",
-    };
+    this.testCase = new SurefireTestCase();
   }
 
   protected onText(tag: TextNode | CDATANode): void {

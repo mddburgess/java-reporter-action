@@ -1,4 +1,4 @@
-import SurefireReport from "./types";
+import SurefireReport from "./SurefireReport";
 import Check from "../check";
 import SurefireParser from "./parser";
 import CheckResult from "../check/result";
