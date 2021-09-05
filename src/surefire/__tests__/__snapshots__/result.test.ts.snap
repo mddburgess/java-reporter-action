@@ -10,7 +10,8 @@ exports[`SurefireResult can handle a real Surefire report 1`] = `
 `;
 
 exports[`SurefireResult can handle a real Surefire report 2`] = `
-"|Package|Tests|Passed|Failures|Errors|Skipped|
+"### 
+|Package|Tests|Passed|Failures|Errors|Skipped|
 |:-|-:|-:|-:|-:|-:|
 |\`org.example\`|11|1|4|2|4|"
 `;

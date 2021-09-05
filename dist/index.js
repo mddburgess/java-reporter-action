@@ -1371,11 +1371,12 @@ exports.default = SpotbugsResult;
 /***/ }),
 
 /***/ 4405:
-/***/ ((__unused_webpack_module, exports) => {
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+const files_1 = __nccwpck_require__(9337);
 class SurefireReport {
     constructor(name = "", tests = 0, failures = 0, errors = 0, skipped = 0, testCases = []) {
         this.name = name;
@@ -1387,6 +1388,16 @@ class SurefireReport {
     }
     get passed() {
         return this.tests - this.failures - this.errors - this.skipped;
+    }
+    get moduleName() {
+        const idx = this.name.lastIndexOf("$");
+        const topLevelClass = idx === -1 ? this.name : this.name.slice(0, idx);
+        const path = (0, files_1.findClasspath)(`${topLevelClass.split(".").join("/")}.java`);
+        if (path) {
+            const match = RegExp("(.*)/src/test/java/.*").exec(path);
+            return match ? match[1] : "";
+        }
+        return "";
     }
     get packageName() {
         const idx = this.name.lastIndexOf(".");
@@ -1589,11 +1600,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+const lodash_1 = __nccwpck_require__(250);
 const result_1 = __importDefault(__nccwpck_require__(1009));
 const types_1 = __nccwpck_require__(2084);
 const table_1 = __nccwpck_require__(9090);
-const SurefireReport_1 = __importDefault(__nccwpck_require__(4405));
 const utils_1 = __nccwpck_require__(1855);
+const SurefireReport_1 = __importDefault(__nccwpck_require__(4405));
 class SurefireResult extends result_1.default {
     constructor(runCondition, reports) {
         super();
@@ -1646,7 +1658,10 @@ class SurefireResult extends result_1.default {
                 { header: "Skipped", justify: "right", value: (report) => `${report.skipped}` },
             ],
         });
-        return table(this.reports);
+        const reportsByModule = (0, lodash_1.groupBy)(this.reports, "moduleName");
+        const modules = (0, lodash_1.keys)(reportsByModule).sort();
+        const tables = modules.map((module) => `### ${module}\n${table(reportsByModule[module])}`);
+        return tables.join("\n");
     }
     get annotations() {
         return (0, utils_1.flatMap)(this.reports, (report) => report.annotations);

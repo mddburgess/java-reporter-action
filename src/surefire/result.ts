@@ -1,9 +1,10 @@
+import { groupBy, keys } from "lodash";
 import CheckResult from "../check/result";
 import { RunCondition } from "../check/types";
 import { configureTable } from "../common/table";
+import { flatMap, plural } from "../common/utils";
 import { CheckAnnotation, CheckConclusion } from "../github/types";
 import SurefireReport from "./SurefireReport";
-import { flatMap, plural } from "../common/utils";
 
 export default class SurefireResult extends CheckResult {
   private readonly aggregate: SurefireReport;
@@ -64,7 +65,12 @@ export default class SurefireResult extends CheckResult {
         { header: "Skipped", justify: "right", value: (report) => `${report.skipped}` },
       ],
     });
-    return table(this.reports);
+
+    const reportsByModule = groupBy(this.reports, "moduleName");
+    const modules = keys(reportsByModule).sort();
+    const tables = modules.map((module) => `### ${module}\n${table(reportsByModule[module])}`);
+
+    return tables.join("\n");
   }
 
   public get annotations(): CheckAnnotation[] {

@@ -1,3 +1,4 @@
+import { findClasspath } from "../common/files";
 import { CheckAnnotation } from "../github/types";
 import SurefireTestCase from "./SurefireTestCase";
 
@@ -13,6 +14,17 @@ export default class SurefireReport {
 
   public get passed(): number {
     return this.tests - this.failures - this.errors - this.skipped;
+  }
+
+  public get moduleName(): string {
+    const idx = this.name.lastIndexOf("$");
+    const topLevelClass = idx === -1 ? this.name : this.name.slice(0, idx);
+    const path = findClasspath(`${topLevelClass.split(".").join("/")}.java`);
+    if (path) {
+      const match = RegExp("(.*)/src/test/java/.*").exec(path);
+      return match ? match[1] : "";
+    }
+    return "";
   }
 
   public get packageName(): string {
