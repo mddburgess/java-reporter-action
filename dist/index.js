@@ -1394,7 +1394,7 @@ class SurefireReport {
         const topLevelClass = idx === -1 ? this.name : this.name.slice(0, idx);
         const path = (0, files_1.findClasspath)(`${topLevelClass.split(".").join("/")}.java`);
         if (path) {
-            const match = RegExp("(.*)/src/test/java/.*").exec(path);
+            const match = /(.*)\/src\/test\/java\/.*/.exec(path);
             return match ? match[1] : "";
         }
         return "";
@@ -1455,7 +1455,7 @@ class SurefireTestCase {
             this.line = 1;
             const trace = (_a = this.stackTrace) === null || _a === void 0 ? void 0 : _a.split("\n").filter((st) => st.includes(this.className)).pop();
             if (trace) {
-                const match = RegExp(".*:(\\d+)").exec(trace);
+                const match = /.*:(\d+)/.exec(trace);
                 this.line = Number(match ? match[1] : 1);
             }
         }

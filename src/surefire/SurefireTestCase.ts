@@ -45,7 +45,7 @@ export default class SurefireTestCase {
         .filter((st) => st.includes(this.className))
         .pop();
       if (trace) {
-        const match = RegExp(".*:(\\d+)").exec(trace);
+        const match = /.*:(\d+)/.exec(trace);
         this.line = Number(match ? match[1] : 1);
       }
     }

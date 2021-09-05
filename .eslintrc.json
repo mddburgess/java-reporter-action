@@ -22,6 +22,7 @@
     "eqeqeq": "error",
     "no-template-curly-in-string": "error",
     "prefer-arrow-callback": "error",
+    "prefer-regex-literals": ["error", { "disallowRedundantWrapping": true }],
 
     "@typescript-eslint/consistent-type-definitions": ["warn", "interface"],
     "@typescript-eslint/explicit-member-accessibility": "error",

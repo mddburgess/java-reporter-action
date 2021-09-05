@@ -21,7 +21,7 @@ export default class SurefireReport {
     const topLevelClass = idx === -1 ? this.name : this.name.slice(0, idx);
     const path = findClasspath(`${topLevelClass.split(".").join("/")}.java`);
     if (path) {
-      const match = RegExp("(.*)/src/test/java/.*").exec(path);
+      const match = /(.*)\/src\/test\/java\/.*/.exec(path);
       return match ? match[1] : "";
     }
     return "";
