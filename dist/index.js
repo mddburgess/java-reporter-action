@@ -312,7 +312,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const glob = __importStar(__nccwpck_require__(8090));
 const classpath = [];
 const loadClasspath = () => __awaiter(void 0, void 0, void 0, function* () {
-    if (classpath === []) {
+    if (classpath.length === 0) {
         core.info("Loading classpath");
         const globber = yield glob.create("**/*.java");
         const searchPath = globber.getSearchPaths()[0];

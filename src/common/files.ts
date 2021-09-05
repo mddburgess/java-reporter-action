@@ -4,7 +4,7 @@ import * as glob from "@actions/glob";
 const classpath: string[] = [];
 
 export const loadClasspath = async (): Promise<string[]> => {
-  if (classpath === []) {
+  if (classpath.length === 0) {
     core.info("Loading classpath");
 
     const globber = await glob.create("**/*.java");
