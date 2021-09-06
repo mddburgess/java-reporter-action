@@ -1420,12 +1420,13 @@ exports.default = SurefireReport;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const files_1 = __nccwpck_require__(9337);
 class SurefireTestCase {
-    constructor(className = "", testName = "", result = "success", message, stackTrace) {
+    constructor(className = "", testName = "", result = "success", message, stackTrace, rawOutput) {
         this.className = className;
         this.testName = testName;
         this.result = result;
         this.message = message;
         this.stackTrace = stackTrace;
+        this.rawOutput = rawOutput;
         this.line = 0;
     }
     get simpleClassName() {
@@ -1433,7 +1434,7 @@ class SurefireTestCase {
         return this.className.slice(idx);
     }
     get annotation() {
-        var _a;
+        var _a, _b;
         return {
             path: (_a = (0, files_1.findClasspath)(this.annotationPath)) !== null && _a !== void 0 ? _a : this.className,
             start_line: this.annotationLine,
@@ -1441,7 +1442,7 @@ class SurefireTestCase {
             annotation_level: this.annotationLevel,
             message: this.annotationMessage,
             title: this.annotationTitle,
-            raw_details: this.stackTrace,
+            raw_details: (_b = this.rawOutput) !== null && _b !== void 0 ? _b : this.stackTrace,
         };
     }
     get annotationPath() {
@@ -1474,7 +1475,7 @@ class SurefireTestCase {
     }
     get annotationMessage() {
         var _a, _b;
-        return (_b = (_a = this.stackTrace) !== null && _a !== void 0 ? _a : this.message) !== null && _b !== void 0 ? _b : `Test ${this.result}`;
+        return (_b = (_a = this.message) !== null && _a !== void 0 ? _a : this.stackTrace) !== null && _b !== void 0 ? _b : `Test ${this.result}`;
     }
     get annotationTitle() {
         if (this.testName) {
@@ -1567,7 +1568,9 @@ class SurefireParser extends parser_1.default {
     }
     onTestResultOpen(result, attrs) {
         this.testCase.result = result;
-        this.testCase.message = (0, html_entities_1.decode)(attrs.message, { level: "xml" });
+        if (attrs.message) {
+            this.testCase.message = (0, html_entities_1.decode)(attrs.message, { level: "xml" });
+        }
     }
     onTagClose(tag) {
         var _a;
@@ -1583,6 +1586,9 @@ class SurefireParser extends parser_1.default {
         const context = this.getContext();
         if (context === "failure" || context === "error" || context === "skipped") {
             this.testCase.stackTrace = ((_a = this.testCase.stackTrace) !== null && _a !== void 0 ? _a : "").concat((0, html_entities_1.decode)(tag.contents, { level: "xml" }));
+        }
+        else if (context === "system-out") {
+            this.testCase.rawOutput = (0, html_entities_1.decode)(tag.contents, { level: "xml" });
         }
     }
 }

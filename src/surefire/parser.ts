@@ -50,7 +50,9 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
 
   private onTestResultOpen(result: SurefireTestResult, attrs: TestResultAttrs) {
     this.testCase.result = result;
-    this.testCase.message = decode(attrs.message, { level: "xml" });
+    if (attrs.message) {
+      this.testCase.message = decode(attrs.message, { level: "xml" });
+    }
   }
 
   protected onTagClose(tag: TagCloseNode): void {
@@ -69,6 +71,8 @@ export default class SurefireParser extends ReportParser<SurefireReport> {
       this.testCase.stackTrace = (this.testCase.stackTrace ?? "").concat(
         decode(tag.contents, { level: "xml" })
       );
+    } else if (context === "system-out") {
+      this.testCase.rawOutput = decode(tag.contents, { level: "xml" });
     }
   }
 }
@@ -87,5 +91,5 @@ interface TestCaseAttrs {
 }
 
 interface TestResultAttrs {
-  message: string;
+  message?: string;
 }

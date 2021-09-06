@@ -11,7 +11,8 @@ export default class SurefireTestCase {
     public testName = "",
     public result: SurefireTestResult = "success",
     public message?: string,
-    public stackTrace?: string
+    public stackTrace?: string,
+    public rawOutput?: string
   ) {}
 
   public get simpleClassName(): string {
@@ -27,7 +28,7 @@ export default class SurefireTestCase {
       annotation_level: this.annotationLevel,
       message: this.annotationMessage,
       title: this.annotationTitle,
-      raw_details: this.stackTrace,
+      raw_details: this.rawOutput ?? this.stackTrace,
     };
   }
 
@@ -65,7 +66,7 @@ export default class SurefireTestCase {
   }
 
   private get annotationMessage(): string {
-    return this.stackTrace ?? this.message ?? `Test ${this.result}`;
+    return this.message ?? this.stackTrace ?? `Test ${this.result}`;
   }
 
   private get annotationTitle(): string {
